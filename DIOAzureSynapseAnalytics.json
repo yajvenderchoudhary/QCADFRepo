@@ -1,0 +1,20 @@
+{
+	"name": "DIOAzureSynapseAnalytics",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=diosynapse-prod.sql.azuresynapse.net;Initial Catalog=diodw",
+			"servicePrincipalId": "7328197a-9fde-4eae-b7eb-2f395166be23",
+			"servicePrincipalKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_cperm_keyvault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "CPERMContactabilityClientSecret"
+			},
+			"tenant": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+		}
+	}
+}
