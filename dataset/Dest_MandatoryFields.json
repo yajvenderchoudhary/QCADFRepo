@@ -1,0 +1,105 @@
+{
+	"name": "Dest_MandatoryFields",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DoNotContact",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Dest"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "Year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QC Date",
+				"type": "date"
+			},
+			{
+				"name": "CPERMListid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GRSBucket",
+				"type": "varchar"
+			},
+			{
+				"name": "CPERMDataSourceID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContactNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContactID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EmailAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CompanyName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubsidiaryName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountManager",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StreetAddress1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "City",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Checkpoint_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Missing_Mandatory_Fields"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,77 @@
+{
+	"name": "Demo trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "DoNotContact",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "CRs NewCheckpoints",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "FY22Q3 KSRFeedback",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "MandatoryFields",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "OtherChecks",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SelectionCriteria",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Tagging_Fields",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Validation_Geography",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Vendor_Feedbacks",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Week",
+				"interval": 1,
+				"startTime": "2022-07-08T06:00:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"weekDays": [
+						"Friday"
+					]
+				}
+			}
+		}
+	}
+}

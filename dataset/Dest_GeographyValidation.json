@@ -1,0 +1,72 @@
+{
+	"name": "Dest_GeographyValidation",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DoNotContact",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Dest"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QC Date",
+				"type": "date"
+			},
+			{
+				"name": "CPERMListID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EmailAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Area",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubRegion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubsidiaryName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Checkpoint_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Validation_Geography"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

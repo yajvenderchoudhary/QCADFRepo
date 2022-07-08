@@ -1,0 +1,177 @@
+{
+	"name": "SelectionCriteria",
+	"properties": {
+		"activities": [
+			{
+				"name": "SelectionCriteria",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dbo.Invalid_SelectionCritera"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Invalid_SelectionCritera"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderStoredProcedureName": "[FAREAST\\v-yachou].[Usp_Get_SelectionCriteria]",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Year",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Year"
+								}
+							},
+							{
+								"source": {
+									"name": "Month",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Month"
+								}
+							},
+							{
+								"source": {
+									"name": "QC Date",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "QC Date"
+								}
+							},
+							{
+								"source": {
+									"name": "CPERMListID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "CPERMListID"
+								}
+							},
+							{
+								"source": {
+									"name": "GRSBucket",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "GRSBucket"
+								}
+							},
+							{
+								"source": {
+									"name": "EmailAddress",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "EmailAddress"
+								}
+							},
+							{
+								"source": {
+									"name": "PartnerSpecialization",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PartnerSpecialization"
+								}
+							},
+							{
+								"source": {
+									"name": "PartnerSubSpecialization",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "PartnerSubSpecialization"
+								}
+							},
+							{
+								"source": {
+									"name": "Segment",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Segment"
+								}
+							},
+							{
+								"source": {
+									"name": "SubSegment",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SubSegment"
+								}
+							},
+							{
+								"source": {
+									"name": "Checkpoint_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Checkpoint_ID"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sr_SelectionCritera",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dest_SelectionCritera",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-06T14:12:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

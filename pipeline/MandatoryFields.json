@@ -1,0 +1,267 @@
+{
+	"name": "MandatoryFields",
+	"properties": {
+		"activities": [
+			{
+				"name": "MandatoryFields",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dbo.Missing_Mandatory_Fields"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Missing_Mandatory_Fields"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderStoredProcedureName": "[FAREAST\\v-yachou].[Usp_Get_MandatoryFields]",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Year",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Year"
+								}
+							},
+							{
+								"source": {
+									"name": "Month",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Month"
+								}
+							},
+							{
+								"source": {
+									"name": "QC Date",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "QC Date"
+								}
+							},
+							{
+								"source": {
+									"name": "CPERMListid",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "CPERMListid"
+								}
+							},
+							{
+								"source": {
+									"name": "GRSBucket",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "GRSBucket"
+								}
+							},
+							{
+								"source": {
+									"name": "CPERMDataSourceID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "CPERMDataSourceID"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountNumber",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "AccountNumber"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "AccountID"
+								}
+							},
+							{
+								"source": {
+									"name": "ContactNumber",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ContactNumber"
+								}
+							},
+							{
+								"source": {
+									"name": "ContactID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ContactID"
+								}
+							},
+							{
+								"source": {
+									"name": "EmailAddress",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "EmailAddress"
+								}
+							},
+							{
+								"source": {
+									"name": "CompanyName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "CompanyName"
+								}
+							},
+							{
+								"source": {
+									"name": "SubsidiaryName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SubsidiaryName"
+								}
+							},
+							{
+								"source": {
+									"name": "Country",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Country"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountManager",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "AccountManager"
+								}
+							},
+							{
+								"source": {
+									"name": "FirstName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "FirstName"
+								}
+							},
+							{
+								"source": {
+									"name": "LastName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "LastName"
+								}
+							},
+							{
+								"source": {
+									"name": "StreetAddress1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "StreetAddress1"
+								}
+							},
+							{
+								"source": {
+									"name": "City",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "City"
+								}
+							},
+							{
+								"source": {
+									"name": "Checkpoint_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Checkpoint_ID"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Dest_MandatoryFields",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dest_MandatoryFields",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-06T14:02:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

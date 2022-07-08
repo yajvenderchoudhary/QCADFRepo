@@ -1,0 +1,109 @@
+{
+	"name": "Dest_AttributesValidationWithMALMPL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DoNotContact",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Dest"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QC Date",
+				"type": "date"
+			},
+			{
+				"name": "CPERMListid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ParentAccountNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CRMID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPLID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OCPCRMID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountManager in FinalTable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountManager in MAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountManager in MPL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Segment in FinalTable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Segment in MAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubSegment in FinalTable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubSegment in MAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PartnerSpecialization in Final Table",
+				"type": "varchar"
+			},
+			{
+				"name": "PartnerSpecialization in MPL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PartnerSubSpecialization in Final Table",
+				"type": "varchar"
+			},
+			{
+				"name": "PartnerSubSpecialization in MPL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Checkpoint_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attributes_Validation_MAL_MPL"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "YADFCPERM",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ad4a0ef3-9ba5-4698-9c96-a25708b691b5",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}

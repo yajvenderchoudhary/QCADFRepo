@@ -1,0 +1,17 @@
+{
+	"name": "SqlServer2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=AZCFITGRSSQ10;initial catalog=CPERM_Sample_Quality_Check",
+			"userName": "FAREAST\\v-yachou",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxNGFmYTc5ZS04MmZlLTRjOTYtYWZhZC0zNTExYTIxMWQ2ZDIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime2",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,68 @@
+{
+	"name": "Dest_SelectionCritera",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DoNotContact",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Dest"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "Year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QC Date",
+				"type": "date"
+			},
+			{
+				"name": "CPERMListID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GRSBucket",
+				"type": "varchar"
+			},
+			{
+				"name": "EmailAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PartnerSpecialization",
+				"type": "varchar"
+			},
+			{
+				"name": "PartnerSubSpecialization",
+				"type": "varchar"
+			},
+			{
+				"name": "Segment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubSegment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Checkpoint_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Invalid_SelectionCritera"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

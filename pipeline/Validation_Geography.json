@@ -1,0 +1,187 @@
+{
+	"name": "Validation_Geography",
+	"properties": {
+		"activities": [
+			{
+				"name": "Validation_Geography",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "FAREAST\\v-yachou.Usp_Get_GeographyValidation"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Validation_Geography"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderStoredProcedureName": "[FAREAST\\v-yachou].[Usp_Get_GeographyValidation]",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Description",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Description"
+								}
+							},
+							{
+								"source": {
+									"name": "Year",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Year"
+								}
+							},
+							{
+								"source": {
+									"name": "Month",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Month"
+								}
+							},
+							{
+								"source": {
+									"name": "QC Date",
+									"type": "DateTime",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "QC Date"
+								}
+							},
+							{
+								"source": {
+									"name": "CPERMListID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "CPERMListID"
+								}
+							},
+							{
+								"source": {
+									"name": "EmailAddress",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "EmailAddress"
+								}
+							},
+							{
+								"source": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Area"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Region"
+								}
+							},
+							{
+								"source": {
+									"name": "SubRegion",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SubRegion"
+								}
+							},
+							{
+								"source": {
+									"name": "SubsidiaryName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SubsidiaryName"
+								}
+							},
+							{
+								"source": {
+									"name": "Country",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Country"
+								}
+							},
+							{
+								"source": {
+									"name": "Checkpoint_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Checkpoint_ID"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sr_GeographyValidation",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dest_GeographyValidation",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-06T13:45:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
