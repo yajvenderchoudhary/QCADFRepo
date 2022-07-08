@@ -1,0 +1,142 @@
+{
+	"name": "pl_copy_cperm_pc_account",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_cperm_pc_account",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "accounts/Partner/Non-PII/Account/Account-V4.parquet"
+					},
+					{
+						"name": "Destination",
+						"value": "Source.PC_Account"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table Source.PC_Account"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "AccountId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountFriendlyName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountFriendlyName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountPurpose",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountPurpose",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountMpnId",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "AccountMpnId",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountSellerId",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "AccountSellerId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CreatedDateTime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UpdatedDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "UpdatedDateTime",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_adls_pc_account",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sql_cperm_account",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

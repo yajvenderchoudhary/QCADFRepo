@@ -1,0 +1,172 @@
+{
+	"name": "pl_copy_cperm_pc_accountenrollment",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_cperm_pc_accountEnrollment",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "accounts/Partner/Non-PII/AccountEnrollment/AccountEnrollment-V4.parquet"
+					},
+					{
+						"name": "Destination",
+						"value": "Source.PC_AccountEnrollment"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table Source.PC_AccountEnrollment"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "AccountId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountPurpose",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountPurpose",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EnrollmentId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EnrollmentId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProgramName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProgramName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EnrollmentStatus",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EnrollmentStatus",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EnrollmentStartDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "EnrollmentStartDateTime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "EnrollmentEndDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "EnrollmentEndDateTime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ProgramCategories",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProgramCategories",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CreatedDateTime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "UpdatedDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "UpdatedDateTime",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_adls_pc_accountenrollment",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sql_cperm_accountenrollment",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
