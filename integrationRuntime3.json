@@ -1,0 +1,12 @@
+{
+	"name": "integrationRuntime3",
+	"properties": {
+		"type": "SelfHosted",
+		"typeProperties": {
+			"linkedInfo": {
+				"resourceId": "/subscriptions/b09a733b-fd6e-4f65-9c69-8c33c48495fe/resourcegroups/ADFCPERMPartnerCenter/providers/Microsoft.DataFactory/factories/YADFCPERM/integrationruntimes/integrationRuntime2",
+				"authorizationType": "Rbac"
+			}
+		}
+	}
+}
