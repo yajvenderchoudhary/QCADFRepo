@@ -1,0 +1,65 @@
+{
+	"name": "ds_sql_msx_cperm_partneraccount",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cperm_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "DetailEngagementType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EngagementType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPLId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MplPartnerType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPNHeadQuartersId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPNLocationId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPNOrganizationId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPNOrganizationPartnerType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MPNSubsidiary",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PartnerAccountId",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "PartnerNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OCPID",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Source",
+			"table": "Source_PartnerAccount"
+		}
+	}
+}

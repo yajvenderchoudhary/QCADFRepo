@@ -1,0 +1,38 @@
+{
+	"name": "ds_sql_cperm_account",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cperm_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "AccountId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountPurpose",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TenantId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TenantEnvironment",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Source",
+			"table": "PC_Account"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

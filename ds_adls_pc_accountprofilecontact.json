@@ -1,0 +1,51 @@
+{
+	"name": "ds_adls_pc_accountprofilecontact",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_partnercenter_adls2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "AccountProfileContact-V4.parquet",
+				"folderPath": "PartnerProfileContact",
+				"fileSystem": "partner-profilecontact"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "AccountId",
+				"type": "UTF8"
+			},
+			{
+				"name": "AccountType",
+				"type": "UTF8"
+			},
+			{
+				"name": "AccountPurpose",
+				"type": "UTF8"
+			},
+			{
+				"name": "UserFirstName",
+				"type": "UTF8"
+			},
+			{
+				"name": "UserLastName",
+				"type": "UTF8"
+			},
+			{
+				"name": "UserEmail",
+				"type": "UTF8"
+			},
+			{
+				"name": "UserPhoneNumber",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,31 @@
+{
+	"name": "ds_adls_pc_mpnrelationship",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_partnercenter_adls2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "MpnRelationship-V4.parquet",
+				"folderPath": "Partner/Non-PII/MpnRelationship",
+				"fileSystem": "accounts"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "MpnId",
+				"type": "INT32"
+			},
+			{
+				"name": "VorgMpnId",
+				"type": "INT32"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

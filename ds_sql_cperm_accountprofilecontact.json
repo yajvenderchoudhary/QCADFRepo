@@ -1,0 +1,46 @@
+{
+	"name": "ds_sql_cperm_accountprofilecontact",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cperm_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "AccountId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountPurpose",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UserFirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UserLastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UserEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UserPhoneNumber",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Source",
+			"table": "PC_AccountProfileContact"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

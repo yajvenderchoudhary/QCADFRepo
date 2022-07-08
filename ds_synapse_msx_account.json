@@ -1,0 +1,306 @@
+{
+	"name": "ds_synapse_msx_account",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DIOAzureSynapseAnalytics",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "AccountID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountGUID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "CompanyName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Area",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Subsidiary",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Owner",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryOrgType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimarySegment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimarySubsegment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Category",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Vertical",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Industry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParentingLevel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParentAccountGUID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ParentAccountID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParentCompanyName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TopParentAccountID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MSSalesTopParentID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MSSalesID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryAddressID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "PrimaryAddress1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryAddress2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryAddress3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryCity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryPostalCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "State",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PrimaryCountry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PhoneNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FaxNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WebSite",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TaxIDNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CurrencyCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "CreatedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedFiscalYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UpdatedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "UpdatedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ServiceEngagement",
+				"type": "bit"
+			},
+			{
+				"name": "Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubRegion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MIOID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DUNSNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StatusChangeReason",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TerritoryID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "SalesTerritory",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EmbeddedDeviceCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CRMDataSource",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Description",
+				"type": "varchar"
+			},
+			{
+				"name": "PcCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ServerCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SmartphoneCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TabletCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LicenseAgreementType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NumberOfEmployees",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SegmentGroup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VersionNumber",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "CID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GPID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GPName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HQ",
+				"type": "bit"
+			},
+			{
+				"name": "LastUpdatedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Accountcreatedby",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Accountmodifiedby",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OEMManaged",
+				"type": "bit"
+			},
+			{
+				"name": "oemorganizationtype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "oemsegmenttype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "managedstatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CLANumber",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "DW_CRM",
+			"table": "t_CRM_Accounts"
+		}
+	}
+}

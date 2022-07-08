@@ -1,0 +1,111 @@
+{
+	"name": "ds_sql_msx_cperm_account",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cperm_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "AccountID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "AccountName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EndCustomerSegment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EndCustomerSubsegment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Industry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "industryVertical",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Line1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Line2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Line3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagedStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MSSalesID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MSSalesTopParentId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NumberOfEmployees",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OEMManaged",
+				"type": "bit"
+			},
+			{
+				"name": "oemorganizationtype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "oemsegmenttype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParentAccountID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ParentingLevel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PcCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TerritoryID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "VerticalCategory",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Source",
+			"table": "Source_Account"
+		}
+	}
+}
