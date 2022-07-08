@@ -1,0 +1,39 @@
+{
+	"name": "ds_adls_pc_accountresellerprofile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_partnercenter_adls2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "AccountResellerProfile-V4.parquet",
+				"folderPath": "Partner/Non-PII/AccountResellerProfile",
+				"fileSystem": "accounts"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "AccountId",
+				"type": "UTF8"
+			},
+			{
+				"name": "AccountType",
+				"type": "UTF8"
+			},
+			{
+				"name": "AccountPurpose",
+				"type": "UTF8"
+			},
+			{
+				"name": "CSPTier",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

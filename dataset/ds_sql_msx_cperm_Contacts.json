@@ -1,0 +1,130 @@
+{
+	"name": "ds_sql_msx_cperm_Contacts",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cperm_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "AccountID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "AddressLine1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AddressLine2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AddressLine3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "City",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContactID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ContactNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CountryValue",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DonotAllowEMail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DonotAllowMail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fax",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobRole",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobTitle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagedCode",
+				"type": "bit"
+			},
+			{
+				"name": "MarketingAudience",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MobilePhone",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PartnerAccountID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "PostalCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StateOrProvince",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StatusCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SurveyLanguage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContactSource",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Source",
+			"table": "Source_ContactPII"
+		}
+	}
+}
