@@ -1,0 +1,73 @@
+{
+	"name": "pl_copy_cperm_pc_mpnrelationship",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_cperm_pc_mpnrelationship",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table Source.PC_MpnRelationship"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MpnId",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "MpnId",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "VorgMpnId",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "VorgMpnId",
+									"type": "Int32"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_adls_pc_mpnrelationship",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sql_cperm_mpnrelationship",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

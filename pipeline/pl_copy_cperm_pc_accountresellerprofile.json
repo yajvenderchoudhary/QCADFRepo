@@ -1,0 +1,93 @@
+{
+	"name": "pl_copy_cperm_pc_accountresellerprofile",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_cperm_pc_accountresellerprofile",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table Source.PC_AccountResellerProfile"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "AccountId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountPurpose",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountPurpose",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CSPTier",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CSPTier",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_adls_pc_accountresellerprofile",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sql_cperm_accountresellerprofile",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
