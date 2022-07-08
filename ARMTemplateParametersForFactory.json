@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "CPERMADFv2PPE"
+		},
+		"ls_partnercenter_blob_servicePrincipalKey": {
+			"value": ""
+		},
+		"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
+			"value": "cpermadfsecret"
+		},
+		"ls_partnercenter_blob_properties_typeProperties_url": {
+			"value": "https://accountsdata.dfs.core.windows.net/"
+		},
+		"ls_partnercenter_blob_properties_typeProperties_tenant": {
+			"value": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+		},
+		"ls_partnercenter_blob_properties_typeProperties_servicePrincipalId": {
+			"value": "7e0025fb-f3c4-4be5-a53f-cfc0dc57e4fc"
+		},
+		"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/b09a733b-fd6e-4f65-9c69-8c33c48495fe/resourcegroups/ADFCPERMPartnerCenter/providers/Microsoft.DataFactory/factories/YADFCPERM/integrationruntimes/integrationRuntime2"
+		},
+		"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
+			"value": "https://cpermkv.vault.azure.net/"
+		}
+	}
+}
