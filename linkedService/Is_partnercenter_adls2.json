@@ -5,8 +5,15 @@
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://partneraccountsdata.dfs.core.windows.net",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEZCQTE4QTZELUNBMTQtNEFGRC1BQUY4LTI5QzI3RTNDODM2Ml9hZGYxMWRkYS00Yzg5LTQyYjEtYThkMS05YzA1NGJkY2I1ZjkiDQp9"
+			"url": "https://partneraccountsdata.dfs.core.windows.net/",
+			"tenant": "975f013f-7f24-47e8-a7d3-abc4752bf346",
+			"servicePrincipalId": "39c035f1-2997-46f6-bf4a-3bed0b373d30",
+			"servicePrincipalCredentialType": "ServicePrincipalKey",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiZDE3Y2NiOC02YTVkLTRkOTktYTE2Ny1kYzM1YTE4MWNiYTciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime3",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }

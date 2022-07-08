@@ -1,0 +1,22 @@
+{
+	"name": "ls_cperm_sql",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_cperm_keyvault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "cpermadfsecret"
+			}
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime3",
+			"type": "IntegrationRuntimeReference"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
