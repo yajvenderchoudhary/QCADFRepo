@@ -153,33 +153,76 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
-				"typeProperties": {
-					"enableStaging": false
-				}
-			},
-			{
-				"name": "Scorecard",
-				"type": "Copy",
-				"dependsOn": [
+				"userProperties": [
 					{
-						"activity": "Partner Account Heirarchy",
-						"dependencyConditions": [
-							"Succeeded"
-						]
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.PartnerAccountHierarchy"
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderQuery": "SELECT PartnerAccountId, PartnerNumber, MPLID\nFROM [dbo].[MSX_PartnerAccount] with(nolock)\nWhere MPLID is not null",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PartnerAccountId",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "PartnerAccountId",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "PartnerNumber",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PartnerNumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MPLID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AccountMPLId",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Source_MSX",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dest_vnxt_reporting_account_Hierarchy",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {

@@ -1,0 +1,57 @@
+{
+	"name": "Dest_vnxt_reporting_account_Hierarchy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "vnxt_reporting",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Reporting Dataset/Dest Report"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PartnerAccountId",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "PartnerNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountMPLId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountManager",
+				"type": "nvarchar"
+			},
+			{
+				"name": "InsertedOn",
+				"type": "nvarchar"
+			},
+			{
+				"name": "InsertedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ModifiedOn",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ModifiedBy",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PartnerAccountHierarchy"
+		}
+	}
+}
