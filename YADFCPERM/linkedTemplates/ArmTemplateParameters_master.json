@@ -5,6 +5,18 @@
 		"factoryName": {
 			"value": "YADFCPERM"
 		},
+		"AzureSqlMI2_connectionString": {
+			"value": ""
+		},
+		"DIOAzureSynapseAnalytics_connectionString": {
+			"value": ""
+		},
+		"DoNotContact_connectionString": {
+			"value": ""
+		},
+		"Is_partnercenter_adls2_servicePrincipalCredential": {
+			"value": ""
+		},
 		"SqlServer1_connectionString": {
 			"value": ""
 		},
@@ -16,24 +28,6 @@
 		},
 		"SqlServer2_password": {
 			"value": ""
-		},
-		"AzureSqlMI2_connectionString": {
-			"value": ""
-		},
-		"DoNotContact_connectionString": {
-			"value": ""
-		},
-		"DIOAzureSynapseAnalytics_connectionString": {
-			"value": ""
-		},
-		"Is_partnercenter_adls2_servicePrincipalCredential": {
-			"value": ""
-		},
-		"SqlServer1_properties_typeProperties_userName": {
-			"value": "FAREAST\\v-yachou"
-		},
-		"SqlServer2_properties_typeProperties_userName": {
-			"value": "FAREAST\\v-yachou"
 		},
 		"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
 			"value": "7328197a-9fde-4eae-b7eb-2f395166be23"
@@ -49,6 +43,12 @@
 		},
 		"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
 			"value": "39c035f1-2997-46f6-bf4a-3bed0b373d30"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "FAREAST\\v-yachou"
+		},
+		"SqlServer2_properties_typeProperties_userName": {
+			"value": "FAREAST\\v-yachou"
 		},
 		"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
 			"value": "https://cpermkv.vault.azure.net/"
