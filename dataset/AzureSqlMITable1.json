@@ -1,0 +1,15 @@
+{
+	"name": "AzureSqlMITable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MSX",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Reporting Dataset/Source report"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": []
+	}
+}
