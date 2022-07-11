@@ -13,6 +13,284 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/MandatoryFields')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "MandatoryFields",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dbo.Missing_Mandatory_Fields"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.Missing_Mandatory_Fields"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderStoredProcedureName": "[[FAREAST\\v-yachou].[Usp_Get_MandatoryFields]",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Year",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Year"
+										}
+									},
+									{
+										"source": {
+											"name": "Month",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Month"
+										}
+									},
+									{
+										"source": {
+											"name": "QC Date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "QC Date"
+										}
+									},
+									{
+										"source": {
+											"name": "CPERMListid",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CPERMListid"
+										}
+									},
+									{
+										"source": {
+											"name": "GRSBucket",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "GRSBucket"
+										}
+									},
+									{
+										"source": {
+											"name": "CPERMDataSourceID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CPERMDataSourceID"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountNumber"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountID"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ContactNumber"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ContactID"
+										}
+									},
+									{
+										"source": {
+											"name": "EmailAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EmailAddress"
+										}
+									},
+									{
+										"source": {
+											"name": "CompanyName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CompanyName"
+										}
+									},
+									{
+										"source": {
+											"name": "SubsidiaryName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SubsidiaryName"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Country"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountManager"
+										}
+									},
+									{
+										"source": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "FirstName"
+										}
+									},
+									{
+										"source": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "LastName"
+										}
+									},
+									{
+										"source": {
+											"name": "StreetAddress1",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "StreetAddress1"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "City"
+										}
+									},
+									{
+										"source": {
+											"name": "Checkpoint_ID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Checkpoint_ID"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Dest_MandatoryFields",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_MandatoryFields",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "QC Pipeline"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-07-06T14:02:50Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OtherChecks')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -7619,6 +7897,97 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Partner Account Heirarchy",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MSX to AccountHierarchy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "."
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.PartnerAccountHierarchy"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderQuery": "SELECT PartnerAccountId, PartnerNumber, MPLID\nFROM [dbo].[MSX_PartnerAccount] with(nolock)\nWhere MPLID is not null",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PartnerAccountId",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "PartnerAccountId",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PartnerNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MPLID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountMPLId",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_MSX",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_vnxt_reporting_account_Hierarchy",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -8438,123 +8807,6 @@
 				"typeProperties": {
 					"schema": "Source",
 					"table": "Source_ContactPII"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_sql_msx_cperm_account')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_cperm_sql",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "PC Datasets"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "AccountID",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "AccountName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EndCustomerSegment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EndCustomerSubsegment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Industry",
-						"type": "nvarchar"
-					},
-					{
-						"name": "industryVertical",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Line1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Line2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Line3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ManagedStatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MSSalesID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MSSalesTopParentId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NumberOfEmployees",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "OEMManaged",
-						"type": "bit"
-					},
-					{
-						"name": "oemorganizationtype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "oemsegmenttype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccountID",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "ParentingLevel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PcCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "TerritoryID",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "VerticalCategory",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "Source",
-					"table": "Source_Account"
 				}
 			},
 			"dependsOn": []

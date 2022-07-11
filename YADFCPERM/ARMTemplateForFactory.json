@@ -14459,6 +14459,97 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Partner Account Heirarchy",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MSX to AccountHierarchy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "."
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.PartnerAccountHierarchy"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderQuery": "SELECT PartnerAccountId, PartnerNumber, MPLID\nFROM [dbo].[MSX_PartnerAccount] with(nolock)\nWhere MPLID is not null",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PartnerAccountId",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "PartnerAccountId",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PartnerNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MPLID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountMPLId",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_MSX",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_vnxt_reporting_account_Hierarchy",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -14473,7 +14564,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_Reporting')]",
 				"[concat(variables('factoryId'), '/datasets/Source_MSX')]",
-				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting')]"
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting')]",
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_reporting_account_Hierarchy')]"
 			]
 		},
 		{
@@ -31468,6 +31560,68 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_reporting_account_Hierarchy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Dest Report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountMPLId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedOn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedOn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedBy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PartnerAccountHierarchy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
 		}
 	]
 }

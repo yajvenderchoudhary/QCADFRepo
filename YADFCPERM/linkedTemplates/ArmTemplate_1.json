@@ -6130,6 +6130,66 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_reporting_account_Hierarchy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Dest Report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountMPLId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedOn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedOn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedBy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PartnerAccountHierarchy"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Attributes ValidationWithMALMPL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -12586,284 +12646,6 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T17:00:31Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MandatoryFields')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "MandatoryFields",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dbo.Missing_Mandatory_Fields"
-							},
-							{
-								"name": "Destination",
-								"value": "dbo.Missing_Mandatory_Fields"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SqlMISource",
-								"sqlReaderStoredProcedureName": "[[FAREAST\\v-yachou].[Usp_Get_MandatoryFields]",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "SqlMISink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Year",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Year"
-										}
-									},
-									{
-										"source": {
-											"name": "Month",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Month"
-										}
-									},
-									{
-										"source": {
-											"name": "QC Date",
-											"type": "DateTime",
-											"physicalType": "date"
-										},
-										"sink": {
-											"name": "QC Date"
-										}
-									},
-									{
-										"source": {
-											"name": "CPERMListid",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "CPERMListid"
-										}
-									},
-									{
-										"source": {
-											"name": "GRSBucket",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "GRSBucket"
-										}
-									},
-									{
-										"source": {
-											"name": "CPERMDataSourceID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "CPERMDataSourceID"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountNumber",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "AccountNumber"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountID",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "AccountID"
-										}
-									},
-									{
-										"source": {
-											"name": "ContactNumber",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "ContactNumber"
-										}
-									},
-									{
-										"source": {
-											"name": "ContactID",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "ContactID"
-										}
-									},
-									{
-										"source": {
-											"name": "EmailAddress",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "EmailAddress"
-										}
-									},
-									{
-										"source": {
-											"name": "CompanyName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "CompanyName"
-										}
-									},
-									{
-										"source": {
-											"name": "SubsidiaryName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "SubsidiaryName"
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Country"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountManager",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "AccountManager"
-										}
-									},
-									{
-										"source": {
-											"name": "FirstName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "FirstName"
-										}
-									},
-									{
-										"source": {
-											"name": "LastName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "LastName"
-										}
-									},
-									{
-										"source": {
-											"name": "StreetAddress1",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "StreetAddress1"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "City"
-										}
-									},
-									{
-										"source": {
-											"name": "Checkpoint_ID",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Checkpoint_ID"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Dest_MandatoryFields",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Dest_MandatoryFields",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "QC Pipeline"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-07-06T14:02:50Z"
 			},
 			"dependsOn": []
 		}
