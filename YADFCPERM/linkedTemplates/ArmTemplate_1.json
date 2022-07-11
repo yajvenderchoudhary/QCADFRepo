@@ -3845,6 +3845,9 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"folder": {
+					"name": "QC Pipeline"
+				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T14:26:07Z"
 			},
@@ -5869,6 +5872,9 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T15:08:27Z"
@@ -7978,7 +7984,7 @@
 					"cancelAfter": {}
 				},
 				"folder": {
-					"name": "PC"
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-08T10:14:54Z"
@@ -10006,7 +10012,7 @@
 					"cancelAfter": {}
 				},
 				"folder": {
-					"name": "PC"
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T17:00:31Z"
@@ -10284,7 +10290,7 @@
 					"cancelAfter": {}
 				},
 				"folder": {
-					"name": "PC"
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T14:02:50Z"
@@ -12312,7 +12318,7 @@
 					"cancelAfter": {}
 				},
 				"folder": {
-					"name": "PC"
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T14:47:36Z"
@@ -12500,6 +12506,9 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T14:12:03Z"
@@ -15074,6 +15083,9 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"folder": {
+					"name": "QC Pipeline"
+				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-08T12:01:11Z"
 			},
@@ -15270,6 +15282,9 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T13:45:17Z"
@@ -17745,6 +17760,9 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "QC Pipeline"
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-06T12:33:31Z"
