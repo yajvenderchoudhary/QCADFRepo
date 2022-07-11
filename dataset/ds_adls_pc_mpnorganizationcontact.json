@@ -5,6 +5,9 @@
 			"referenceName": "Is_partnercenter_adls2",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "PC Datasets"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

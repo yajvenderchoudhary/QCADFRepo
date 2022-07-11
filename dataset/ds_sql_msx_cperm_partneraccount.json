@@ -5,6 +5,9 @@
 			"referenceName": "ls_cperm_sql",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "PC Datasets"
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [

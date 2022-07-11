@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Dest"
+			"name": "QC Datasets/Dest"
 		},
 		"annotations": [],
 		"type": "AzureSqlMITable",
