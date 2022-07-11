@@ -1,5 +1,5 @@
 {
-	"name": "vnxt_Reporting",
+	"name": "Source_vnxt_Reporting",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "vnxt_reporting",

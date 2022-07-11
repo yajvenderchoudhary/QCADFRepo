@@ -1,5 +1,5 @@
 {
-	"name": "MSX",
+	"name": "Source_MSX",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "MSX",

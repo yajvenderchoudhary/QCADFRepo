@@ -21,7 +21,7 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "vnxt_Reporting",
+						"referenceName": "Source_vnxt_Reporting",
 						"type": "DatasetReference"
 					}
 				}
@@ -62,13 +62,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "MSX",
+						"referenceName": "Source_MSX",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "vnxt_Reporting",
+						"referenceName": "Source_vnxt_Reporting",
 						"type": "DatasetReference"
 					}
 				]
