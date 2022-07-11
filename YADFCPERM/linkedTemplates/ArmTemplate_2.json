@@ -7499,7 +7499,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlMISource",
-								"sqlReaderQuery": "IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','Scorecard'\nTruncate TABLE dbo.Scorecard\nEND\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
+								"sqlReaderQuery": "--IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\n--BEGIN\n--EXEC dbo.CreateBackup 'dbo','Scorecard'\n--Truncate TABLE dbo.Scorecard\n0--END\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
 								"partitionOption": "None"
 							},
 							"dataset": {
@@ -7527,7 +7527,7 @@
 							},
 							{
 								"name": "Destination",
-								"value": "dbo.Scorecard"
+								"value": "dbo.AccountHierarchy"
 							}
 						],
 						"typeProperties": {
@@ -7541,7 +7541,162 @@
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountID",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccountId",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "ParentAccountId",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentingLevel",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ParentingLevel",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccountNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ParentAccountNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "AccountManager",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "InsertedOn",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "InsertedOn",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "InsertedBy",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "InsertedBy",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedOn",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ModifiedOn",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedBy",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ModifiedBy",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MSSalesId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "MSSalesId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MSSalesTopParentId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "MSSalesTopParentId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "CompanyName",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "CompanyName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentCompanyName",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ParentCompanyName",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
@@ -7552,7 +7707,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "Source_vnxt_Reporting",
+								"referenceName": "Dest_vnxt_Reporting",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
