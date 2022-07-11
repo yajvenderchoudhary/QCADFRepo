@@ -37,18 +37,38 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Scorecard"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "SqlMISource",
 						"sqlReaderQuery": "exec usp_AccountHierarchy",
 						"partitionOption": "None"
 					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "MSX",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "vnxt_Reporting",
 						"type": "DatasetReference"
 					}
 				]
