@@ -1,0 +1,1990 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "YADFCPERM"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_msx_account')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy accounts",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "SELECT    AccountGUID AS AccountID  ,CompanyName AS AccountName  ,AccountID AS AccountNumber  ,PrimarySegment AS EndCustomerSegment  ,PrimarySubSegment AS EndCustomerSubsegment  ,Industry  ,Vertical AS industryVertical  ,PrimaryAddress1 AS Line1  ,PrimaryAddress2 AS Line2  ,PrimaryAddress3 AS Line3  ,ManagedStatus   ,MSSalesID  ,MSSalesTopParentID  ,NumberOfEmployees  ,OEMManaged  ,oemorganizationtype  ,oemsegmenttype  ,ParentAccountGUID AS ParentAccountID  ,ParentingLevel  ,PcCount  ,Status  ,TerritoryID  ,Category AS VerticalCategory  FROM [DW_CRM].[t_CRM_Accounts]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "EXEC dbo.CreateBackup 'Source', 'Source_Account'\n\ntruncate table Source.Source_Account",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": true
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AccountID",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "AccountID",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EndCustomerSegment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EndCustomerSegment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EndCustomerSubsegment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EndCustomerSubsegment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Industry",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Industry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "industryVertical",
+											"type": "String"
+										},
+										"sink": {
+											"name": "industryVertical",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Line1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Line1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Line2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Line2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Line3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Line3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedStatus",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ManagedStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MSSalesID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MSSalesID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MSSalesTopParentID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MSSalesTopParentId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NumberOfEmployees",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NumberOfEmployees",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "OEMManaged",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "OEMManaged",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "oemorganizationtype",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oemorganizationtype",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "oemsegmenttype",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oemsegmenttype",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccountID",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "ParentAccountID",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentingLevel",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ParentingLevel",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PcCount",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "PcCount",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TerritoryID",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "TerritoryID",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "VerticalCategory",
+											"type": "String"
+										},
+										"sink": {
+											"name": "VerticalCategory",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_synapse_msx_account",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_msx_cperm_account",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_msx_contacts')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Contacts",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "SELECT AccountGUID AS AccountID ,AddressLine1 ,AddressLine2 ,AddressLine3 ,City , ContactGUID AS ContactID ,ContactID AS ContactNumber ,Country ,CountryValue ,Description ,DonotAllowEMail ,DonotAllowMail ,Email ,Fax ,FirstName ,JobRole ,JobTitle ,LastName ,ManagedCode ,MarketingAudience ,MobilePhone ,PartnerAccountID ,PostalCode ,StateOrProvince ,Status ,StatusCode ,SurveyLanguage, ContactSource FROM [DW_CRM].[t_CRM_Contacts]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "EXEC dbo.CreateBackup 'Source', 'Source_ContactPII'\n\ntruncate table Source.Source_ContactPII",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": true
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "AccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine1",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AddressLine1",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine2",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AddressLine2",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine3",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AddressLine3",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "ContactID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ContactNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryValue",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CountryValue",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Description",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Description",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DonotAllowEMail",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DonotAllowEMail",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DonotAllowMail",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DonotAllowMail",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Email",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Email",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Fax",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Fax",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JobRole",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "JobRole",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JobTitle",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "JobTitle",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedCode",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "ManagedCode",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "MarketingAudience",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MarketingAudience",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MobilePhone",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MobilePhone",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerAccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "PartnerAccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "PostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StateOrProvince",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "StateOrProvince",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Status",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Status",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StatusCode",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "StatusCode",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "SurveyLanguage",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SurveyLanguage",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactSource",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ContactSource",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_synapse_msx_contacts",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_msx_cperm_Contacts",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_msx_partneraccount')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy partneraccount",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "SELECT   DetailEngagementType  ,EngagementType  ,MPLId  ,MplPartnerType  ,MPNHeadQuartersId  ,MPNLocationId  ,MPNOrganizationId  ,MPNOrganizationPartnerType  ,MPNSubsidiary  ,PartnerAccountGUID AS PartnerAccountId  ,PartnerAccountID AS PartnerNumber  ,ocpid  FROM [DW_CRM].[t_CRM_PartnerAccounts]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "EXEC dbo.CreateBackup 'Source', 'Source_PartnerAccount'\n\ntruncate table Source.Source_PartnerAccount",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": true
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "DetailEngagementType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DetailEngagementType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "EngagementType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EngagementType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPLId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MPLId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MplPartnerType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MplPartnerType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNHeadQuartersId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MPNHeadQuartersId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNLocationId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MPNLocationId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNOrganizationId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MPNOrganizationId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNOrganizationPartnerType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MPNOrganizationPartnerType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNSubsidiary",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MPNSubsidiary",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerAccountId",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "PartnerAccountId",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ocpid",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "OCPID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_synapse_msx_partneraccounts",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_msx_cperm_partneraccount",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_msx_territory')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy territory",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "SELECT SalesGeographyRegion ,SalesGroup ,SalesUnit ,Subsidiary ,SalesTerritoryGUID AS TerritoryId FROM DW_CRM.t_CRM_Taxonomy_SalesTerritory where SalesUnit <> 'USA - Federal'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "EXEC dbo.CreateBackup 'Source', 'Source_Territory'\n\ntruncate table Source.Source_Territory",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": true
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_synapse_msx_Territory",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_msx_cperm_territory",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_account')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_cperm_pc_account",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "accounts/Partner/Non-PII/Account/Account-V4.parquet"
+							},
+							{
+								"name": "Destination",
+								"value": "Source.PC_Account"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Source.PC_Account"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AccountId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountFriendlyName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountFriendlyName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountPurpose",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountPurpose",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountMpnId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "AccountMpnId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountSellerId",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "AccountSellerId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDateTime",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "UpdatedDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "UpdatedDateTime",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_adls_pc_account",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_cperm_account",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_accountenrollment')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_cperm_pc_accountEnrollment",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "accounts/Partner/Non-PII/AccountEnrollment/AccountEnrollment-V4.parquet"
+							},
+							{
+								"name": "Destination",
+								"value": "Source.PC_AccountEnrollment"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Source.PC_AccountEnrollment"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AccountId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountPurpose",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountPurpose",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EnrollmentId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EnrollmentId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProgramName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProgramName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EnrollmentStatus",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EnrollmentStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EnrollmentStartDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "EnrollmentStartDateTime",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "EnrollmentEndDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "EnrollmentEndDateTime",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "ProgramCategories",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProgramCategories",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDateTime",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "UpdatedDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "UpdatedDateTime",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_adls_pc_accountenrollment",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_cperm_accountenrollment",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_accountprofilecontact')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_cperm_pc_accountprofilecontact",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Source.PC_AccountProfileContact"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AccountId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountPurpose",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountPurpose",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UserFirstName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UserFirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UserLastName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UserLastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UserEmail",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UserEmail",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UserPhoneNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UserPhoneNumber",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_adls_pc_accountprofilecontact",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_cperm_accountprofilecontact",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_accountresellerprofile')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_cperm_pc_accountresellerprofile",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Source.PC_AccountResellerProfile"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AccountId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountPurpose",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountPurpose",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CSPTier",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CSPTier",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_adls_pc_accountresellerprofile",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_cperm_accountresellerprofile",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_mpnorganizationcontact')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_cperm_pc_mpnorganizationcontact",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Source.PC_MpnOrganizationContact"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "MpnId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "MpnId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "VorgMpnId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "VorgMpnId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "CompanyName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CompanyName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DoingBusinessAsName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DoingBusinessAsName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PrimaryContactFirstName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PrimaryContactFirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PrimaryContactLastName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PrimaryContactLastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PrimaryContactEmailAddress",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PrimaryContactEmailAddress",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Address1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Address1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Address2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Address2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Address3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Address3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CityName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CityName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "StateProvinceCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "StateProvinceCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "StateProvinceName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "StateProvinceName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PostalCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PostalCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CountryCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ShortCountryCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShortCountryCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CountryName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PhoneNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PhoneNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LevelIndicator",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LevelIndicator",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MpnMembershipExpired",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MpnMembershipExpired",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDateTimeUtc",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDateTimeUtc",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_adls_pc_mpnorganizationcontact",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_cperm_mpnorganizationcontact",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_mpnrelationship')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_cperm_pc_mpnrelationship",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Source.PC_MpnRelationship"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "MpnId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "MpnId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "VorgMpnId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "VorgMpnId",
+											"type": "Int32"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_adls_pc_mpnrelationship",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sql_cperm_mpnrelationship",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Demo trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "DoNotContact",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "CRs NewCheckpoints",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "FY22Q3 KSRFeedback",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "MandatoryFields",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "OtherChecks",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SelectionCriteria",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Tagging_Fields",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Validation_Geography",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Vendor_Feedbacks",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2022-07-08T06:00:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"weekDays": [
+								"Friday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
