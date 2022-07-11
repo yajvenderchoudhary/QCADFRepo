@@ -2556,6 +2556,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "QC Pipeline"
+		},
 		"annotations": [],
 		"lastPublishTime": "2022-07-08T12:01:11Z"
 	},
