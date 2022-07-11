@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlMISource",
-						"sqlReaderQuery": "--IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\n--BEGIN\n--EXEC dbo.CreateBackup 'dbo','Scorecard'\n--Truncate TABLE dbo.Scorecard\n0--END\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
+						"sqlReaderQuery": "--IF EXISTS(Select * from sysobjects where name = --'Scorecard' and type = 'U')\n--BEGIN\n--EXEC dbo.CreateBackup 'dbo','Scorecard'\n--Truncate TABLE dbo.Scorecard\n-- END\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
 						"partitionOption": "None"
 					},
 					"dataset": {
@@ -29,7 +29,14 @@
 			{
 				"name": "MSX to AccountHierarchy",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Scorecard_bkp",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
