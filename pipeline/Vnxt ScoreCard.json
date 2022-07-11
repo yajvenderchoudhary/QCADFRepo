@@ -39,8 +39,19 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderQuery": "exec usp_AccountHierarchy",
+						"partitionOption": "None"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "MSX",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
