@@ -71,16 +71,6 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "ID",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "ID",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
 									"name": "AccountID",
 									"type": "Guid"
 								},
