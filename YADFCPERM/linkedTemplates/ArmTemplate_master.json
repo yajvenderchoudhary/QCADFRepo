@@ -7,22 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "YADFCPERM"
 		},
-		"AzureSqlMI2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI2'"
-		},
-		"DIOAzureSynapseAnalytics_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
-		},
-		"DoNotContact_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DoNotContact'"
-		},
-		"Is_partnercenter_adls2_servicePrincipalCredential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalCredential' of 'Is_partnercenter_adls2'"
-		},
 		"SqlServer1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
@@ -38,6 +22,38 @@
 		"SqlServer2_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SqlServer2'"
+		},
+		"AzureSqlMI2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI2'"
+		},
+		"DoNotContact_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DoNotContact'"
+		},
+		"DIOAzureSynapseAnalytics_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
+		},
+		"Is_partnercenter_adls2_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'Is_partnercenter_adls2'"
+		},
+		"vnxt_reporting_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'vnxt_reporting'"
+		},
+		"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/b09a733b-fd6e-4f65-9c69-8c33c48495fe/resourcegroups/ADFCPERMPartnerCenter/providers/Microsoft.DataFactory/factories/YADFCPERM/integrationruntimes/integrationRuntime2"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "FAREAST\\v-yachou"
+		},
+		"SqlServer2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "FAREAST\\v-yachou"
 		},
 		"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
@@ -59,14 +75,6 @@
 			"type": "string",
 			"defaultValue": "39c035f1-2997-46f6-bf4a-3bed0b373d30"
 		},
-		"SqlServer1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "FAREAST\\v-yachou"
-		},
-		"SqlServer2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "FAREAST\\v-yachou"
-		},
 		"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://cpermkv.vault.azure.net/"
@@ -74,10 +82,6 @@
 		"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "cpermadfsecret"
-		},
-		"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/b09a733b-fd6e-4f65-9c69-8c33c48495fe/resourcegroups/ADFCPERMPartnerCenter/providers/Microsoft.DataFactory/factories/YADFCPERM/integrationruntimes/integrationRuntime2"
 		},
 		"containerUri": {
 			"type": "string",
@@ -112,11 +116,56 @@
 					"DoNotContact_connectionString": {
 						"value": "[parameters('DoNotContact_connectionString')]"
 					},
-					"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
-						"value": "[parameters('ls_cperm_keyvault_properties_typeProperties_baseUrl')]"
+					"vnxt_reporting_connectionString": {
+						"value": "[parameters('vnxt_reporting_connectionString')]"
+					},
+					"SqlServer1_connectionString": {
+						"value": "[parameters('SqlServer1_connectionString')]"
+					},
+					"SqlServer1_password": {
+						"value": "[parameters('SqlServer1_password')]"
+					},
+					"SqlServer2_connectionString": {
+						"value": "[parameters('SqlServer2_connectionString')]"
+					},
+					"SqlServer2_password": {
+						"value": "[parameters('SqlServer2_password')]"
+					},
+					"DIOAzureSynapseAnalytics_connectionString": {
+						"value": "[parameters('DIOAzureSynapseAnalytics_connectionString')]"
+					},
+					"Is_partnercenter_adls2_servicePrincipalCredential": {
+						"value": "[parameters('Is_partnercenter_adls2_servicePrincipalCredential')]"
 					},
 					"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
 						"value": "[parameters('integrationRuntime3_properties_typeProperties_linkedInfo_resourceId')]"
+					},
+					"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_cperm_keyvault_properties_typeProperties_baseUrl')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					},
+					"SqlServer2_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer2_properties_typeProperties_userName')]"
+					},
+					"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId')]"
+					},
+					"DIOAzureSynapseAnalytics_properties_typeProperties_tenant": {
+						"value": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_tenant')]"
+					},
+					"Is_partnercenter_adls2_properties_typeProperties_url": {
+						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_url')]"
+					},
+					"Is_partnercenter_adls2_properties_typeProperties_tenant": {
+						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_tenant')]"
+					},
+					"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId')]"
+					},
+					"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -135,48 +184,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"DIOAzureSynapseAnalytics_connectionString": {
-						"value": "[parameters('DIOAzureSynapseAnalytics_connectionString')]"
-					},
-					"Is_partnercenter_adls2_servicePrincipalCredential": {
-						"value": "[parameters('Is_partnercenter_adls2_servicePrincipalCredential')]"
-					},
-					"SqlServer1_connectionString": {
-						"value": "[parameters('SqlServer1_connectionString')]"
-					},
-					"SqlServer1_password": {
-						"value": "[parameters('SqlServer1_password')]"
-					},
-					"SqlServer2_connectionString": {
-						"value": "[parameters('SqlServer2_connectionString')]"
-					},
-					"SqlServer2_password": {
-						"value": "[parameters('SqlServer2_password')]"
-					},
-					"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId')]"
-					},
-					"DIOAzureSynapseAnalytics_properties_typeProperties_tenant": {
-						"value": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_tenant')]"
-					},
-					"Is_partnercenter_adls2_properties_typeProperties_url": {
-						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_url')]"
-					},
-					"Is_partnercenter_adls2_properties_typeProperties_tenant": {
-						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_tenant')]"
-					},
-					"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId')]"
-					},
-					"SqlServer1_properties_typeProperties_userName": {
-						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
-					},
-					"SqlServer2_properties_typeProperties_userName": {
-						"value": "[parameters('SqlServer2_properties_typeProperties_userName')]"
-					},
-					"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
