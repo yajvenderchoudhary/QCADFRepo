@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlMITable1",
+	"name": "MSX",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "MSX",
