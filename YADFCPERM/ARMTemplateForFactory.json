@@ -14321,38 +14321,6 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Truncate",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "Scorecard_bkp",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlMISource",
-								"sqlReaderQuery": "Truncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "vnxt_Reporting",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
 						"name": "Scorecard_bkp",
 						"type": "Lookup",
 						"dependsOn": [],
@@ -14367,7 +14335,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlMISource",
-								"sqlReaderQuery": "IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','Scorecard'\nTruncate TABLE dbo.Scorecard\nEND\n\nselect 1 as abcd\n",
+								"sqlReaderQuery": "IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','Scorecard'\nTruncate TABLE dbo.Scorecard\nEND\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
 								"partitionOption": "None"
 							},
 							"dataset": {
