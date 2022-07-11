@@ -15,6 +15,30 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DoNotContact'"
 		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
+		},
+		"SqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer1'"
+		},
+		"SqlServer2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer2'"
+		},
+		"SqlServer2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer2'"
+		},
+		"DIOAzureSynapseAnalytics_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
+		},
+		"Is_partnercenter_adls2_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'Is_partnercenter_adls2'"
+		},
 		"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://cpermkv.vault.azure.net/"
@@ -22,6 +46,38 @@
 		"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/b09a733b-fd6e-4f65-9c69-8c33c48495fe/resourcegroups/ADFCPERMPartnerCenter/providers/Microsoft.DataFactory/factories/YADFCPERM/integrationruntimes/integrationRuntime2"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "FAREAST\\v-yachou"
+		},
+		"SqlServer2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "FAREAST\\v-yachou"
+		},
+		"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "7328197a-9fde-4eae-b7eb-2f395166be23"
+		},
+		"DIOAzureSynapseAnalytics_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+		},
+		"Is_partnercenter_adls2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://partneraccountsdata.dfs.core.windows.net/"
+		},
+		"Is_partnercenter_adls2_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "975f013f-7f24-47e8-a7d3-abc4752bf346"
+		},
+		"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "39c035f1-2997-46f6-bf4a-3bed0b373d30"
+		},
+		"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "cpermadfsecret"
 		}
 	},
 	"variables": {
@@ -94,120 +150,133 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dest_AttributesValidationWithMALMPL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Dest"
-				},
 				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "Description",
-						"type": "varchar"
-					},
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QC Date",
-						"type": "date"
-					},
-					{
-						"name": "CPERMListid",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ParentAccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CRMID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MPLID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "OCPCRMID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager in FinalTable",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager in MAL",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager in MPL",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Segment in FinalTable",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Segment in MAL",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubSegment in FinalTable",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubSegment in MAL",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerSpecialization in Final Table",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSpecialization in MPL",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerSubSpecialization in Final Table",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSubSpecialization in MPL",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
+				"type": "SqlServer",
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "Attributes_Validation_MAL_MPL"
+					"connectionString": "[parameters('SqlServer1_connectionString')]",
+					"userName": "[parameters('SqlServer1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SqlServer1_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dest_CRs_NewCheckpoints')]",
+			"name": "[concat(parameters('factoryName'), '/SqlServer2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('SqlServer2_connectionString')]",
+					"userName": "[parameters('SqlServer2_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SqlServer2_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIOAzureSynapseAnalytics')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('DIOAzureSynapseAnalytics_connectionString')]",
+					"servicePrincipalId": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_cperm_keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "CPERMContactabilityClientSecret"
+					},
+					"tenant": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_tenant')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_cperm_keyvault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Is_partnercenter_adls2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('Is_partnercenter_adls2_properties_typeProperties_url')]",
+					"tenant": "[parameters('Is_partnercenter_adls2_properties_typeProperties_tenant')]",
+					"servicePrincipalId": "[parameters('Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalKey",
+					"servicePrincipalCredential": {
+						"type": "SecureString",
+						"value": "[parameters('Is_partnercenter_adls2_servicePrincipalCredential')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime3",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_cperm_sql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_cperm_keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime3",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_cperm_keyvault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sr_Donotcontact')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -216,7 +285,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Dest"
+					"name": "Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
@@ -237,6 +306,10 @@
 					{
 						"name": "QC Date",
 						"type": "date"
+					},
+					{
+						"name": "Checkpoint_ID",
+						"type": "varchar"
 					},
 					{
 						"name": "ID",
@@ -871,99 +944,99 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Area_FY22",
+						"name": "Area_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Region_FY22",
+						"name": "Region_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "SubRegion_FY22",
+						"name": "SubRegion_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Subsidiary_FY22",
+						"name": "Subsidiary_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Segment_FY22",
+						"name": "Segment_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "SubSegment_FY22",
+						"name": "SubSegment_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PartnerSpecialization_FY22",
+						"name": "PartnerSpecialization_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PartnerSubSpecialization_FY22",
+						"name": "PartnerSubSpecialization_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "AccountManager_FY22",
+						"name": "AccountManager_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "Industry_Parent_FY22",
+						"name": "Industry_Parent_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Vertical_Parent_FY22",
+						"name": "Vertical_Parent_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "VerticalCategory_Parent_FY22",
+						"name": "VerticalCategory_Parent_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Industry_FY22",
+						"name": "Industry_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "VerticalCategory_FY22",
+						"name": "VerticalCategory_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Vertical_FY22",
+						"name": "Vertical_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PrimaryPDM_FY22",
+						"name": "PrimaryPDM_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PDM_FY22",
+						"name": "PDM_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "PDMM_FY22",
+						"name": "PDMM_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "IPDM_FY22",
+						"name": "IPDM_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Engagement_FY22",
+						"name": "Engagement_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "GlobalCoverage_FY22",
+						"name": "GlobalCoverage_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "CSA_FY22",
+						"name": "CSA_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PMA_FY22",
+						"name": "PMA_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PTS_FY22",
+						"name": "PTS_FY21",
 						"type": "varchar"
 					},
 					{
@@ -1016,11 +1089,10 @@
 					},
 					{
 						"name": "DimDataSourceID",
-						"type": "int",
-						"precision": 10
+						"type": "varchar"
 					},
 					{
-						"name": "PrimaryRoleType_FY22",
+						"name": "PrimaryRoleType_FY21",
 						"type": "nvarchar"
 					},
 					{
@@ -1028,18 +1100,17 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "SubDistrict_FY22",
+						"name": "SubDistrict_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
+						"name": "SMCTypeSummaryName",
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "CRs_CheckpointAddition"
+					"schema": "FAREAST\\v-yachou",
+					"table": "VW_Usp_Get_DoNotContact"
 				}
 			},
 			"dependsOn": [
@@ -1905,7 +1976,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dest_FY22Q3_KSRFeedback')]",
+			"name": "[concat(parameters('factoryName'), '/Sr_Tagging_Fields')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1914,7 +1985,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Dest"
+					"name": "Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
@@ -1938,8 +2009,7 @@
 					},
 					{
 						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
+						"type": "varchar"
 					},
 					{
 						"name": "ID",
@@ -2574,1119 +2644,99 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Area_FY22",
+						"name": "Area_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Region_FY22",
+						"name": "Region_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "SubRegion_FY22",
+						"name": "SubRegion_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Subsidiary_FY22",
+						"name": "Subsidiary_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Segment_FY22",
+						"name": "Segment_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "SubSegment_FY22",
+						"name": "SubSegment_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PartnerSpecialization_FY22",
+						"name": "PartnerSpecialization_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PartnerSubSpecialization_FY22",
+						"name": "PartnerSubSpecialization_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "AccountManager_FY22",
+						"name": "AccountManager_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "Industry_Parent_FY22",
+						"name": "Industry_Parent_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Vertical_Parent_FY22",
+						"name": "Vertical_Parent_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "VerticalCategory_Parent_FY22",
+						"name": "VerticalCategory_Parent_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Industry_FY22",
+						"name": "Industry_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "VerticalCategory_FY22",
+						"name": "VerticalCategory_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Vertical_FY22",
+						"name": "Vertical_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PrimaryPDM_FY22",
+						"name": "PrimaryPDM_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PDM_FY22",
+						"name": "PDM_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "PDMM_FY22",
+						"name": "PDMM_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "IPDM_FY22",
+						"name": "IPDM_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "Engagement_FY22",
+						"name": "Engagement_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "GlobalCoverage_FY22",
+						"name": "GlobalCoverage_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "CSA_FY22",
+						"name": "CSA_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PMA_FY22",
+						"name": "PMA_FY21",
 						"type": "varchar"
 					},
 					{
-						"name": "PTS_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Src_MP_GSI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_MS",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_GLS",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_KR",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AM_MP_GSI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_MS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_GLS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_KR",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Segment_MPAA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Subsegment_MPAA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DataSourceName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DimDataSourceID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PrimaryRoleType_FY22",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowEmail_SBO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubDistrict_FY22",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FY22Q3KS&RFeedback"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dest_GeographyValidation')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Dest"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "Description",
-						"type": "varchar"
-					},
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QC Date",
-						"type": "date"
-					},
-					{
-						"name": "CPERMListID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Area",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubRegion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubsidiaryName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Validation_Geography"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dest_MandatoryFields')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Dest"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QC Date",
-						"type": "date"
-					},
-					{
-						"name": "CPERMListid",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GRSBucket",
-						"type": "varchar"
-					},
-					{
-						"name": "CPERMDataSourceID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubsidiaryName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "StreetAddress1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "City",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Missing_Mandatory_Fields"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dest_OtherChecks')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Dest"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "Description1",
-						"type": "varchar"
-					},
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QC Date",
-						"type": "date"
-					},
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CPERMDataSourceID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CPERMListid",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CPERM_Segment_classification",
-						"type": "varchar"
-					},
-					{
-						"name": "MSSalesTopParentID",
-						"type": "varchar"
-					},
-					{
-						"name": "ParentAccountID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "StreetAddress1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "City",
-						"type": "nvarchar"
-					},
-					{
-						"name": "State",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PostalCode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Segment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubSegment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactID2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "KeyContact",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Prefix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MainPhoneNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "JobRole",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PrimaryMarketAudience",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowEmail",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowDMail",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowCalls",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PreferredLanguage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "OrganizationType",
-						"type": "varchar"
-					},
-					{
-						"name": "Sector",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Industry",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Vertical",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesRegion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesDistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubDistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PhysicalDistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Area",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubRegion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubsidiaryName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentingLevel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ATUName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ATUManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ATUAccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "VerticalCategory",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MSPP_Partner_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EP_P_Detailed Engagement Type4",
-						"type": "nvarchar"
-					},
-					{
-						"name": "UPP_Ind_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "UPP_MSO_Org_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Src_MP_SWO",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_NMP",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_CM_ENT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_PS_ENT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_ST_ENT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_ST_PS",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SM_Comm",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_Edu",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_Gov",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_PS_SMB",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_SMB",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_ISV",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_IT_PRO_MPAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_BDM_MPAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_OEM",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_OEM",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AM_MP_SWO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_CM_ENT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_PS_ENT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_ST_ENT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_ST_PS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_Comm",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_Edu",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_Gov",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_PS_SMB",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_SMB",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_ISV",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_OEM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_OEM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Partner_Program_Engagement",
-						"type": "bit"
-					},
-					{
-						"name": "t_p1_Partner_MSPP_ProgramLevel",
-						"type": "varchar"
-					},
-					{
-						"name": "t_p1_Partner_MSPP_EngineType",
-						"type": "varchar"
-					},
-					{
-						"name": "t_p1_Partner_MSPP_SB_Specialist",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "t_p1_Partner_MSPP_Enrollment_Status",
-						"type": "varchar"
-					},
-					{
-						"name": "t_p1_Partner_Program_Engagement",
-						"type": "bit"
-					},
-					{
-						"name": "t_a1_ManagedContact",
-						"type": "bit"
-					},
-					{
-						"name": "T_C4_List_Account_Manager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Number_Of_Employees",
-						"type": "varchar"
-					},
-					{
-						"name": "PC_Count",
-						"type": "varchar"
-					},
-					{
-						"name": "t_g1_previous_sample_contact",
-						"type": "bit"
-					},
-					{
-						"name": "t_g1_previous_sample_account",
-						"type": "bit"
-					},
-					{
-						"name": "Partner_MSPP_ProgramLevel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "t_In_Reserve",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "t_vd_Culture_ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "t_p1_UPP_isMaps",
-						"type": "nvarchar"
-					},
-					{
-						"name": "t_MPL_MAL_Coverage",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "Hard_BounceBack",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "T_Source_Contact_DNC",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "AccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ActiveCompetencies",
-						"type": "varchar"
-					},
-					{
-						"name": "EnrollmentStatusID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "IsMaps",
-						"type": "bit"
-					},
-					{
-						"name": "IsMapsDD",
-						"type": "bit"
-					},
-					{
-						"name": "IsMapsSP",
-						"type": "bit"
-					},
-					{
-						"name": "TierLevel",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerType",
-						"type": "varchar"
-					},
-					{
-						"name": "t_Baseline",
-						"type": "bit"
-					},
-					{
-						"name": "MPLID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PartnerAccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MPNLocationId",
-						"type": "varchar"
-					},
-					{
-						"name": "MPNID",
-						"type": "varchar"
-					},
-					{
-						"name": "ParentAccount_Industry",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccount_Vertical",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccount_Vertical_Category",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MSSalesID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "TP_AccountName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "OCPCRMID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerOneSubID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerOneID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerSpecialization",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSubSpecialization",
-						"type": "varchar"
-					},
-					{
-						"name": "Engagement",
-						"type": "nvarchar"
-					},
-					{
-						"name": "GlobalCoverage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "oemsegmenttype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "oemorganizationtype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "OEMManaged",
-						"type": "bit"
-					},
-					{
-						"name": "Description",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountStatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "GPID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "GPName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PDM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IPDM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PTS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PDMM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PTM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PrimaryRoleType",
-						"type": "nvarchar"
-					},
-					{
-						"name": "HQ/DS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Primary",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IsDelete",
-						"type": "bit"
-					},
-					{
-						"name": "Custom#1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Custom#2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Custom#3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "TagName",
-						"type": "varchar"
-					},
-					{
-						"name": "MobilePhone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Area_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Region_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "SubRegion_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Subsidiary_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Segment_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "SubSegment_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSpecialization_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSubSpecialization_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "AccountManager_FY22",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Industry_Parent_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Vertical_Parent_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "VerticalCategory_Parent_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Industry_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "VerticalCategory_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Vertical_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "PrimaryPDM_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "PDM_FY22",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PDMM_FY22",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IPDM_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "Engagement_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "GlobalCoverage_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "CSA_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "PMA_FY22",
-						"type": "varchar"
-					},
-					{
-						"name": "PTS_FY22",
+						"name": "PTS_FY21",
 						"type": "varchar"
 					},
 					{
@@ -3739,11 +2789,10 @@
 					},
 					{
 						"name": "DimDataSourceID",
-						"type": "int",
-						"precision": 10
+						"type": "varchar"
 					},
 					{
-						"name": "PrimaryRoleType_FY22",
+						"name": "PrimaryRoleType_FY21",
 						"type": "nvarchar"
 					},
 					{
@@ -3751,90 +2800,17 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "SubDistrict_FY22",
+						"name": "SubDistrict_FY21",
 						"type": "nvarchar"
 					},
 					{
-						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
+						"name": "SMCTypeSummaryName",
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "Other_Checks"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dest_SelectionCritera')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Dest"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QC Date",
-						"type": "date"
-					},
-					{
-						"name": "CPERMListID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GRSBucket",
-						"type": "varchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerSpecialization",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSubSpecialization",
-						"type": "varchar"
-					},
-					{
-						"name": "Segment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubSegment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Checkpoint_ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Invalid_SelectionCritera"
+					"schema": "FAREAST\\v-yachou",
+					"table": "VW_Usp_Get_DoNotContact"
 				}
 			},
 			"dependsOn": [
@@ -5590,31 +4566,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Sr_AttributesValidation_MAL_MPL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Source"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "FAREAST\\v-yachou",
-					"table": "VW_Usp_Get_DoNotContact"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sr_CRs_CheckpointAddition')]",
+			"name": "[concat(parameters('factoryName'), '/Sr_VendorFeedback')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -6446,872 +5398,6 @@
 						"type": "varchar"
 					}
 				],
-				"typeProperties": {
-					"schema": "FAREAST\\v-yachou",
-					"table": "VW_Usp_Get_DoNotContact"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sr_Donotcontact')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Source"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "Description1",
-						"type": "varchar"
-					},
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QC Date",
-						"type": "date"
-					},
-					{
-						"name": "Checkpoint_ID",
-						"type": "varchar"
-					},
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CPERMDataSourceID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CPERMListid",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CPERM_Segment_classification",
-						"type": "varchar"
-					},
-					{
-						"name": "MSSalesTopParentID",
-						"type": "varchar"
-					},
-					{
-						"name": "ParentAccountID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "StreetAddress1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "City",
-						"type": "nvarchar"
-					},
-					{
-						"name": "State",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PostalCode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Segment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubSegment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactID2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "KeyContact",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Prefix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MainPhoneNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "JobRole",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PrimaryMarketAudience",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowEmail",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowDMail",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowCalls",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PreferredLanguage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "OrganizationType",
-						"type": "varchar"
-					},
-					{
-						"name": "Sector",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Industry",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Vertical",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesRegion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesDistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubDistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PhysicalDistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Area",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubRegion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubsidiaryName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentingLevel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ATUName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ATUManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ATUAccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "VerticalCategory",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MSPP_Partner_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EP_P_Detailed Engagement Type4",
-						"type": "nvarchar"
-					},
-					{
-						"name": "UPP_Ind_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "UPP_MSO_Org_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Src_MP_SWO",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_NMP",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_CM_ENT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_PS_ENT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_ST_ENT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_ST_PS",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SM_Comm",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_Edu",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_Gov",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_PS_SMB",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_SMC_SMB",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_ISV",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_IT_PRO_MPAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_BDM_MPAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_OEM",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_OEM",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AM_MP_SWO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_CM_ENT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_PS_ENT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_ST_ENT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_ST_PS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_Comm",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_Edu",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_Gov",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_PS_SMB",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_SMC_SMB",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_ISV",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_OEM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_OEM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Partner_Program_Engagement",
-						"type": "bit"
-					},
-					{
-						"name": "t_p1_Partner_MSPP_ProgramLevel",
-						"type": "varchar"
-					},
-					{
-						"name": "t_p1_Partner_MSPP_EngineType",
-						"type": "varchar"
-					},
-					{
-						"name": "t_p1_Partner_MSPP_SB_Specialist",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "t_p1_Partner_MSPP_Enrollment_Status",
-						"type": "varchar"
-					},
-					{
-						"name": "t_p1_Partner_Program_Engagement",
-						"type": "bit"
-					},
-					{
-						"name": "t_a1_ManagedContact",
-						"type": "bit"
-					},
-					{
-						"name": "T_C4_List_Account_Manager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Number_Of_Employees",
-						"type": "varchar"
-					},
-					{
-						"name": "PC_Count",
-						"type": "varchar"
-					},
-					{
-						"name": "t_g1_previous_sample_contact",
-						"type": "bit"
-					},
-					{
-						"name": "t_g1_previous_sample_account",
-						"type": "bit"
-					},
-					{
-						"name": "Partner_MSPP_ProgramLevel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "t_In_Reserve",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "t_vd_Culture_ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "t_p1_UPP_isMaps",
-						"type": "nvarchar"
-					},
-					{
-						"name": "t_MPL_MAL_Coverage",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "Hard_BounceBack",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "T_Source_Contact_DNC",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "AccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ContactNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ActiveCompetencies",
-						"type": "varchar"
-					},
-					{
-						"name": "EnrollmentStatusID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "IsMaps",
-						"type": "bit"
-					},
-					{
-						"name": "IsMapsDD",
-						"type": "bit"
-					},
-					{
-						"name": "IsMapsSP",
-						"type": "bit"
-					},
-					{
-						"name": "TierLevel",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerType",
-						"type": "varchar"
-					},
-					{
-						"name": "t_Baseline",
-						"type": "bit"
-					},
-					{
-						"name": "MPLID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PartnerAccountNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MPNLocationId",
-						"type": "varchar"
-					},
-					{
-						"name": "MPNID",
-						"type": "varchar"
-					},
-					{
-						"name": "ParentAccount_Industry",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccount_Vertical",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ParentAccount_Vertical_Category",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MSSalesID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "TP_AccountName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "OCPCRMID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerOneSubID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerOneID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PartnerSpecialization",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSubSpecialization",
-						"type": "varchar"
-					},
-					{
-						"name": "Engagement",
-						"type": "nvarchar"
-					},
-					{
-						"name": "GlobalCoverage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "oemsegmenttype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "oemorganizationtype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "OEMManaged",
-						"type": "bit"
-					},
-					{
-						"name": "Description",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountStatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "GPID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "GPName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PDM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IPDM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PTS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PDMM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PTM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PrimaryRoleType",
-						"type": "nvarchar"
-					},
-					{
-						"name": "HQ/DS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Primary",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IsDelete",
-						"type": "bit"
-					},
-					{
-						"name": "Custom#1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Custom#2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Custom#3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "TagName",
-						"type": "varchar"
-					},
-					{
-						"name": "MobilePhone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Area_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Region_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "SubRegion_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Subsidiary_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Segment_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "SubSegment_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSpecialization_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "PartnerSubSpecialization_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "AccountManager_FY21",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Industry_Parent_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Vertical_Parent_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "VerticalCategory_Parent_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Industry_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "VerticalCategory_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Vertical_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "PrimaryPDM_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "PDM_FY21",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PDMM_FY21",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IPDM_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Engagement_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "GlobalCoverage_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "CSA_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "PMA_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "PTS_FY21",
-						"type": "varchar"
-					},
-					{
-						"name": "Src_MP_GSI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_MS",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_GLS",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Src_MP_KR",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AM_MP_GSI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_MS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_GLS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AM_MP_KR",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Segment_MPAA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Subsegment_MPAA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DataSourceName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DimDataSourceID",
-						"type": "varchar"
-					},
-					{
-						"name": "PrimaryRoleType_FY21",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AllowEmail_SBO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SubDistrict_FY21",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SMCTypeSummaryName",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "FAREAST\\v-yachou",
-					"table": "VW_Usp_Get_DoNotContact"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sr_FY22Q3_KSRFeedback')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Source"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [],
 				"typeProperties": {
 					"schema": "FAREAST\\v-yachou",
 					"table": "VW_Usp_Get_DoNotContact"
@@ -7323,6 +5409,1033 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Sr_GeographyValidation')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DoNotContact",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Source"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "Description1",
+						"type": "varchar"
+					},
+					{
+						"name": "Year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QC Date",
+						"type": "date"
+					},
+					{
+						"name": "Checkpoint_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CPERMDataSourceID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CPERMListid",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CPERM_Segment_classification",
+						"type": "varchar"
+					},
+					{
+						"name": "MSSalesTopParentID",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentAccountID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StreetAddress1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "State",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PostalCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Segment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubSegment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContactID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContactID2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "KeyContact",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Prefix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MainPhoneNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobRole",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PrimaryMarketAudience",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AllowEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AllowDMail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AllowCalls",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PreferredLanguage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrganizationType",
+						"type": "varchar"
+					},
+					{
+						"name": "Sector",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Industry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Vertical",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PhysicalDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Area",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubsidiaryName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentingLevel",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUAccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VerticalCategory",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MSPP_Partner_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EP_P_Detailed Engagement Type4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "UPP_Ind_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "UPP_MSO_Org_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Src_MP_SWO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_MP_NMP",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_CM_ENT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_PS_ENT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_ST_ENT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_ST_PS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_SM_Comm",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_SMC_Edu",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_SMC_Gov",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_SMC_PS_SMB",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_SMC_SMB",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_MP_ISV",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_IT_PRO_MPAA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_BDM_MPAA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_OEM",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_MP_OEM",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AM_MP_SWO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_CM_ENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_PS_ENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_ST_ENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_ST_PS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_SMC_Comm",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_SMC_Edu",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_SMC_Gov",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_SMC_PS_SMB",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_SMC_SMB",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_MP_ISV",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_OEM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_MP_OEM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Partner_Program_Engagement",
+						"type": "bit"
+					},
+					{
+						"name": "t_p1_Partner_MSPP_ProgramLevel",
+						"type": "varchar"
+					},
+					{
+						"name": "t_p1_Partner_MSPP_EngineType",
+						"type": "varchar"
+					},
+					{
+						"name": "t_p1_Partner_MSPP_SB_Specialist",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "t_p1_Partner_MSPP_Enrollment_Status",
+						"type": "varchar"
+					},
+					{
+						"name": "t_p1_Partner_Program_Engagement",
+						"type": "bit"
+					},
+					{
+						"name": "t_a1_ManagedContact",
+						"type": "bit"
+					},
+					{
+						"name": "T_C4_List_Account_Manager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Number_Of_Employees",
+						"type": "varchar"
+					},
+					{
+						"name": "PC_Count",
+						"type": "varchar"
+					},
+					{
+						"name": "t_g1_previous_sample_contact",
+						"type": "bit"
+					},
+					{
+						"name": "t_g1_previous_sample_account",
+						"type": "bit"
+					},
+					{
+						"name": "Partner_MSPP_ProgramLevel",
+						"type": "nvarchar"
+					},
+					{
+						"name": "t_In_Reserve",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "t_vd_Culture_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "t_p1_UPP_isMaps",
+						"type": "nvarchar"
+					},
+					{
+						"name": "t_MPL_MAL_Coverage",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "Hard_BounceBack",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "T_Source_Contact_DNC",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "AccountNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContactNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentAccountNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActiveCompetencies",
+						"type": "varchar"
+					},
+					{
+						"name": "EnrollmentStatusID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "IsMaps",
+						"type": "bit"
+					},
+					{
+						"name": "IsMapsDD",
+						"type": "bit"
+					},
+					{
+						"name": "IsMapsSP",
+						"type": "bit"
+					},
+					{
+						"name": "TierLevel",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerType",
+						"type": "varchar"
+					},
+					{
+						"name": "t_Baseline",
+						"type": "bit"
+					},
+					{
+						"name": "MPLID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNLocationId",
+						"type": "varchar"
+					},
+					{
+						"name": "MPNID",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentAccount_Industry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentAccount_Vertical",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentAccount_Vertical_Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MSSalesID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TP_AccountName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OCPCRMID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneSubID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerSpecialization",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerSubSpecialization",
+						"type": "varchar"
+					},
+					{
+						"name": "Engagement",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GlobalCoverage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "oemsegmenttype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "oemorganizationtype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OEMManaged",
+						"type": "bit"
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GPID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GPName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IPDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PTS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDMM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PTM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PrimaryRoleType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HQ/DS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Primary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsDelete",
+						"type": "bit"
+					},
+					{
+						"name": "Custom#1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custom#2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custom#3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TagName",
+						"type": "varchar"
+					},
+					{
+						"name": "MobilePhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Area_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Region_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "SubRegion_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Subsidiary_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Segment_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "SubSegment_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerSpecialization_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerSubSpecialization_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "AccountManager_FY21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Industry_Parent_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Vertical_Parent_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "VerticalCategory_Parent_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Industry_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "VerticalCategory_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Vertical_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "PrimaryPDM_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "PDM_FY21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDMM_FY21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IPDM_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Engagement_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "GlobalCoverage_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "CSA_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "PMA_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "PTS_FY21",
+						"type": "varchar"
+					},
+					{
+						"name": "Src_MP_GSI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_MP_MS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_MP_GLS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Src_MP_KR",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AM_MP_GSI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_MP_MS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_MP_GLS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AM_MP_KR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Segment_MPAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subsegment_MPAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DataSourceName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DimDataSourceID",
+						"type": "varchar"
+					},
+					{
+						"name": "PrimaryRoleType_FY21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AllowEmail_SBO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubDistrict_FY21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SMCTypeSummaryName",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "FAREAST\\v-yachou",
+					"table": "VW_Usp_Get_DoNotContact"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dest_GeographyValidation')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DoNotContact",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Dest"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QC Date",
+						"type": "date"
+					},
+					{
+						"name": "CPERMListID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Area",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubsidiaryName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Checkpoint_ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Validation_Geography"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dest_MandatoryFields')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DoNotContact",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Dest"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "Year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QC Date",
+						"type": "date"
+					},
+					{
+						"name": "CPERMListid",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GRSBucket",
+						"type": "varchar"
+					},
+					{
+						"name": "CPERMDataSourceID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContactNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContactID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubsidiaryName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StreetAddress1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Checkpoint_ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Missing_Mandatory_Fields"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DoNotContact')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sr_Mandatory_Fields')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
