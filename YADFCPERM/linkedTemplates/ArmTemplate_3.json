@@ -13,6 +13,234 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_msx_partneraccounts')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DIOAzureSynapseAnalytics",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerAccountGUId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_AddressId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "Address1_City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_Line1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_Line2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_Line3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_PostalCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Address1_StateOrProvince",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DetailEngagementType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EngagementType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MainPhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPLID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPLName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPLPracticeName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MplPartnerType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNOrganizationID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNOrganizationName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNOrganizationPartnerType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNOrganizationSubsidiary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNPartnerType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNSubsidiary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNHeadquartersID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNLocationID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MSSalesId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OwnerId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "Owner",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Segment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StatusReason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "C2PCEnabled",
+						"type": "bit"
+					},
+					{
+						"name": "MojaEnabled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IncentiveId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CrmInstanceId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "CreatedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ModifiedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "OdsCreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "OdsModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "VersionNumber",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Website",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastUpdatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "CRMDataSource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OCPID",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "DW_CRM",
+					"table": "t_CRM_PartnerAccounts"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_msx_account')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -925,7 +1153,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_msx_partneraccounts')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_msx_territory')]",
