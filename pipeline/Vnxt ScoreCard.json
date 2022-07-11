@@ -1,0 +1,35 @@
+{
+	"name": "Vnxt ScoreCard",
+	"properties": {
+		"activities": [
+			{
+				"name": "Truncate",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderQuery": "truncate table dbo.Do_Not_Contact\ntruncate table [dbo].[Tagging_Fields]\ntruncate table [dbo].[Vendor_Feedbacks]\ntruncate table [dbo].[Validation_Geography]\ntruncate table [dbo].[Missing_Mandatory_Fields]\ntruncate table [dbo].[Invalid_SelectionCritera]\ntruncate table [dbo].[Attributes_Validation_MAL_MPL]\ntruncate table [dbo].[Other_Checks]\ntruncate table [dbo].[FY22Q3KS&RFeedback]\ntruncate table [dbo].[CRs_CheckpointAddition]\nselect 1 as abcd",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Dest_Donotcontact",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Reporting Pipeline"
+		},
+		"annotations": []
+	}
+}
