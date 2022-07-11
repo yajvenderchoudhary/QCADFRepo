@@ -87,6 +87,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "PC"
+		},
 		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
