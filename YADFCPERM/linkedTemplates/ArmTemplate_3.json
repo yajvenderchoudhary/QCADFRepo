@@ -13,6 +13,271 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_sql_msx_cperm_partneraccount')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_cperm_sql",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "DetailEngagementType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EngagementType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPLId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MplPartnerType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNHeadQuartersId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNLocationId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNOrganizationId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNOrganizationPartnerType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MPNSubsidiary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerAccountId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OCPID",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "Source",
+					"table": "Source_PartnerAccount"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_sql_msx_cperm_territory')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_cperm_sql",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "SalesGeographyRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesUnit",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subsidiary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TerritoryId",
+						"type": "uniqueidentifier"
+					}
+				],
+				"typeProperties": {
+					"schema": "Source",
+					"table": "Source_Territory"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_msx_Territory')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DIOAzureSynapseAnalytics",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "ATUName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUGroupName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreatedByGUID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "CrmInstanceGUID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "Deleted",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SalesTerritoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UpdatedByGUID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "OdsCreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "OdsModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesGeographyAreaSeqNo",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SalesGeographyRegionSeqNo",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SalesGeographySubRegionSeqNo",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SalesGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesUnit",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Segment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subsidiary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubsidiarySeqNo",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SalesTerritoryGUID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "SalesTerritoryName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VersionNumber",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "CRMDatasource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesGeographyArea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesGeographyRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesGeographySubRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubsidiaryCode",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "DW_CRM",
+					"table": "t_CRM_Taxonomy_SalesTerritory"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_synapse_msx_account')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1751,7 +2016,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_msx_partneraccounts')]"
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_msx_partneraccounts')]",
+				"[concat(variables('factoryId'), '/datasets/ds_sql_msx_cperm_partneraccount')]"
 			]
 		},
 		{
@@ -1820,7 +2086,10 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_msx_Territory')]",
+				"[concat(variables('factoryId'), '/datasets/ds_sql_msx_cperm_territory')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_copy_cperm_pc_account')]",

@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'servicePrincipalCredential' of 'Is_partnercenter_adls2'"
 		},
+		"MSX_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MSX'"
+		},
 		"SqlServer1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
@@ -115,6 +119,9 @@
 					},
 					"DoNotContact_connectionString": {
 						"value": "[parameters('DoNotContact_connectionString')]"
+					},
+					"MSX_connectionString": {
+						"value": "[parameters('MSX_connectionString')]"
 					},
 					"vnxt_reporting_connectionString": {
 						"value": "[parameters('vnxt_reporting_connectionString')]"

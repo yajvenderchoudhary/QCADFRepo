@@ -17,6 +17,9 @@
 		"Is_partnercenter_adls2_servicePrincipalCredential": {
 			"value": ""
 		},
+		"MSX_connectionString": {
+			"value": ""
+		},
 		"SqlServer1_connectionString": {
 			"value": ""
 		},
