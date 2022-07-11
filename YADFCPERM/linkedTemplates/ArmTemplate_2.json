@@ -64,6 +64,9 @@
 					"referenceName": "Is_partnercenter_adls2",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -120,6 +123,9 @@
 				"linkedServiceName": {
 					"referenceName": "Is_partnercenter_adls2",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -190,6 +196,9 @@
 					"referenceName": "Is_partnercenter_adls2",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -243,6 +252,9 @@
 					"referenceName": "Is_partnercenter_adls2",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -283,6 +295,9 @@
 				"linkedServiceName": {
 					"referenceName": "Is_partnercenter_adls2",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -397,6 +412,9 @@
 					"referenceName": "Is_partnercenter_adls2",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -429,6 +447,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "SqlServerTable",
@@ -470,6 +491,9 @@
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -509,6 +533,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "SqlServerTable",
@@ -558,6 +585,9 @@
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -605,6 +635,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "SqlServerTable",
@@ -654,6 +687,9 @@
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -701,6 +737,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "SqlServerTable",
@@ -835,6 +874,9 @@
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -949,6 +991,9 @@
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -1017,6 +1062,9 @@
 					"referenceName": "ls_cperm_sql",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -1056,6 +1104,9 @@
 				"linkedServiceName": {
 					"referenceName": "DIOAzureSynapseAnalytics",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -1204,6 +1255,9 @@
 				"linkedServiceName": {
 					"referenceName": "DIOAzureSynapseAnalytics",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -1513,6 +1567,9 @@
 				"linkedServiceName": {
 					"referenceName": "DIOAzureSynapseAnalytics",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "PC Datasets"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",

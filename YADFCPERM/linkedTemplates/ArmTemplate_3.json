@@ -21,6 +21,9 @@
 					"referenceName": "DIOAzureSynapseAnalytics",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "PC Datasets"
+				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
 				"schema": [

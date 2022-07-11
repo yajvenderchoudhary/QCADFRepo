@@ -78,7 +78,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Source"
+					"name": "QC Datasets/Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
@@ -918,7 +918,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Source"
+					"name": "QC Datasets/Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
@@ -940,7 +940,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Source"
+					"name": "QC Datasets/Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
@@ -1780,7 +1780,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Source"
+					"name": "QC Datasets/Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
@@ -2620,7 +2620,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "Source"
+					"name": "QC Datasets/Source"
 				},
 				"annotations": [],
 				"type": "AzureSqlMITable",
