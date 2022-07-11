@@ -14394,16 +14394,6 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "ID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "ID",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
 											"name": "AccountID",
 											"type": "Guid"
 										},
@@ -14449,96 +14439,6 @@
 										},
 										"sink": {
 											"name": "ParentAccountNumber",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountManager",
-											"type": "String"
-										},
-										"sink": {
-											"name": "AccountManager",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "InsertedOn",
-											"type": "String"
-										},
-										"sink": {
-											"name": "InsertedOn",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "InsertedBy",
-											"type": "String"
-										},
-										"sink": {
-											"name": "InsertedBy",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ModifiedOn",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ModifiedOn",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ModifiedBy",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ModifiedBy",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MSSalesId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MSSalesId",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MSSalesTopParentId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MSSalesTopParentId",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "CompanyName",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CompanyName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ParentCompanyName",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ParentCompanyName",
 											"type": "String"
 										}
 									}
