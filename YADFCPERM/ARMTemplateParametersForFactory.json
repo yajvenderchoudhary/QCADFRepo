@@ -20,6 +20,9 @@
 		"MSX_connectionString": {
 			"value": ""
 		},
+		"Source_Pool_connectionString": {
+			"value": ""
+		},
 		"SqlServer1_connectionString": {
 			"value": ""
 		},

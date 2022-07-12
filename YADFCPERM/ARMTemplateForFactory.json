@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'MSX'"
 		},
+		"Source_Pool_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Source_Pool'"
+		},
 		"SqlServer1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
@@ -14550,6 +14554,1624 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "ScoreCard",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Partner Account Heirarchy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dbo.vw_vnxt_Pool"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.Scorecard"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"additionalColumns": [
+									{
+										"name": "Fixable",
+										"value": ""
+									}
+								],
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "GRSListId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "GRSListId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "GRSDataSourceID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "GRSDataSourceID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "ParentAccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccountNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "ParentAccountNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "AccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "AccountNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "ContactID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "ContactNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "PartnerID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentPartnerID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "ParentPartnerID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentPartnerNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "ParentPartnerNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerAccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "PartnerAccountID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerAccountNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerAccountNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPLID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MPLID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MPNID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MSSalesTopParentID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MSSalesTopParentID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MSSalesID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MSSalesID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Prefix",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Prefix",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MiddleName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MiddleName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "EmailAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EmailAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MainPhoneNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MainPhoneNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MobilePhone",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MobilePhone",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Fax",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Fax",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StreetAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "StreetAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JobTitle",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "JobTitle",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JobRole",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "JobRole",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountManager",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OrganizationTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "OrganizationTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "ContactTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccount_Vertical",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Vertical",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VerticalIndustry",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "VerticalIndustry",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Industry",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Industry",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Tier",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Tier",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TierLevelID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "TierLevelID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "CompanyName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CompanyName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SalesDistrict",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SalesDistrict",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SalesSubDistrict",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SalesSubDistrict",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SalesRegion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SalesRegion",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AreaID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "AreaID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "RegionID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "RegionID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "SubRegionID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "SubRegionID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "SubsidiaryID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "SubsidiaryID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "CountryId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "SegmentId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "SegmentId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "SubSegmentId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "SubSegmentId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "EngagementTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "EngagementTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "DetailedEngagementTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "DetailedEngagementTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "MarketAudienceID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "MarketAudienceID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "PrimaryMarketAudienceID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "PrimaryMarketAudienceID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "AllowCalls",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "AllowCalls",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "AllowDMail",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "AllowDMail",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "AllowEMail",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "AllowEMail",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "KeyContact",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "KeyContact",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedAccount",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "ManagedAccount",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedContact",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "ManagedContact",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "DecisionMakerFlag",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "DecisionMakerFlag",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "PreferredLanguageId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "PreferredLanguageId",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNHeadQuartersId",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MPNHeadQuartersId",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MPNLocationId",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MPNLocationId",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VOrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "VOrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "VOrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "VOrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VOrganization_PartnerID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "VOrganization_PartnerID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "VOrganization_PartnerNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "VOrganization_PartnerNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PCCount",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PCCount",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NumberOfEmployees",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "NumberOfEmployees",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "OrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "OrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "OrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentOrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "ParentOrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentOrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "ParentOrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerOrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "PartnerOrganizationID",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerOrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerOrganizationNumber",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SourceLanguage",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SourceLanguage",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "PartnerTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSubTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "PartnerSubTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "OrganizationPartnerTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "OrganizationPartnerTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "EnrollmentStatusID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "EnrollmentStatusID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentingLevelID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "ParentingLevelID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "CompetencyID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "CompetencyID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "ActiveCompetencies",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "ActiveCompetencies",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactTypePriority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "ContactTypePriority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "EnrollmentPriority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "EnrollmentPriority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "TierLevelPriority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "TierLevelPriority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsMaps",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsMaps",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "IsMapsSP",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsMapsSP",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "IsMapsDD",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsMapsDD",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "RejectionCount",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "RejectionCount",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "RejectionSubTypes",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "RejectionSubTypes",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "isFixable",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "IsFixable",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "OCPCRMID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "OCPCRMID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerOneSubID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerOneSubID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerOneID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerOneID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerOneName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerOneName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSpecialization",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerSpecialization",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSubSpecialization",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerSubSpecialization",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Engagement",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Engagement",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GlobalCoverage",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "GlobalCoverage",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PrimaryPDM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PrimaryPDM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PMA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PMA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PDMR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PDMR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsEngaged",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsEngaged",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "HasValidPDM",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "HasValidPDM",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "IsManaged",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsManaged",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDelete",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsDelete",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "oemsegmenttype",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "oemsegmenttype",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "oemorganizationtype",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "oemorganizationtype",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OEMManaged",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "OEMManaged",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountDescription",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Description",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountStatus",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountStatus",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountAddress",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GPID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "GPID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GPName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "GPName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PDM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PDM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IPDM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "IPDM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PTS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PTS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PDMM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PDMM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PTM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PTM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PrimaryRoleType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PrimaryRoleType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "HQ/DS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "HQ/DS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Primary",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Primary",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TagName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "TagName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": false,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_vnxt_pool",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Source_vnxt_Reporting",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -14565,7 +16187,8 @@
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_Reporting')]",
 				"[concat(variables('factoryId'), '/datasets/Source_MSX')]",
 				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting')]",
-				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_reporting_account_Hierarchy')]"
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_reporting_account_Hierarchy')]",
+				"[concat(variables('factoryId'), '/datasets/Source_vnxt_pool')]"
 			]
 		},
 		{
@@ -20663,6 +22286,68 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_reporting_account_Hierarchy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Dest Report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountMPLId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedOn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InsertedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedOn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedBy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PartnerAccountHierarchy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Source_MSX')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -21279,6 +22964,633 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source_vnxt_pool')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Source_Pool",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Source report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "GRSListId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "GRSDataSourceID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ParentAccountID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ParentAccountNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "AccountID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "AccountNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "ContactID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ContactNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentPartnerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ParentPartnerNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerAccountID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerAccountNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "MPLID",
+						"type": "varchar"
+					},
+					{
+						"name": "MPNID",
+						"type": "varchar"
+					},
+					{
+						"name": "MSSalesTopParentID",
+						"type": "varchar"
+					},
+					{
+						"name": "MSSalesID",
+						"type": "varchar"
+					},
+					{
+						"name": "Prefix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MainPhoneNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MobilePhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fax",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StreetAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "State",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PostalCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sector",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobTitle",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobRole",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrganizationTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ContactTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "Vertical",
+						"type": "varchar"
+					},
+					{
+						"name": "VerticalIndustry",
+						"type": "varchar"
+					},
+					{
+						"name": "Industry",
+						"type": "varchar"
+					},
+					{
+						"name": "Tier",
+						"type": "varchar"
+					},
+					{
+						"name": "TierLevelID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesSubDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AreaID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "RegionID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SubRegionID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SubsidiaryID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CountryId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SegmentId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SubSegmentId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "EngagementTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "DetailedEngagementTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "MarketAudienceID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PrimaryMarketAudienceID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "AllowCalls",
+						"type": "bit"
+					},
+					{
+						"name": "AllowDMail",
+						"type": "bit"
+					},
+					{
+						"name": "AllowEMail",
+						"type": "bit"
+					},
+					{
+						"name": "KeyContact",
+						"type": "bit"
+					},
+					{
+						"name": "ManagedAccount",
+						"type": "bit"
+					},
+					{
+						"name": "ManagedContact",
+						"type": "bit"
+					},
+					{
+						"name": "DecisionMakerFlag",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PreferredLanguageId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "MPNHeadQuartersId",
+						"type": "varchar"
+					},
+					{
+						"name": "MPNLocationId",
+						"type": "varchar"
+					},
+					{
+						"name": "VOrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "VOrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "VOrganization_PartnerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "VOrganization_PartnerNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PCCount",
+						"type": "varchar"
+					},
+					{
+						"name": "NumberOfEmployees",
+						"type": "varchar"
+					},
+					{
+						"name": "OrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "OrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentOrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ParentOrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerOrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerOrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "SourceLanguage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PartnerSubTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "OrganizationPartnerTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "EnrollmentStatusID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ParentingLevelID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CompetencyID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ActiveCompetencies",
+						"type": "varchar"
+					},
+					{
+						"name": "ContactTypePriority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "EnrollmentPriority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "TierLevelPriority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "Priority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PartnerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsMaps",
+						"type": "bit"
+					},
+					{
+						"name": "IsMapsSP",
+						"type": "bit"
+					},
+					{
+						"name": "IsMapsDD",
+						"type": "bit"
+					},
+					{
+						"name": "DeDupeContactTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "OCPCRMID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneSubID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerSpecialization",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerSubSpecialization",
+						"type": "varchar"
+					},
+					{
+						"name": "Engagement",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GlobalCoverage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PrimaryPDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDMR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HasValidMPNID",
+						"type": "bit"
+					},
+					{
+						"name": "IsEngaged",
+						"type": "bit"
+					},
+					{
+						"name": "HasValidPDM",
+						"type": "bit"
+					},
+					{
+						"name": "IsManaged",
+						"type": "bit"
+					},
+					{
+						"name": "IsDelete",
+						"type": "bit"
+					},
+					{
+						"name": "oemsegmenttype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "oemorganizationtype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OEMManaged",
+						"type": "bit"
+					},
+					{
+						"name": "AccountDescription",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GPID",
+						"type": "varchar"
+					},
+					{
+						"name": "GPName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IPDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PTS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDMM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PTM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PrimaryRoleType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HQ/DS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Primary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RejectionSubTypes",
+						"type": "varchar"
+					},
+					{
+						"name": "RejectionCount",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "isFixable",
+						"type": "varchar"
+					},
+					{
+						"name": "TagName",
+						"type": "varchar"
+					},
+					{
+						"name": "ContactSource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VerticalCategory",
+						"type": "nvarchar"
+					},
+					{
+						"name": "T_C4_List_Account_Manager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentAccount_Industry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentAccount_Vertical",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParentAccount_Vertical_Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TP_AccountName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ATUAccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "t_p1_Partner_MSPP_ProgramLevel",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "vw_vnxt_Pool"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Source_Pool')]"
 			]
 		},
 		{
@@ -27338,6 +29650,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Source_Pool')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlMI",
+				"typeProperties": {
+					"connectionString": "[parameters('Source_Pool_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -27562,68 +29887,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_reporting_account_Hierarchy')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "vnxt_reporting",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Reporting Dataset/Dest Report"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PartnerAccountId",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "PartnerNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountMPLId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "InsertedOn",
-						"type": "nvarchar"
-					},
-					{
-						"name": "InsertedBy",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ModifiedOn",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ModifiedBy",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "PartnerAccountHierarchy"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
-			]
 		}
 	]
 }

@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'MSX'"
 		},
+		"Source_Pool_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Source_Pool'"
+		},
 		"SqlServer1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
@@ -122,6 +126,9 @@
 					},
 					"MSX_connectionString": {
 						"value": "[parameters('MSX_connectionString')]"
+					},
+					"Source_Pool_connectionString": {
+						"value": "[parameters('Source_Pool_connectionString')]"
 					},
 					"vnxt_reporting_connectionString": {
 						"value": "[parameters('vnxt_reporting_connectionString')]"
