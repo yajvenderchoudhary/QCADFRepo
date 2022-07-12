@@ -255,17 +255,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlMISource",
-						"additionalColumns": [
-							{
-								"name": "Fixable",
-								"value": ""
-							}
-						],
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "SqlMISink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"IsFixable"
+							]
+						},
 						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
@@ -1415,7 +1415,6 @@
 							{
 								"source": {
 									"name": "isFixable",
-									"type": "String",
 									"physicalType": "varchar"
 								},
 								"sink": {
