@@ -24,9 +24,6 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
-				},
-				{
-					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -179,10 +176,8 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> pool",
-				"pool derive(isFixable = iif(isNull(isFixable),'0',isFixable)\r",
-				") ~> derivedColumn1",
-				"derivedColumn1 alterRow(updateIf(iif(isNull(isFixable),'0',isFixable))) ~> AlterRow1",
-				"AlterRow1 sink(allowSchemaDrift: true,",
+				"pool derive(isFixable = iif(isNull(isFixable),'0',isFixable)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     input(",
 				"          ID as integer,",
