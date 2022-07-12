@@ -8,6 +8,9 @@
 		"AzureSqlMI2_connectionString": {
 			"value": ""
 		},
+		"AzureSqlMI3_connectionString": {
+			"value": ""
+		},
 		"DIOAzureSynapseAnalytics_connectionString": {
 			"value": ""
 		},

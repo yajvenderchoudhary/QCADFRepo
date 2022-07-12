@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI2'"
 		},
+		"AzureSqlMI3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI3'"
+		},
 		"DIOAzureSynapseAnalytics_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
@@ -120,6 +124,9 @@
 					},
 					"AzureSqlMI2_connectionString": {
 						"value": "[parameters('AzureSqlMI2_connectionString')]"
+					},
+					"AzureSqlMI3_connectionString": {
+						"value": "[parameters('AzureSqlMI3_connectionString')]"
 					},
 					"DoNotContact_connectionString": {
 						"value": "[parameters('DoNotContact_connectionString')]"

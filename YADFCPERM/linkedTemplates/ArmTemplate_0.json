@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI2'"
 		},
+		"AzureSqlMI3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI3'"
+		},
 		"DoNotContact_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DoNotContact'"
@@ -49,6 +53,19 @@
 				"type": "AzureSqlMI",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureSqlMI2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMI3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlMI",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlMI3_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -6232,68 +6249,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "AccountHierarchy"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_reporting_account_Hierarchy')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "vnxt_reporting",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Reporting Dataset/Dest Report"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PartnerAccountId",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "PartnerNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountMPLId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "AccountManager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "InsertedOn",
-						"type": "nvarchar"
-					},
-					{
-						"name": "InsertedBy",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ModifiedOn",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ModifiedBy",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "PartnerAccountHierarchy"
 				}
 			},
 			"dependsOn": [

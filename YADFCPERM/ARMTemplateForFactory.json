@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI2'"
 		},
+		"AzureSqlMI3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI3'"
+		},
 		"DIOAzureSynapseAnalytics_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
@@ -14586,17 +14590,17 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlMISource",
-								"additionalColumns": [
-									{
-										"name": "Fixable",
-										"value": ""
-									}
-								],
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "SqlMISink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"IsFixable"
+									]
+								},
 								"sqlWriterUseTableLock": false
 							},
 							"enableStaging": false,
@@ -15746,7 +15750,6 @@
 									{
 										"source": {
 											"name": "isFixable",
-											"type": "String",
 											"physicalType": "varchar"
 										},
 										"sink": {
@@ -22345,6 +22348,601 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Scorecard')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlMI3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GRSListId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "GRSDataSourceID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ParentAccountID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ParentAccountNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "AccountID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "AccountNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "ContactID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ContactNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentPartnerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ParentPartnerNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerAccountID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerAccountNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "MPLID",
+						"type": "varchar"
+					},
+					{
+						"name": "MPNID",
+						"type": "varchar"
+					},
+					{
+						"name": "MSSalesTopParentID",
+						"type": "varchar"
+					},
+					{
+						"name": "MSSalesID",
+						"type": "varchar"
+					},
+					{
+						"name": "Prefix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MainPhoneNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MobilePhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fax",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StreetAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "State",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PostalCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sector",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobTitle",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobRole",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrganizationTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ContactTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "Vertical",
+						"type": "varchar"
+					},
+					{
+						"name": "VerticalIndustry",
+						"type": "varchar"
+					},
+					{
+						"name": "Industry",
+						"type": "varchar"
+					},
+					{
+						"name": "Tier",
+						"type": "varchar"
+					},
+					{
+						"name": "TierLevelID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesSubDistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AreaID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "RegionID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SubRegionID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SubsidiaryID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CountryId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SegmentId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "SubSegmentId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "EngagementTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "DetailedEngagementTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "MarketAudienceID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PrimaryMarketAudienceID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "AllowCalls",
+						"type": "bit"
+					},
+					{
+						"name": "AllowDMail",
+						"type": "bit"
+					},
+					{
+						"name": "AllowEMail",
+						"type": "bit"
+					},
+					{
+						"name": "KeyContact",
+						"type": "bit"
+					},
+					{
+						"name": "ManagedAccount",
+						"type": "bit"
+					},
+					{
+						"name": "ManagedContact",
+						"type": "bit"
+					},
+					{
+						"name": "DecisionMakerFlag",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PreferredLanguageId",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "MPNHeadQuartersId",
+						"type": "varchar"
+					},
+					{
+						"name": "MPNLocationId",
+						"type": "varchar"
+					},
+					{
+						"name": "VOrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "VOrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "VOrganization_PartnerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "VOrganization_PartnerNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PCCount",
+						"type": "varchar"
+					},
+					{
+						"name": "NumberOfEmployees",
+						"type": "varchar"
+					},
+					{
+						"name": "OrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "OrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentOrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ParentOrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerOrganizationID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "PartnerOrganizationNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "SourceLanguage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PartnerSubTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "OrganizationPartnerTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "EnrollmentStatusID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ParentingLevelID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "CompetencyID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ActiveCompetencies",
+						"type": "varchar"
+					},
+					{
+						"name": "ContactTypePriority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "EnrollmentPriority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "TierLevelPriority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "Priority",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "PartnerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsMaps",
+						"type": "bit"
+					},
+					{
+						"name": "IsMapsSP",
+						"type": "bit"
+					},
+					{
+						"name": "IsMapsDD",
+						"type": "bit"
+					},
+					{
+						"name": "RejectionCount",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "RejectionSubTypes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsFixable",
+						"type": "bit"
+					},
+					{
+						"name": "DeDupeContactTypeID",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "InsertedOn",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "InsertedBy",
+						"type": "varchar"
+					},
+					{
+						"name": "OCPCRMID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneSubID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerOneName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PartnerSpecialization",
+						"type": "varchar"
+					},
+					{
+						"name": "PartnerSubSpecialization",
+						"type": "varchar"
+					},
+					{
+						"name": "Engagement",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GlobalCoverage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PrimaryPDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDMR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsEngaged",
+						"type": "bit"
+					},
+					{
+						"name": "HasValidPDM",
+						"type": "bit"
+					},
+					{
+						"name": "IsManaged",
+						"type": "bit"
+					},
+					{
+						"name": "IsDelete",
+						"type": "bit"
+					},
+					{
+						"name": "oemsegmenttype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "oemorganizationtype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OEMManaged",
+						"type": "bit"
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AccountAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GPID",
+						"type": "varchar"
+					},
+					{
+						"name": "GPName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IPDM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PTS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PDMM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PTM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PrimaryRoleType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HQ/DS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Primary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TagName",
+						"type": "varchar"
+					},
+					{
+						"name": "ISCALCMastered",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Scorecard"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlMI3')]"
 			]
 		},
 		{
@@ -29573,6 +30171,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMI3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlMI",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlMI3_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DIOAzureSynapseAnalytics')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -29887,6 +30498,342 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Drivedcolumns data')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Source_vnxt_pool",
+								"type": "DatasetReference"
+							},
+							"name": "pool"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Scorecard",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          GRSListId as integer,",
+						"          GRSDataSourceID as integer,",
+						"          ParentAccountID as string,",
+						"          ParentAccountNumber as string,",
+						"          AccountID as string,",
+						"          AccountNumber as string,",
+						"          ContactID as string,",
+						"          ContactNumber as string,",
+						"          PartnerID as string,",
+						"          PartnerNumber as string,",
+						"          ParentPartnerID as string,",
+						"          ParentPartnerNumber as string,",
+						"          PartnerAccountID as string,",
+						"          PartnerAccountNumber as string,",
+						"          MPLID as string,",
+						"          MPNID as string,",
+						"          MSSalesTopParentID as string,",
+						"          MSSalesID as string,",
+						"          Prefix as string,",
+						"          FirstName as string,",
+						"          MiddleName as string,",
+						"          LastName as string,",
+						"          EmailAddress as string,",
+						"          MainPhoneNumber as string,",
+						"          MobilePhone as string,",
+						"          Fax as string,",
+						"          StreetAddress as string,",
+						"          City as string,",
+						"          State as string,",
+						"          PostalCode as string,",
+						"          Sector as string,",
+						"          JobTitle as string,",
+						"          JobRole as string,",
+						"          AccountManager as string,",
+						"          OrganizationTypeID as integer,",
+						"          ContactTypeID as integer,",
+						"          Vertical as string,",
+						"          VerticalIndustry as string,",
+						"          Industry as string,",
+						"          Tier as string,",
+						"          TierLevelID as integer,",
+						"          CompanyName as string,",
+						"          SalesDistrict as string,",
+						"          SalesSubDistrict as string,",
+						"          SalesRegion as string,",
+						"          AreaID as integer,",
+						"          RegionID as integer,",
+						"          SubRegionID as integer,",
+						"          SubsidiaryID as integer,",
+						"          CountryId as integer,",
+						"          SegmentId as integer,",
+						"          SubSegmentId as integer,",
+						"          EngagementTypeID as integer,",
+						"          DetailedEngagementTypeID as integer,",
+						"          MarketAudienceID as integer,",
+						"          PrimaryMarketAudienceID as integer,",
+						"          AllowCalls as boolean,",
+						"          AllowDMail as boolean,",
+						"          AllowEMail as boolean,",
+						"          KeyContact as boolean,",
+						"          ManagedAccount as boolean,",
+						"          ManagedContact as boolean,",
+						"          DecisionMakerFlag as integer,",
+						"          PreferredLanguageId as integer,",
+						"          MPNHeadQuartersId as string,",
+						"          MPNLocationId as string,",
+						"          VOrganizationID as string,",
+						"          VOrganizationNumber as string,",
+						"          VOrganization_PartnerID as string,",
+						"          VOrganization_PartnerNumber as string,",
+						"          PCCount as string,",
+						"          NumberOfEmployees as string,",
+						"          OrganizationID as string,",
+						"          OrganizationNumber as string,",
+						"          ParentOrganizationID as string,",
+						"          ParentOrganizationNumber as string,",
+						"          PartnerOrganizationID as string,",
+						"          PartnerOrganizationNumber as string,",
+						"          SourceLanguage as string,",
+						"          PartnerTypeID as integer,",
+						"          PartnerSubTypeID as integer,",
+						"          OrganizationPartnerTypeID as integer,",
+						"          EnrollmentStatusID as integer,",
+						"          ParentingLevelID as integer,",
+						"          CompetencyID as integer,",
+						"          ActiveCompetencies as string,",
+						"          ContactTypePriority as integer,",
+						"          EnrollmentPriority as integer,",
+						"          TierLevelPriority as integer,",
+						"          Priority as integer,",
+						"          PartnerName as string,",
+						"          IsMaps as boolean,",
+						"          IsMapsSP as boolean,",
+						"          IsMapsDD as boolean,",
+						"          DeDupeContactTypeID as integer,",
+						"          OCPCRMID as string,",
+						"          PartnerOneSubID as string,",
+						"          PartnerOneID as string,",
+						"          PartnerOneName as string,",
+						"          PartnerSpecialization as string,",
+						"          PartnerSubSpecialization as string,",
+						"          Engagement as string,",
+						"          GlobalCoverage as string,",
+						"          PrimaryPDM as string,",
+						"          CSA as string,",
+						"          PMA as string,",
+						"          PDMR as string,",
+						"          HasValidMPNID as boolean,",
+						"          IsEngaged as boolean,",
+						"          HasValidPDM as boolean,",
+						"          IsManaged as boolean,",
+						"          IsDelete as boolean,",
+						"          oemsegmenttype as string,",
+						"          oemorganizationtype as string,",
+						"          OEMManaged as boolean,",
+						"          AccountDescription as string,",
+						"          AccountStatus as string,",
+						"          AccountAddress as string,",
+						"          GPID as string,",
+						"          GPName as string,",
+						"          PDM as string,",
+						"          IPDM as string,",
+						"          PTS as string,",
+						"          PDMM as string,",
+						"          PTM as string,",
+						"          PrimaryRoleType as string,",
+						"          {HQ/DS} as string,",
+						"          Primary as string,",
+						"          RejectionSubTypes as string,",
+						"          RejectionCount as integer,",
+						"          isFixable as string,",
+						"          TagName as string,",
+						"          ContactSource as string,",
+						"          VerticalCategory as string,",
+						"          T_C4_List_Account_Manager as string,",
+						"          ParentAccount_Industry as string,",
+						"          ParentAccount_Vertical as string,",
+						"          ParentAccount_Vertical_Category as string,",
+						"          TP_AccountName as string,",
+						"          ATUName as string,",
+						"          ATUManager as string,",
+						"          ATUAccountManager as string,",
+						"          t_p1_Partner_MSPP_ProgramLevel as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> pool",
+						"pool derive(isFixable = iif(isNull(isFixable),'0',isFixable)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: true,",
+						"     input(",
+						"          ID as integer,",
+						"          GRSListId as integer,",
+						"          GRSDataSourceID as integer,",
+						"          ParentAccountID as string,",
+						"          ParentAccountNumber as string,",
+						"          AccountID as string,",
+						"          AccountNumber as string,",
+						"          ContactID as string,",
+						"          ContactNumber as string,",
+						"          PartnerID as string,",
+						"          PartnerNumber as string,",
+						"          ParentPartnerID as string,",
+						"          ParentPartnerNumber as string,",
+						"          PartnerAccountID as string,",
+						"          PartnerAccountNumber as string,",
+						"          MPLID as string,",
+						"          MPNID as string,",
+						"          MSSalesTopParentID as string,",
+						"          MSSalesID as string,",
+						"          Prefix as string,",
+						"          FirstName as string,",
+						"          MiddleName as string,",
+						"          LastName as string,",
+						"          EmailAddress as string,",
+						"          MainPhoneNumber as string,",
+						"          MobilePhone as string,",
+						"          Fax as string,",
+						"          StreetAddress as string,",
+						"          City as string,",
+						"          State as string,",
+						"          PostalCode as string,",
+						"          Sector as string,",
+						"          JobTitle as string,",
+						"          JobRole as string,",
+						"          AccountManager as string,",
+						"          OrganizationTypeID as integer,",
+						"          ContactTypeID as integer,",
+						"          Vertical as string,",
+						"          VerticalIndustry as string,",
+						"          Industry as string,",
+						"          Tier as string,",
+						"          TierLevelID as integer,",
+						"          CompanyName as string,",
+						"          SalesDistrict as string,",
+						"          SalesSubDistrict as string,",
+						"          SalesRegion as string,",
+						"          AreaID as integer,",
+						"          RegionID as integer,",
+						"          SubRegionID as integer,",
+						"          SubsidiaryID as integer,",
+						"          CountryId as integer,",
+						"          SegmentId as integer,",
+						"          SubSegmentId as integer,",
+						"          EngagementTypeID as integer,",
+						"          DetailedEngagementTypeID as integer,",
+						"          MarketAudienceID as integer,",
+						"          PrimaryMarketAudienceID as integer,",
+						"          AllowCalls as boolean,",
+						"          AllowDMail as boolean,",
+						"          AllowEMail as boolean,",
+						"          KeyContact as boolean,",
+						"          ManagedAccount as boolean,",
+						"          ManagedContact as boolean,",
+						"          DecisionMakerFlag as integer,",
+						"          PreferredLanguageId as integer,",
+						"          MPNHeadQuartersId as string,",
+						"          MPNLocationId as string,",
+						"          VOrganizationID as string,",
+						"          VOrganizationNumber as string,",
+						"          VOrganization_PartnerID as string,",
+						"          VOrganization_PartnerNumber as string,",
+						"          PCCount as string,",
+						"          NumberOfEmployees as string,",
+						"          OrganizationID as string,",
+						"          OrganizationNumber as string,",
+						"          ParentOrganizationID as string,",
+						"          ParentOrganizationNumber as string,",
+						"          PartnerOrganizationID as string,",
+						"          PartnerOrganizationNumber as string,",
+						"          SourceLanguage as string,",
+						"          PartnerTypeID as integer,",
+						"          PartnerSubTypeID as integer,",
+						"          OrganizationPartnerTypeID as integer,",
+						"          EnrollmentStatusID as integer,",
+						"          ParentingLevelID as integer,",
+						"          CompetencyID as integer,",
+						"          ActiveCompetencies as string,",
+						"          ContactTypePriority as integer,",
+						"          EnrollmentPriority as integer,",
+						"          TierLevelPriority as integer,",
+						"          Priority as integer,",
+						"          PartnerName as string,",
+						"          IsMaps as boolean,",
+						"          IsMapsSP as boolean,",
+						"          IsMapsDD as boolean,",
+						"          RejectionCount as integer,",
+						"          RejectionSubTypes as string,",
+						"          IsFixable as boolean,",
+						"          DeDupeContactTypeID as integer,",
+						"          InsertedOn as timestamp,",
+						"          InsertedBy as string,",
+						"          OCPCRMID as string,",
+						"          PartnerOneSubID as string,",
+						"          PartnerOneID as string,",
+						"          PartnerOneName as string,",
+						"          PartnerSpecialization as string,",
+						"          PartnerSubSpecialization as string,",
+						"          Engagement as string,",
+						"          GlobalCoverage as string,",
+						"          PrimaryPDM as string,",
+						"          CSA as string,",
+						"          PMA as string,",
+						"          PDMR as string,",
+						"          IsEngaged as boolean,",
+						"          HasValidPDM as boolean,",
+						"          IsManaged as boolean,",
+						"          IsDelete as boolean,",
+						"          oemsegmenttype as string,",
+						"          oemorganizationtype as string,",
+						"          OEMManaged as boolean,",
+						"          Description as string,",
+						"          AccountStatus as string,",
+						"          AccountAddress as string,",
+						"          GPID as string,",
+						"          GPName as string,",
+						"          PDM as string,",
+						"          IPDM as string,",
+						"          PTS as string,",
+						"          PDMM as string,",
+						"          PTM as string,",
+						"          PrimaryRoleType as string,",
+						"          {HQ/DS} as string,",
+						"          Primary as string,",
+						"          TagName as string,",
+						"          ISCALCMastered as boolean",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Source_vnxt_pool')]",
+				"[concat(variables('factoryId'), '/datasets/Scorecard')]"
+			]
 		}
 	]
 }
