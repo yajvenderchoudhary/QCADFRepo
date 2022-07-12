@@ -1,5 +1,5 @@
 {
-	"name": "Drivedcolumns dataflow",
+	"name": "Drivedcolumns data",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -178,7 +181,8 @@
 				"     format: 'table') ~> pool",
 				"pool derive(isFixable = iif(isNull(isFixable),'0',isFixable)\r",
 				") ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 alterRow(updateIf(iif(isNull(isFixable),'0',isFixable))) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     input(",
 				"          ID as integer,",
@@ -324,7 +328,6 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
