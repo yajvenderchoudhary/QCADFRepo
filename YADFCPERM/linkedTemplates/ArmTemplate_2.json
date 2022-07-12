@@ -14925,7 +14925,7 @@
 									},
 									{
 										"source": {
-											"name": "ParentAccount_Vertical",
+											"name": "Vertical",
 											"type": "String",
 											"physicalType": "varchar"
 										},
@@ -15561,6 +15561,18 @@
 									},
 									{
 										"source": {
+											"name": "Priority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "Priority",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
 											"name": "PartnerName",
 											"type": "String",
 											"physicalType": "nvarchar"
@@ -15634,6 +15646,7 @@
 									{
 										"source": {
 											"name": "isFixable",
+											"type": "String",
 											"physicalType": "varchar"
 										},
 										"sink": {
@@ -15644,6 +15657,18 @@
 									},
 									{
 										"source": {
+											"name": "DeDupeContactTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "DeDupeContactTypeID",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
 											"name": "OCPCRMID",
 											"type": "String",
 											"physicalType": "nvarchar"
@@ -15868,17 +15893,6 @@
 											"name": "OEMManaged",
 											"type": "Boolean",
 											"physicalType": "bit"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountDescription",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Description",
-											"type": "String",
-											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -16059,6 +16073,38 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Script1",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "ScoreCard",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null"
+								}
+							]
+						}
 					}
 				],
 				"policy": {
