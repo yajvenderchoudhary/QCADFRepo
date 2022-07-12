@@ -255,6 +255,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlMISource",
+						"additionalColumns": [
+							{
+								"name": "Fixable",
+								"value": ""
+							}
+						],
 						"partitionOption": "None"
 					},
 					"sink": {
@@ -700,7 +706,7 @@
 							},
 							{
 								"source": {
-									"name": "Vertical",
+									"name": "ParentAccount_Vertical",
 									"type": "String",
 									"physicalType": "varchar"
 								},
@@ -1330,18 +1336,6 @@
 								},
 								"sink": {
 									"name": "TierLevelPriority",
-									"type": "Int16",
-									"physicalType": "smallint"
-								}
-							},
-							{
-								"source": {
-									"name": "Priority",
-									"type": "Int16",
-									"physicalType": "smallint"
-								},
-								"sink": {
-									"name": "Priority",
 									"type": "Int16",
 									"physicalType": "smallint"
 								}
@@ -1432,18 +1426,6 @@
 							},
 							{
 								"source": {
-									"name": "DeDupeContactTypeID",
-									"type": "Int16",
-									"physicalType": "smallint"
-								},
-								"sink": {
-									"name": "DeDupeContactTypeID",
-									"type": "Int16",
-									"physicalType": "smallint"
-								}
-							},
-							{
-								"source": {
 									"name": "OCPCRMID",
 									"type": "String",
 									"physicalType": "nvarchar"
@@ -1668,6 +1650,17 @@
 									"name": "OEMManaged",
 									"type": "Boolean",
 									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountDescription",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Description",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
