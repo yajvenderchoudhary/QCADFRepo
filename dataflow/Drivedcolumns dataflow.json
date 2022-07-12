@@ -174,10 +174,13 @@
 				"     format: 'table') ~> pool",
 				"pool derive(isFixable = iif(isNull(isFixable),'0',isFixable)\r",
 				") ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				"derivedColumn1 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> sink1"
 			]
 		}
 	}
