@@ -16123,7 +16123,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\n_______________________________________\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\nGO\n_____________________________________\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\n_____________________________________\nselect 1 abcd\n\n"
+									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\n_______________________________________\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n_____________________________________\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\n_____________________________________\nselect 1 abcd\n\n"
 								}
 							]
 						}
