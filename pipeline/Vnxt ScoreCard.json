@@ -1432,8 +1432,8 @@
 								},
 								"sink": {
 									"name": "IsFixable",
-									"type": "Boolean",
-									"physicalType": "bit"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -1848,7 +1848,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Dest_vnxt_Reporting",
+						"referenceName": "Desr_vnxt_Reporting_Scorecard",
 						"type": "DatasetReference"
 					}
 				]
