@@ -16185,38 +16185,6 @@
 						]
 					},
 					{
-						"name": "Update Scorecard missing info",
-						"type": "Script",
-						"dependsOn": [
-							{
-								"activity": "ScoreCard",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "vnxt_reporting",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"type": "Query",
-									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\n_______________________________________\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n_____________________________________\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\n_____________________________________\nselect 1 abcd\n\n"
-								}
-							]
-						}
-					},
-					{
 						"name": "Update AccountHierarchy Missing info",
 						"type": "Script",
 						"dependsOn": [
@@ -16308,6 +16276,38 @@
 								{
 									"type": "Query",
 									"text": "\nUPDATE ACC\nSet Acc.parentaccountid = AH.ParentAccountId, Acc.AccountManager = AH.AccountManager,\nAcc.ParentAccountNumber = AH.ParentAccountNumber\nFROM dbo.scorecard Acc \nINNER JOIN AccountHierarchy AH WITH(NOLOCK)\nON Acc.AccountId = AH.AccountId\n--WHERE Acc.GRSListId in (1,21,27,28,29,2,20,14,15,16,17,18,22,23,24,25)\nWHERE Acc.GRSListId in (14,15,16,17,18,22,23,24,25,37)\n\n\n\nUPDATE ACC\nSet Acc.AccountManager = AH.AccountManager\nFROM dbo.scorecard Acc \nINNER JOIN PartnerAccountHierarchy AH WITH(NOLOCK)\nON Acc.PartnerAccountId = AH.PartnerAccountId\n--WHERE Acc.GRSListId in (6,7,9,10,12,3,4,8,11,26)\nWHERE Acc.GRSListId in (3,4,8,10,11,26,38)\n\n\nselect 1 abcd"
+								}
+							]
+						}
+					},
+					{
+						"name": "Update Scorecard missing info",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "ScoreCard",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\nselect 1 abcd\n\n"
 								}
 							]
 						}
@@ -31619,6 +31619,51 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_pool')]",
 				"[concat(variables('factoryId'), '/datasets/Scorecard')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/For_Testing_task')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Update Scorecard missing info",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\nselect 1 abcd\n\n"
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Reporting Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
 			]
 		}
 	]
