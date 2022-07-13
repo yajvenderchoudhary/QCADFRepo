@@ -263,7 +263,7 @@
 						"upsertSettings": {
 							"useTempDB": true,
 							"keys": [
-								"IsFixable"
+								""
 							]
 						},
 						"sqlWriterUseTableLock": false
@@ -1848,7 +1848,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Source_vnxt_Reporting",
+						"referenceName": "Dest_vnxt_Reporting",
 						"type": "DatasetReference"
 					}
 				]
