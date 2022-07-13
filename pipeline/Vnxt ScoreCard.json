@@ -140,7 +140,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "MSX to AccountHierarchy",
+						"activity": "Update AccountHierarchy Missing info",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -229,7 +229,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Partner Account Heirarchy",
+						"activity": "Update Partner account missing info",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1848,7 +1848,7 @@
 				]
 			},
 			{
-				"name": "Script1",
+				"name": "Update Scorecard missing info",
 				"type": "Script",
 				"dependsOn": [
 					{
@@ -1874,7 +1874,71 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\nselect 1 abcd\n\n"
+							"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\n_______________________________________\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\nGO\n_____________________________________\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\n_____________________________________\nselect 1 abcd\n\n"
+						}
+					]
+				}
+			},
+			{
+				"name": "Update AccountHierarchy Missing info",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "MSX to AccountHierarchy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "EXEC dbo.sp_UpdateTopParent"
+						}
+					]
+				}
+			},
+			{
+				"name": "Update Partner account missing info",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Partner Account Heirarchy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Update P\nSet P.AccountManager = M.AccountManager\nFROM dbo.[PartnerAccountHierarchy] P\nINNER JOIN [MAL_MPL].[dbo].[vw_vnxt_src_MPL] M with(nolock)\nON P.PartnerNumber = M.AccountNumber and P.AccountMPLId = M.MPLID\n\nselect 1 abcd"
 						}
 					]
 				}
