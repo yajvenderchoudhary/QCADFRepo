@@ -6,12 +6,40 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "YADFCPERM"
+		},
+		"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "cpermadfsecret"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_cperm_sql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_cperm_keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime3",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Attributes ValidationWithMALMPL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -14478,13 +14506,7 @@
 							},
 							"sink": {
 								"type": "SqlMISink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"IsFixable"
-									]
-								},
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false
 							},
 							"enableStaging": false,
@@ -15651,8 +15673,8 @@
 										},
 										"sink": {
 											"name": "IsFixable",
-											"type": "Boolean",
-											"physicalType": "bit"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -16068,7 +16090,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "Source_vnxt_Reporting",
+								"referenceName": "Desr_vnxt_Reporting_Scorecard",
 								"type": "DatasetReference",
 								"parameters": {}
 							}

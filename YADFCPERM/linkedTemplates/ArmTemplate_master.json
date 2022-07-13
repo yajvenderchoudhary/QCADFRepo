@@ -202,9 +202,6 @@
 					},
 					"SqlServer2_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer2_properties_typeProperties_userName')]"
-					},
-					"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -225,6 +222,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
