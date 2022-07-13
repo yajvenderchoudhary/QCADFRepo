@@ -431,7 +431,7 @@
 			},
 			{
 				"name": "IsFixable",
-				"type": "bit"
+				"type": "varchar"
 			},
 			{
 				"name": "DeDupeContactTypeID",
