@@ -1,0 +1,36 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Update Scorecard missing info",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\nselect 1 abcd\n\n"
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Reporting Pipeline"
+		},
+		"annotations": []
+	}
+}
