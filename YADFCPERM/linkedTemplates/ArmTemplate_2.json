@@ -16123,7 +16123,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null"
+									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\nselect 1 abcd\n\n"
 								}
 							]
 						}
