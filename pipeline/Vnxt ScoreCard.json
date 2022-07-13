@@ -1942,6 +1942,38 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Update Account detail in Scorecard",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Update Scorecard missing info",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "\nUPDATE ACC\nSet Acc.parentaccountid = AH.ParentAccountId, Acc.AccountManager = AH.AccountManager,\nAcc.ParentAccountNumber = AH.ParentAccountNumber\nFROM dbo.scorecard Acc \nINNER JOIN AccountHierarchy AH WITH(NOLOCK)\nON Acc.AccountId = AH.AccountId\n--WHERE Acc.GRSListId in (1,21,27,28,29,2,20,14,15,16,17,18,22,23,24,25)\nWHERE Acc.GRSListId in (14,15,16,17,18,22,23,24,25,37)\n\n\n\nUPDATE ACC\nSet Acc.AccountManager = AH.AccountManager\nFROM dbo.scorecard Acc \nINNER JOIN PartnerAccountHierarchy AH WITH(NOLOCK)\nON Acc.PartnerAccountId = AH.PartnerAccountId\n--WHERE Acc.GRSListId in (6,7,9,10,12,3,4,8,11,26)\nWHERE Acc.GRSListId in (3,4,8,10,11,26,38)\n\n\nselect 1 abcd"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
