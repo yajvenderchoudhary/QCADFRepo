@@ -14,8 +14,17 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
 				"typeProperties": {
-					"scripts": []
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Scorecard_Detail' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Scorecard_Detail'\nDROP TABLE dbo.TempReport_Scorecard_Detail\nEND"
+						}
+					]
 				}
 			}
 		],
