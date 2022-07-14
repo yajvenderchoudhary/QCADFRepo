@@ -15,17 +15,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI3'"
 		},
-		"DIOAzureSynapseAnalytics_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
-		},
 		"DoNotContact_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DoNotContact'"
-		},
-		"Is_partnercenter_adls2_servicePrincipalCredential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalCredential' of 'Is_partnercenter_adls2'"
 		},
 		"MSX_connectionString": {
 			"type": "secureString",
@@ -35,61 +27,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Source_Pool'"
 		},
-		"SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
-		},
-		"SqlServer1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SqlServer1'"
-		},
-		"SqlServer2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer2'"
-		},
-		"SqlServer2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SqlServer2'"
-		},
 		"vnxt_reporting_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'vnxt_reporting'"
-		},
-		"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "7328197a-9fde-4eae-b7eb-2f395166be23"
-		},
-		"DIOAzureSynapseAnalytics_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47"
-		},
-		"Is_partnercenter_adls2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://partneraccountsdata.dfs.core.windows.net/"
-		},
-		"Is_partnercenter_adls2_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "975f013f-7f24-47e8-a7d3-abc4752bf346"
-		},
-		"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "39c035f1-2997-46f6-bf4a-3bed0b373d30"
-		},
-		"SqlServer1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "FAREAST\\v-yachou"
-		},
-		"SqlServer2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "FAREAST\\v-yachou"
-		},
-		"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://cpermkv.vault.azure.net/"
-		},
-		"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "cpermadfsecret"
 		},
 		"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
@@ -140,9 +80,6 @@
 					"vnxt_reporting_connectionString": {
 						"value": "[parameters('vnxt_reporting_connectionString')]"
 					},
-					"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
-						"value": "[parameters('ls_cperm_keyvault_properties_typeProperties_baseUrl')]"
-					},
 					"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
 						"value": "[parameters('integrationRuntime3_properties_typeProperties_linkedInfo_resourceId')]"
 					}
@@ -163,45 +100,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"DIOAzureSynapseAnalytics_connectionString": {
-						"value": "[parameters('DIOAzureSynapseAnalytics_connectionString')]"
-					},
-					"Is_partnercenter_adls2_servicePrincipalCredential": {
-						"value": "[parameters('Is_partnercenter_adls2_servicePrincipalCredential')]"
-					},
-					"SqlServer1_connectionString": {
-						"value": "[parameters('SqlServer1_connectionString')]"
-					},
-					"SqlServer1_password": {
-						"value": "[parameters('SqlServer1_password')]"
-					},
-					"SqlServer2_connectionString": {
-						"value": "[parameters('SqlServer2_connectionString')]"
-					},
-					"SqlServer2_password": {
-						"value": "[parameters('SqlServer2_password')]"
-					},
-					"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId')]"
-					},
-					"DIOAzureSynapseAnalytics_properties_typeProperties_tenant": {
-						"value": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_tenant')]"
-					},
-					"Is_partnercenter_adls2_properties_typeProperties_url": {
-						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_url')]"
-					},
-					"Is_partnercenter_adls2_properties_typeProperties_tenant": {
-						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_tenant')]"
-					},
-					"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId')]"
-					},
-					"SqlServer1_properties_typeProperties_userName": {
-						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
-					},
-					"SqlServer2_properties_typeProperties_userName": {
-						"value": "[parameters('SqlServer2_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -222,9 +120,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},

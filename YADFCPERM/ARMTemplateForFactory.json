@@ -15,17 +15,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI3'"
 		},
-		"DIOAzureSynapseAnalytics_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DIOAzureSynapseAnalytics'"
-		},
 		"DoNotContact_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DoNotContact'"
-		},
-		"Is_partnercenter_adls2_servicePrincipalCredential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalCredential' of 'Is_partnercenter_adls2'"
 		},
 		"MSX_connectionString": {
 			"type": "secureString",
@@ -35,61 +27,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Source_Pool'"
 		},
-		"SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
-		},
-		"SqlServer1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SqlServer1'"
-		},
-		"SqlServer2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer2'"
-		},
-		"SqlServer2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SqlServer2'"
-		},
 		"vnxt_reporting_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'vnxt_reporting'"
-		},
-		"DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "7328197a-9fde-4eae-b7eb-2f395166be23"
-		},
-		"DIOAzureSynapseAnalytics_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47"
-		},
-		"Is_partnercenter_adls2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://partneraccountsdata.dfs.core.windows.net/"
-		},
-		"Is_partnercenter_adls2_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "975f013f-7f24-47e8-a7d3-abc4752bf346"
-		},
-		"Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "39c035f1-2997-46f6-bf4a-3bed0b373d30"
-		},
-		"SqlServer1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "FAREAST\\v-yachou"
-		},
-		"SqlServer2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "FAREAST\\v-yachou"
-		},
-		"ls_cperm_keyvault_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://cpermkv.vault.azure.net/"
-		},
-		"ls_cperm_sql_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "cpermadfsecret"
 		},
 		"integrationRuntime3_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
@@ -6563,6 +6503,51 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Dest_FY22Q3_KSRFeedback')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/For_Testing_task')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Update Scorecard missing info",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\nselect 1 abcd\n\n"
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Reporting Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
 			]
 		},
 		{
@@ -16333,6 +16318,51 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Vnxt_Report_Scorecard_Detail')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TempReport_Scorecard_Detail",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Scorecard_Detail' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Scorecard_Detail'\nDROP TABLE dbo.TempReport_Scorecard_Detail\nEND"
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Reporting Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -23753,6 +23783,67 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Source_TempReport_Scorecard')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Source report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "Classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GRSBucket",
+						"type": "varchar"
+					},
+					{
+						"name": "AreaName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubRegionName",
+						"type": "varchar"
+					},
+					{
+						"name": "TotalCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NonFixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TempReport_Scorecard_Detail"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Source_vnxt_Reporting')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -30970,31 +31061,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DIOAzureSynapseAnalytics')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('DIOAzureSynapseAnalytics_connectionString')]",
-					"servicePrincipalId": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_servicePrincipalId')]",
-					"servicePrincipalKey": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_cperm_keyvault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "CPERMContactabilityClientSecret"
-					},
-					"tenant": "[parameters('DIOAzureSynapseAnalytics_properties_typeProperties_tenant')]"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_cperm_keyvault')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DoNotContact')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -31006,32 +31072,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Is_partnercenter_adls2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('Is_partnercenter_adls2_properties_typeProperties_url')]",
-					"tenant": "[parameters('Is_partnercenter_adls2_properties_typeProperties_tenant')]",
-					"servicePrincipalId": "[parameters('Is_partnercenter_adls2_properties_typeProperties_servicePrincipalId')]",
-					"servicePrincipalCredentialType": "ServicePrincipalKey",
-					"servicePrincipalCredential": {
-						"type": "SecureString",
-						"value": "[parameters('Is_partnercenter_adls2_servicePrincipalCredential')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime3",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/MSX')]",
@@ -31058,94 +31098,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServer1_connectionString')]",
-					"userName": "[parameters('SqlServer1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SqlServer1_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime2",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServer2_connectionString')]",
-					"userName": "[parameters('SqlServer2_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SqlServer2_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime2",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_cperm_keyvault')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('ls_cperm_keyvault_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_cperm_sql')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_cperm_keyvault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('ls_cperm_sql_properties_typeProperties_connectionString_secretName')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime3",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_cperm_keyvault')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/vnxt_reporting')]",
@@ -31619,51 +31571,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_pool')]",
 				"[concat(variables('factoryId'), '/datasets/Scorecard')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/For_Testing_task')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Update Scorecard missing info",
-						"type": "Script",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "vnxt_reporting",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"type": "Query",
-									"text": "UPDATE dbo.[Scorecard] \nSET isfixable = 0\nWHERE isfixable is null\n\nUpdate dbo.Scorecard\nSet GRSlistId = 36\nWhere GRSListId = 35\n\nUpdate dbo.Scorecard\nSet ManagedContact = 0\nWhere ManagedContact is null\n\nselect 1 abcd\n\n"
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "Reporting Pipeline"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
 			]
 		}
 	]
