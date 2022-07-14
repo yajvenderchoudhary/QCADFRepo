@@ -1,0 +1,27 @@
+{
+	"name": "Vnxt_Report_Scorecard_Detail",
+	"properties": {
+		"activities": [
+			{
+				"name": "TempReport_Scorecard_Detail",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scripts": []
+				}
+			}
+		],
+		"folder": {
+			"name": "Reporting Pipeline"
+		},
+		"annotations": []
+	}
+}
