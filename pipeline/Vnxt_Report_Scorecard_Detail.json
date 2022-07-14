@@ -26,6 +26,38 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Create TempReport_Scorecard_Detail",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "TempReport_Scorecard_Detail",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "\n\nSelect \nCla.Classification\n,Grs.GRSBucket\n,Sub.AreaName\n,Sub.SubRegionName\n,Count(1) AS TotalCount\n,Count(CASE WHEN ISNULL(S.RejectionCount,0) = 0 THEN 1 END) AS SampleCount\n,Count(CASE WHEN ISNULL(S.RejectionCount,0) != 0 AND ISNULL(S.IsFixable,0) = 1 THEN 1 END) AS FixableRejectionCount\n,Count(CASE WHEN ISNULL(S.RejectionCount,0) != 0 AND ISNULL(S.IsFixable,0) = 0 THEN 1 END) AS NonFixableRejectionCount\nINTO dbo.TempReport_Scorecard_Detail\nFROM [vnxt_Reporting].dbo.Scorecard S with(Nolock)\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] Grs with(nolock)\nON S.[GRSListID] = Grs.[GRSListID]\nLEFT JOIN [vnxt_Reporting].[dbo].[wk_Cat_Core_GRSLists] Cla with(nolock)\nON S.[GRSListID] = Cla.[GRSListID]\nINNER JOIN [vnxt_Reporting].dbo.SubsidiaryDetails Sub with(nolock)\nON S.SubsidiaryId = Sub.SubsidiaryId\nWHERE 1=1\nGroup By Cla.Classification\n,Grs.GRSBucket\n,Sub.AreaName\n,Sub.SubRegionName\n\n\nUpdate dbo.[TempReport_Scorecard_Detail]\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA ITP'\n\nUpdate dbo.[TempReport_Scorecard_Detail]\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA BDM'\n"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
