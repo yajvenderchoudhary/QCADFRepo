@@ -1,0 +1,36 @@
+{
+	"name": "Vnxt_Report_Detail_Sub",
+	"properties": {
+		"activities": [
+			{
+				"name": "TempReport_Summary_Detai",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_Detail' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_Detail'\nDROP TABLE dbo.TempReport_Summary_Detail\nEND\n"
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Reporting Pipeline"
+		},
+		"annotations": []
+	}
+}
