@@ -31604,6 +31604,83 @@
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_pool')]",
 				"[concat(variables('factoryId'), '/datasets/Scorecard')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Vnxt_Report_Detail_Sub')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "BKP TempReport_Summary_Detai",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_Detail' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_Detail'\nDROP TABLE dbo.TempReport_Summary_Detail\nEND\n"
+								}
+							]
+						}
+					},
+					{
+						"name": "Create and update TempReport_Summary_Detail",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "BKP TempReport_Summary_Detai",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "Select CASE WHEN ISNULL(S.RejectionCount,0) = 0 THEN 'Included'\nELSE 'Rejected' END AS InSample\n,Sou.[SourceName] AS SourceName\n,S.GRSListId\n,Grs.[GRSBucket] AS GRSBucket\n,Seg.[SegmentName] AS SegmentName\n,Sub.[SubSegment] AS SubSegmentName\n,ET.[EngagementType] AS [EngagementType]\n,DET.[DetailedEngagementType] AS [DetailedEngagementType]\n,Com.[ActiveCompetencies] AS CompetancyLevel\n,S.[CompanyName] AS CompanyName\n,S.[AccountNumber] as AccountId\n,S.[ContactNumber] as ContactId\n,S.[MPNID] AS MPNID\n,CASE WHEN S.KeyContact = 1 THEN 'Y' ELSE 'N' END AS KeyContact\n,CASE WHEN S.ManagedContact = 1 THEN 'Y' ELSE 'N' END AS ManagedContact\n,S.[FirstName] AS FirstName\n,S.[LastName] AS LastName\n,S.[EmailAddress] AS EmailAddress\n,CASE WHEN S.AllowEmail = 1 THEN 'Y' ELSE 'N' END AS AllowEmail\n,S.[JobRole] AS JobRole\n,S.[JobTitle] AS JobTitle\n,MA.[MarketAudience] AS MarketAudience\n,Pl.[Language] AS PreferredLanguageId\n,S.[City] AS City\n,S.[State] AS State\n,S.[StreetAddress] AS StreetAddress\n,S.[PostalCode] AS PostalCode\n,C.[CountryName] AS CountryName\n,S.AccountManager\n,S.SubsidiaryID\n,SR.SubsidiaryName\n,SR.AreaName\n,SR.RegionName\n,SR.SubRegionName\n,S.RejectionCount\n,S.RejectionSubTypes\n,ISNULL(S.IsFixable,0) AS IsFixable\n----------NonFixable\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%DNC Poland%' \nOR ISNULL(S.RejectionSubTypes,'') like '%DNC Germany%' \nOR ISNULL(S.RejectionSubTypes,'') like '%DNC France%' \nOR ISNULL(S.RejectionSubTypes,'') like '%DNC Canada%') AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 0) THEN 'X' ELSE '' END) AS DNCLocalSuppression\n,'' AS DNCPriorWaveHardBounceBack\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%DNC MMDS Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Retail Survey Priority Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%OEM Survey Priority Suppression%')  AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 0) THEN 'X' ELSE '' END) AS OtherSurveySuppression\n,(Case WHEN ISNULL(S.RejectionSubTypes,'') like '%Geneva Undeliverable%' AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 0) THEN 'X' ELSE '' END) AS DNCMDMHardSuppress\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%Local Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Hierarchy De-Duplication%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing IsMaps%' \nOR ISNULL(S.RejectionSubTypes,'') like '%NMP%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Partner Organization%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Geography Out of Scope%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing DetailedEngagementType%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing SubSegment%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing Segment%' \nOR ISNULL(S.RejectionSubTypes,'') like '%MSHK Competitor Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Russia Competitor Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Hard Bounce Back%'  \nOR ISNULL(S.RejectionSubTypes,'') like '%FAR Clause Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Prior Wave Survey DQ%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Competitor Suppression%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Company Wide Anti Survey Suppression%') AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 0) THEN 'X' ELSE '' END) AS OtherNonFixable\n,(Case WHEN ISNULL(S.RejectionSubTypes,'') like '%Global Company Suppression%' AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 0) THEN 'X' ELSE '' END) AS GlobalCompanySuppression\n,(Case WHEN ISNULL(S.RejectionSubTypes,'') like '%Duplicate records%' AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 0) THEN 'X' ELSE '' END) AS DeDupeinSameBucket\n--------Fixable\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%Survey Vendor Unsubscribe%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Non-Personal Emails%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Not In Managed List%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Geneva Undeliverable%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Dummy Emails%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Contact Preference%') AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 1) THEN 'X' ELSE '' END) AS OtherFixable\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%Missing FirstName%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing LastName%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Invalid or Missing company name%')  AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 1) THEN 'X' ELSE '' END) AS MissingNameCompanyFirstLast\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%Missing Email%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Invalid Email or Format%') AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 1) THEN 'X' ELSE '' END) AS InvalidMissingEmail\n,(Case WHEN (ISNULL(S.RejectionSubTypes,'') like '%Missing Country%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing SubsidiaryName%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing AccountManager%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing City (NMP Only)%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing ContactID%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing AccountID%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing Partner Number%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing Postal Code (US Only)%' \nOR ISNULL(S.RejectionSubTypes,'') like '%Missing Company Street Address%') AND (ISNULL(S.RejectionCount,0) !=0 AND ISNULL(S.IsFixable,0) = 1) THEN 'X' ELSE '' END) AS InvalidMissingFields\nINTO dbo.TempReport_Summary_Detail\nFROM dbo.Scorecard S with(nolock)\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_Country] C with(nolock) ON S.[CountryId] = C.[CountryId]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_MarketAudience] MA with(nolock) ON S.[MarketAudienceID] = MA.[MarketAudienceID]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_Segment] Seg with(nolock) ON S.[SegmentId] = Seg.[SegmentId]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_SubSegment] Sub with(nolock) ON S.[SubSegmentId] = Sub.[SubSegmentId]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_ActiveCompetencies] Com with(nolock) ON S.[CompetencyID] = Com.[ID]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_Language] Pl with(nolock) ON S.[PreferredLanguageId] = Pl.[LanguageId]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] Grs with(nolock) ON S.[GRSListID] = Grs.[GRSListID]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_Source] Sou with(nolock) ON S.[GRSDataSourceID] = Sou.[SourceId]\nLEFT JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] SR with(nolock) ON S.[SubsidiaryID] = SR.[SubsidiaryID]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_EngagementType] ET with(nolock) ON S.[EngagementTypeId] = ET.[EngagementTypeId]\nLEFT JOIN [vnxt_Catalogues].[dbo].[Lkp_DetailedEngagementType] DET with(nolock) ON S.[DetailedEngagementTypeId] = DET.[DetailedEngagementTypeId]\nWHERE 1=1\n\n\nUpdate dbo.TempReport_Summary_Detail\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA ITP'\n\n\nUpdate dbo.TempReport_Summary_Detail\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA BDM'\n\nUpdate dbo.TempReport_Summary_Detail\nSet MarketAudience = ''\nWhere MarketAudience = '0'\n\nUpdate S\nSet SubSegmentName = null\nFROM [Vnxt_Reporting].[dbo].[TempReport_Summary_Detail] S with(nolock)\nWHERE SubSegmentName = '0'\n\n\nUpdate S\nSet SegmentName = null\nFROM [Vnxt_Reporting].[dbo].[TempReport_Summary_Detail] S with(nolock)\nWHERE SegmentName = '0'\n\nUpdate S\nSet [DetailedEngagementType] = null\nFROM [Vnxt_Reporting].[dbo].[TempReport_Summary_Detail] S with(nolock)\nWHERE [DetailedEngagementType] = '0'\n\nUpdate S\nSet [EngagementType] = null\nFROM [Vnxt_Reporting].[dbo].[TempReport_Summary_Detail] S with(nolock)\nWHERE [EngagementType] = '0'"
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Reporting Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
 		}
 	]
 }
