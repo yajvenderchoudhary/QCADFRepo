@@ -1,0 +1,132 @@
+{
+	"name": "Vnxt_Delta_Search_Trend_Reports",
+	"properties": {
+		"activities": [
+			{
+				"name": "Delta Report",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "EXEC dbo.usp_Delta_Report"
+						}
+					]
+				}
+			},
+			{
+				"name": "Pool",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Delta Report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Exec [dbo].[Vnxt_Pool]"
+						}
+					]
+				}
+			},
+			{
+				"name": "Rejection Trend",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Pool",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Exec [dbo].[Vnxt_Rejection_Trend_Report]"
+						}
+					]
+				}
+			},
+			{
+				"name": "Trend",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Rejection Trend",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Exec [dbo].[Vnxt_Trend_Report] "
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Reporting Pipeline"
+		},
+		"annotations": []
+	}
+}
