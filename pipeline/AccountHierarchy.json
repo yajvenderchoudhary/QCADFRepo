@@ -22,7 +22,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "Truncate Table [dbo].[AccountHierarchy]\n\nselect 1 abcd\n"
+							"text": "---Truncate Table [dbo].[AccountHierarchy]\n\nselect 1 abcd\n"
 						}
 					]
 				}
