@@ -28,7 +28,7 @@
 				}
 			},
 			{
-				"name": "Script1",
+				"name": "Create TempReport",
 				"type": "Script",
 				"dependsOn": [
 					{
