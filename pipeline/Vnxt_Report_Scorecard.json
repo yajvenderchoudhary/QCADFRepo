@@ -1,6 +1,33 @@
 {
 	"name": "Vnxt_Report_Scorecard",
 	"properties": {
+		"activities": [
+			{
+				"name": "Drop Table",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport'\nDROP TABLE dbo.TempReport\nEND\n\n\nIF EXISTS (Select 1 from sysobjects where name = 'SubsidiaryDetails' and type = 'U')\nDROP TABLE [dbo].[SubsidiaryDetails]\n\n\nSelect Distinct SubsidiaryId, SubsidiaryName, AreaName, RegionName, SubRegionName into dbo.SubsidiaryDetails from [vnxt_Catalogues].[reporting].[vw_Mst_Subsidiary]  where 1=1 order by SubsidiaryId\n"
+						}
+					]
+				}
+			}
+		],
 		"folder": {
 			"name": "Reporting Pipeline"
 		},
