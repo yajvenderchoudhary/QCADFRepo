@@ -13,6 +13,294 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Attributes ValidationWithMALMPL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Attributes Validation With MALMPL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "[[FAREAST\\v-yachou].[Usp_Get_Attributes_Validation_With_MAL_MPL]"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.Attributes_Validation_MAL_MPL"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderStoredProcedureName": "[[FAREAST\\v-yachou].[Usp_Get_Attributes_Validation_With_MAL_MPL]",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Description",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Description"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Year"
+										}
+									},
+									{
+										"source": {
+											"name": "Month",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Month"
+										}
+									},
+									{
+										"source": {
+											"name": "QC Date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "QC Date"
+										}
+									},
+									{
+										"source": {
+											"name": "CPERMListid",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CPERMListid"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentAccountNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ParentAccountNumber"
+										}
+									},
+									{
+										"source": {
+											"name": "CRMID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CRMID"
+										}
+									},
+									{
+										"source": {
+											"name": "MPLID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "MPLID"
+										}
+									},
+									{
+										"source": {
+											"name": "OCPCRMID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "OCPCRMID"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager in FinalTable",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountManager in FinalTable"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager in MAL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountManager in MAL"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager in MPL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountManager in MPL"
+										}
+									},
+									{
+										"source": {
+											"name": "Segment in FinalTable",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Segment in FinalTable"
+										}
+									},
+									{
+										"source": {
+											"name": "Segment in MAL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Segment in MAL"
+										}
+									},
+									{
+										"source": {
+											"name": "SubSegment in FinalTable",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SubSegment in FinalTable"
+										}
+									},
+									{
+										"source": {
+											"name": "SubSegment in MAL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "SubSegment in MAL"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSpecialization in Final Table",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerSpecialization in Final Table"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSpecialization in MPL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerSpecialization in MPL"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSubSpecialization in Final Table",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PartnerSubSpecialization in Final Table"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerSubSpecialization in MPL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "PartnerSubSpecialization in MPL"
+										}
+									},
+									{
+										"source": {
+											"name": "Checkpoint_ID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Checkpoint_ID"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sr_AttributesValidation_MAL_MPL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_AttributesValidationWithMALMPL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "QC Pipeline"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-07-06T14:26:07Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CRs NewCheckpoints')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
