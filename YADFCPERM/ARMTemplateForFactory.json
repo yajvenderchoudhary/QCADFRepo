@@ -6557,8 +6557,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Create TempReport",
-						"type": "Script",
+						"name": "Copy data2",
+						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -6568,18 +6568,79 @@
 							"secureInput": false
 						},
 						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "vnxt_reporting",
-							"type": "LinkedServiceReference"
-						},
 						"typeProperties": {
-							"scripts": [
-								{
-									"type": "Query",
-									"text": "Select P.GRSListid\n,G.GRSBucket\n,Geo.AreaName\n,Geo.RegionName\n,Geo.SubRegionName\n,Geo.SubsidiaryName\n,COUNT(1) AS TotalCount\n,0 AS ContactsSameSegmentFromLastWave\n,CAST(00.0000 AS numeric(6,4)) AS Perc_ContactsSameSegmentFromLastWave\n,0 AS ContactsDifferentSegmentFromLastWave\n,CAST(0.0000 AS numeric(5,4)) AS Perc_ContactsDifferentSegmentFromLastWave\n,0 AS NewContactInThisWave\n,CAST(0.0000 AS numeric(7,4)) AS Perc_NewContactInThisWave\n,0 AS PreviousWaveSampleCount\n,0 AS PreviousWaveFixableRejectionCount\n,0 AS DifferenceFromPreviousWave\n,CAST(0.0000 AS numeric(7,4)) AS Perc_DifferenceFromPreviousWave\n,0 AS NewContactsinCurrentWave\n,CAST(0.0000 AS numeric(5,4)) AS Perc_NewContactsinCurrentWave\n,0 AS ManagedContactsFromLastWave\n,0 AS ManagedContactsDifferenceFromLastWave\n,CAST(0.0000 AS numeric(6,4)) AS Perc_ManagedContactsDifferenceFromLastWave\n,COUNT(Case When ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.KeyContact,0) = 1 THEN 1 END) AS ManagedContactCRMKey\n,CAST(0.0000 AS numeric(5,4)) AS Perc_ManagedContactCRMKey\n,COUNT(Case When ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedContact,0) = 1 THEN 1 END) AS ManagedContactMPOR\n,CAST(0.0000 AS numeric(5,4)) AS Perc_ManagedContactMPOR\n,0 AS IntendedCompletes\n,CAST(0 AS bit) IsManagedSegment\n,COUNT(Case When ISNULL(P.RejectionCount,0) = 0 THEN 1 END) AS SampleCount\n,COUNT(Case When ISNULL(P.RejectionCount,0) !=0 THEN 1 END) AS RejectionCount\n,COUNT(Case When ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 1 THEN 1 END) AS FixableRejectionCount\n,COUNT(Case When ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0 THEN 1 END) AS NonFixableRejectionCount\n,COUNT(Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedContact,0) = 1 THEN 1 END) AS ManagedSampleCount\n,COUNT(Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedContact,0) = 0 THEN 1 END) AS NonManagedSampleCount\n,COUNT(Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedContact,0) = 1 THEN 1 END) AS ManagedContact\n,CAST(0.0000 AS numeric(5,4)) AS Perc_ManagedContact\n,COUNT(Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedContact,0) = 0 THEN 1 END) AS NonManagedContact\n,COUNT(Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedAccount,0) = 1 THEN 1 END) AS ManagedAccount\n,COUNT(Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ManagedAccount,0) = 0 THEN 1 END) AS NonManagedAccount\n,COUNT(Distinct Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.AccountNumber,'') != '' THEN P.AccountNumber END) AS Accountnumber\n,COUNT(Distinct Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.PartnerAccountNumber,'') != '' THEN P.PartnerAccountNumber END) AS PartnerAccountNumber\n,COUNT(Distinct Case WHEN ISNULL(P.RejectionCount,0) = 0 AND ISNULL(P.ParentAccountNumber,'') != '' THEN P.ParentAccountNumber END) AS ParentAccountNumber\n,0 AS MissingAccountNumber\n,0 AS TotalAccountNumber\n,0 AS AccountsManagedContact_1\n,0 AS AccountsManagedContact_2\n,0 AS AccountsManagedContact_3\n,0 AS AccountsNonManagedContact_1\n,0 AS AccountsNonManagedContact_2\n,0 AS AccountsNonManagedContact_3\n,CAST(0.0000 AS numeric(5,4)) AS Perc_AccountsManagedContact_1\n,CAST(0.0000 AS numeric(5,4)) AS Perc_AccountsManagedContact_2\n,CAST(0.0000 AS numeric(5,4)) AS Perc_AccountsManagedContact_3\n,CAST(0.0000 AS numeric(5,4)) AS Perc_AccountsNonManagedContact_1\n,CAST(0.0000 AS numeric(5,4)) AS Perc_AccountsNonManagedContact_2\n,CAST(0.0000 AS numeric(5,4)) AS Perc_AccountsNonManagedContact_3\n,CAST(0.0000 AS numeric(5,4)) AS ManagedContactMLAccountCoverage\n,CAST(0.0000 AS numeric(5,4)) AS DataQuality\n,CAST(0.0000 AS numeric(5,4)) AS DataQualityManagedContact\n,CAST(0.0000 AS numeric(5,4)) AS ChangeDataQualityInThisWave\n,CAST(0.0000 AS numeric(5,4)) AS ChangeDataQualityFromLastWave\n,CAST(0.0000 AS numeric(5,4)) AS Perc_ContactRecency_NoOld\n,CAST(0.0000 AS numeric(5,4)) AS QualifiedSampleFromLastWave\n----------NonFixable\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%DNC Poland%' \nOR ISNULL(P.RejectionSubTypes,'') like '%DNC Germany%' \nOR ISNULL(P.RejectionSubTypes,'') like '%DNC France%' \nOR ISNULL(P.RejectionSubTypes,'') like '%DNC Canada%') AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0) THEN 1 END) AS DNCLocalSuppression\n,0 AS DNCPriorWaveHardBounceBack\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%DNC MMDS Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Retail Survey Priority Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%OEM Survey Priority Suppression%')  AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0) THEN 1 END) AS OtherSurveySuppression\n,COUNT(Case WHEN ISNULL(P.RejectionSubTypes,'') like '%Geneva Undeliverable%' AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0) THEN 1 END) AS DNCMDMHardSuppress\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%Local Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Hierarchy De-Duplication%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing IsMaps%' \nOR ISNULL(P.RejectionSubTypes,'') like '%NMP%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Partner Organization%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Geography Out of Scope%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing DetailedEngagementType%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing SubSegment%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing Segment%' \nOR ISNULL(P.RejectionSubTypes,'') like '%MSHK Competitor Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Russia Competitor Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Hard Bounce Back%' \nOR ISNULL(P.RejectionSubTypes,'') like '%FAR Clause Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Prior Wave Survey DQ%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Competitor Suppression%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Company Wide Anti Survey Suppression%') AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0) THEN 1 END) AS OtherNonFixable\n,COUNT(Case WHEN ISNULL(P.RejectionSubTypes,'') like '%Global Company Suppression%' AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0) THEN 1 END) AS GlobalCompanySuppression\n,COUNT(Case WHEN ISNULL(P.RejectionSubTypes,'') like '%Duplicate Records%' AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 0) THEN 1 END) AS DeDupeinSameBucket\n--------Fixable\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%Survey Vendor Unsubscribe%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Non-Personal Emails%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Not In Managed List%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Geneva Undeliverable%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Dummy Emails%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Contact Preference%') AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 1) THEN 1 END) AS OtherFixable\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%Missing FirstName%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing LastName%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Invalid or Missing company name%')  AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 1) THEN 1 END) AS MissingNameCompanyFirstLast\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%Missing Email%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Invalid Email or Format%') AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 1) THEN 1 END) AS InvalidMissingEmail\n,COUNT(Case WHEN (ISNULL(P.RejectionSubTypes,'') like '%Missing Country%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing SubsidiaryName%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing AccountManager%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing City (NMP Only)%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing ContactID%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing AccountID%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing Partner Number%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing Postal Code (US Only)%' \nOR ISNULL(P.RejectionSubTypes,'') like '%Missing Company Street Address%') AND (ISNULL(P.RejectionCount,0) !=0 AND ISNULL(P.IsFixable,0) = 1) THEN 1 END) AS InvalidMissingFields\nINTO [vnxt_Reporting].dbo.TempReport\nfrom [vnxt_Reporting].[dbo].[Scorecard] P with(nolock)\nINNER JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] G with(nolock)\nON P.grslistid = G.GrsListid\nINNER JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] Geo with(nolock)\nON P.Subsidiaryid = Geo.SubsidiaryId\nWHERE 1=1\nGroup By P.GRSListid,\nG.GRSBucket,\nGeo.AreaName,\nGeo.RegionName,\nGeo.SubRegionName,\nGeo.SubsidiaryName\n\n\nselect 1 abcd"
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderQuery": "select M.Subsidiary,P.GrslistId,Count(Distinct  Case WHEN ISNULL(m.AccountNumber,'') != '' THEN \nm.AccountNumber END) AS AccountNumber from MAL_MPL.[dbo].[vw_vnxt_src_MPL] m with(nolock)\nINNER JOIN [vnxt_Reporting].[dbo].[Partner_SegmentSubSegment] p with(nolock)\nON m.Segment = p.segment\nGROUp BY M.Subsidiary,P.GrslistId",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Subsidiary",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Subsidiary",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GrslistId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "GrslistId",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
 								}
-							]
-						}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_vnxt_Reporting",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_vnxt_Reporting_MPL_AccountNumber",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -6592,7 +6653,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+				"[concat(variables('factoryId'), '/datasets/Source_vnxt_Reporting')]",
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting_MPL_AccountNumber')]"
 			]
 		},
 		{
@@ -16606,7 +16668,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport'\ntruncate TABLE dbo.TempReport\nEND\n\n\nIF EXISTS (Select 1 from sysobjects where name = 'SubsidiaryDetails' and type = 'U')\nDROP TABLE [dbo].[SubsidiaryDetails]\n\n\nSelect Distinct SubsidiaryId, SubsidiaryName, AreaName, RegionName, SubRegionName into dbo.SubsidiaryDetails from [vnxt_Catalogues].[reporting].[vw_Mst_Subsidiary]  where 1=1 order by SubsidiaryId\n"
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport'\ntruncate TABLE dbo.TempReport\nEND\n\n\nIF EXISTS (Select 1 from sysobjects where name = 'SubsidiaryDetails' and type = 'U')\nDROP TABLE [dbo].[SubsidiaryDetails]\n\n\nSelect Distinct SubsidiaryId, SubsidiaryName, AreaName, RegionName, SubRegionName into dbo.SubsidiaryDetails from [vnxt_Catalogues].[reporting].[vw_Mst_Subsidiary]  where 1=1 order by SubsidiaryId\n\nTRUNCATE TABLE [dbo].[MAL_AccountNumber]\n\nTRUNCATE TABLE [dbo].[MPL_AccountNumber]\n\n"
 								}
 							]
 						}
@@ -17652,6 +17714,131 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Update TempReport",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "Update dbo.TempReport\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA ITP'\n\n\nUpdate dbo.TempReport\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA BDM'\n\n\nUpdate S\nSet S.PartnerAccountNumber = M.AccountNumber\nFROM Scorecard S\nINNER JOIN [MAL_MPL].[dbo].[vw_vnxt_src_MPL] m with(nolock)\nON S.MPLID = M.MPLID\nWHERE M.MPLID is not NULL AND M.AccountNumber is not null\n\n\nUPDATE dbo.TempReport\nSET IsManagedSegment = 1\n--Where GRSListId in (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,34)\nWHERE GRSLISTID IN (3,4,8,10,11,14,15,16,17,18,22,23,24,25,26,35,36,37,38)\n\n\nUPDATE dbo.TempReport\nSET IsManagedSegment = 0\n--Where GRSListId not in (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,33,34)\nWHERE GRSLISTID NOT IN (3,4,8,10,11,14,15,16,17,18,22,23,24,25,26,35,36,37,38)\nselect 1 abcd"
+								}
+							]
+						}
+					},
+					{
+						"name": "MAL MPL Count",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Update TempReport",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderQuery": "select M.Subsidiary,P.GrslistId,Count(Distinct  Case WHEN ISNULL(m.AccountNumber,'') != '' THEN \nm.AccountNumber END) AS AccountNumber from MAL_MPL.[dbo].[vw_vnxt_src_MPL] m with(nolock)\nINNER JOIN [vnxt_Reporting].[dbo].[Partner_SegmentSubSegment] p with(nolock)\nON m.Segment = p.segment\nGROUp BY M.Subsidiary,P.GrslistId",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Subsidiary",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Subsidiary",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GrslistId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "GrslistId",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_vnxt_Reporting",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_vnxt_Reporting_MPL_AccountNumber",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -17666,7 +17853,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]",
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_Reporting')]",
-				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting_TempReport')]"
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting_TempReport')]",
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting_MPL_AccountNumber')]"
 			]
 		},
 		{
@@ -24482,6 +24670,417 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "AccountHierarchy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_Reporting_TempReport')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Dest Report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "GRSListid",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "GRSBucket",
+						"type": "varchar"
+					},
+					{
+						"name": "AreaName",
+						"type": "varchar"
+					},
+					{
+						"name": "RegionName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubRegionName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubsidiaryName",
+						"type": "varchar"
+					},
+					{
+						"name": "TotalCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ContactsSameSegmentFromLastWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_ContactsSameSegmentFromLastWave",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 4
+					},
+					{
+						"name": "ContactsDifferentSegmentFromLastWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_ContactsDifferentSegmentFromLastWave",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "NewContactInThisWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_NewContactInThisWave",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "PreviousWaveSampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PreviousWaveFixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DifferenceFromPreviousWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_DifferenceFromPreviousWave",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "NewContactsinCurrentWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_NewContactsinCurrentWave",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "ManagedContactsFromLastWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagedContactsDifferenceFromLastWave",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_ManagedContactsDifferenceFromLastWave",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 4
+					},
+					{
+						"name": "ManagedContactCRMKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_ManagedContactCRMKey",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "ManagedContactMPOR",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_ManagedContactMPOR",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "IntendedCompletes",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "IsManagedSegment",
+						"type": "bit"
+					},
+					{
+						"name": "SampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NonFixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagedSampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NonManagedSampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagedContact",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_ManagedContact",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "NonManagedContact",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagedAccount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NonManagedAccount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accountnumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ParentAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MissingAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_AccountsManagedContact_1",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsManagedContact_2",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsManagedContact_3",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_1",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_2",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_3",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "ManagedContactMLAccountCoverage",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "DataQuality",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "DataQualityManagedContact",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "ChangeDataQualityInThisWave",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "ChangeDataQualityFromLastWave",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "Perc_ContactRecency_NoOld",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "QualifiedSampleFromLastWave",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 4
+					},
+					{
+						"name": "DNCLocalSuppression",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DNCPriorWaveHardBounceBack",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OtherSurveySuppression",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DNCMDMHardSuppress",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OtherNonFixable",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GlobalCompanySuppression",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DeDupeinSameBucket",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OtherFixable",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MissingNameCompanyFirstLast",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InvalidMissingEmail",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InvalidMissingFields",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TempReport"
 				}
 			},
 			"dependsOn": [
@@ -32958,7 +33557,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_Reporting_TempReport')]",
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_Reporting_MPL_AccountNumber')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -32973,395 +33572,23 @@
 				"type": "AzureSqlMITable",
 				"schema": [
 					{
-						"name": "GRSListid",
-						"type": "smallint",
-						"precision": 5
-					},
-					{
-						"name": "GRSBucket",
+						"name": "Subsidiary",
 						"type": "varchar"
 					},
 					{
-						"name": "AreaName",
-						"type": "varchar"
-					},
-					{
-						"name": "RegionName",
-						"type": "varchar"
-					},
-					{
-						"name": "SubRegionName",
-						"type": "varchar"
-					},
-					{
-						"name": "SubsidiaryName",
-						"type": "varchar"
-					},
-					{
-						"name": "TotalCount",
+						"name": "GrslistId",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "ContactsSameSegmentFromLastWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_ContactsSameSegmentFromLastWave",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 4
-					},
-					{
-						"name": "ContactsDifferentSegmentFromLastWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_ContactsDifferentSegmentFromLastWave",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "NewContactInThisWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_NewContactInThisWave",
-						"type": "decimal",
-						"precision": 7,
-						"scale": 4
-					},
-					{
-						"name": "PreviousWaveSampleCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PreviousWaveFixableRejectionCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DifferenceFromPreviousWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_DifferenceFromPreviousWave",
-						"type": "decimal",
-						"precision": 7,
-						"scale": 4
-					},
-					{
-						"name": "NewContactsinCurrentWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_NewContactsinCurrentWave",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "ManagedContactsFromLastWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ManagedContactsDifferenceFromLastWave",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_ManagedContactsDifferenceFromLastWave",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 4
-					},
-					{
-						"name": "ManagedContactCRMKey",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_ManagedContactCRMKey",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "ManagedContactMPOR",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_ManagedContactMPOR",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "IntendedCompletes",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "IsManagedSegment",
-						"type": "bit"
-					},
-					{
-						"name": "SampleCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "RejectionCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "FixableRejectionCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NonFixableRejectionCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ManagedSampleCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NonManagedSampleCount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ManagedContact",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_ManagedContact",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "NonManagedContact",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ManagedAccount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NonManagedAccount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accountnumber",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PartnerAccountNumber",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ParentAccountNumber",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "MissingAccountNumber",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "TotalAccountNumber",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountsManagedContact_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountsManagedContact_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountsManagedContact_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountsNonManagedContact_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountsNonManagedContact_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "AccountsNonManagedContact_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Perc_AccountsManagedContact_1",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "Perc_AccountsManagedContact_2",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "Perc_AccountsManagedContact_3",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "Perc_AccountsNonManagedContact_1",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "Perc_AccountsNonManagedContact_2",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "Perc_AccountsNonManagedContact_3",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "ManagedContactMLAccountCoverage",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "DataQuality",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "DataQualityManagedContact",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "ChangeDataQualityInThisWave",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "ChangeDataQualityFromLastWave",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "Perc_ContactRecency_NoOld",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "QualifiedSampleFromLastWave",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 4
-					},
-					{
-						"name": "DNCLocalSuppression",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DNCPriorWaveHardBounceBack",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "OtherSurveySuppression",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DNCMDMHardSuppress",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "OtherNonFixable",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GlobalCompanySuppression",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DeDupeinSameBucket",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "OtherFixable",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "MissingNameCompanyFirstLast",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "InvalidMissingEmail",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "InvalidMissingFields",
+						"name": "AccountNumber",
 						"type": "int",
 						"precision": 10
 					}
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "TempReport"
+					"table": "MPL_AccountNumber"
 				}
 			},
 			"dependsOn": [
