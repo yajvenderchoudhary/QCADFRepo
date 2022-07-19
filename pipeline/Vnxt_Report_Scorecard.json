@@ -1189,6 +1189,38 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Update Total Account Number",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "MAL MPL Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "UPDATE s\nSET TotalAccountNumber = t.AccountNumber\nFROM dbo.TempReport s\nINNER JOIN [dbo].[MPL_AccountNumber] t WITH(NOLOCK)\nON t.subsidiary = s.subsidiaryName and t.grslistid = s.grslistid\n--WHERE s.GRSListId in (3,4,6,7,8,9,11,12,19,10,26)\nWHERE s.GRSListId IN (3,4,8,10,11,26,38)\n\n\nUPDATE s\nSET TotalAccountNumber = t.AccountNumber\nFROM dbo.TempReport s\nINNER JOIN [dbo].[MAL_AccountNumber] t WITH(NOLOCK)\nON t.subsidiary = s.subsidiaryName and t.grslistid = s.grslistid\n--WHERE s.GRSListId not in (3,4,6,7,8,9,11,12,19,10,26)\nWHERE s.GRSListId NOT IN (3,4,8,10,11,26,38)\n\n\nUPDATE dbo.TempReport\nSET MissingAccountNumber = TotalAccountNumber - ISNULL(PartnerAccountNumber,0)\nWHERE ISNULL(TotalAccountNumber,0) != 0 and grslistid IN (3,4,8,10,11,26,38)\n\n\nUPDATE dbo.TempReport\nSET MissingAccountNumber = TotalAccountNumber - ISNULL(ParentAccountNumber,0)\nWHERE ISNULL(TotalAccountNumber,0) != 0 and grslistid NOT IN (3,4,8,10,11,26,38)\n\n\nUPDATE dbo.TempReport\nSET MissingAccountNumber  = 0\nWHERE MissingAccountNumber < 0\n\nselect 1 abcd"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
