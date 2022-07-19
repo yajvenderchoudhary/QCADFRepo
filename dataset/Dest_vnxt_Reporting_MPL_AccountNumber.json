@@ -1,0 +1,34 @@
+{
+	"name": "Dest_vnxt_Reporting_MPL_AccountNumber",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "vnxt_reporting",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Reporting Dataset/Dest Report"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "Subsidiary",
+				"type": "varchar"
+			},
+			{
+				"name": "GrslistId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountNumber",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MPL_AccountNumber"
+		}
+	}
+}
