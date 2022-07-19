@@ -22,7 +22,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport'\nDROP TABLE dbo.TempReport\nEND\n\n\nIF EXISTS (Select 1 from sysobjects where name = 'SubsidiaryDetails' and type = 'U')\nDROP TABLE [dbo].[SubsidiaryDetails]\n\n\nSelect Distinct SubsidiaryId, SubsidiaryName, AreaName, RegionName, SubRegionName into dbo.SubsidiaryDetails from [vnxt_Catalogues].[reporting].[vw_Mst_Subsidiary]  where 1=1 order by SubsidiaryId\n"
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport'\ntruncate TABLE dbo.TempReport\nEND\n\n\nIF EXISTS (Select 1 from sysobjects where name = 'SubsidiaryDetails' and type = 'U')\nDROP TABLE [dbo].[SubsidiaryDetails]\n\n\nSelect Distinct SubsidiaryId, SubsidiaryName, AreaName, RegionName, SubRegionName into dbo.SubsidiaryDetails from [vnxt_Catalogues].[reporting].[vw_Mst_Subsidiary]  where 1=1 order by SubsidiaryId\n"
 						}
 					]
 				}
