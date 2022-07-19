@@ -1102,7 +1102,14 @@
 			{
 				"name": "Copy data2",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Update TempReport",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -1112,8 +1119,76 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderQuery": "select M.Subsidiary,P.GrslistId,Count(Distinct  Case WHEN ISNULL(m.AccountNumber,'') != '' THEN \nm.AccountNumber END) AS AccountNumber from MAL_MPL.[dbo].[vw_vnxt_src_MPL] m with(nolock)\nINNER JOIN [vnxt_Reporting].[dbo].[Partner_SegmentSubSegment] p with(nolock)\nON m.Segment = p.segment\nGROUp BY M.Subsidiary,P.GrslistId",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Subsidiary",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Subsidiary",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "GrslistId",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "GrslistId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Source_vnxt_Reporting",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dest_vnxt_Reporting_MPL_AccountNumber",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
