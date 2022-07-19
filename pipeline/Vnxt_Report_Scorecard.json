@@ -1317,6 +1317,31 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Update Partner Account NonManaged",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Select Distinct Q.GRSListid, Geo.SubsidiaryName ,Q.PartnerAccountNumber,SUM(Case WHEN ISNULL(Q.ManagedContact,0) = 0 THEN 1 ELSE 0 END) AS ManagedContact into #Temp1 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName ,Q.PartnerAccountNumber\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName ,COUNT(Distinct Q.PartnerAccountNumber) AccountsNonManagedContact_1 into #Temp2 from #Temp1 Q with(nolock) \nWHERE Q.PartnerAccountNumber is not null and ManagedContact > 1\nGROUP BY Q.GRSListid, Q.SubsidiaryName\n\nUpdate P\nSet P.AccountsNonManagedContact_1 = Tem.AccountsNonManagedContact_1\nfrom vnxt_reporting..TempReport P with(nolock)\nINNER JOIN #Temp2 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName\n--WHERE p.grslistid in (3,4,6,7,8,9,11,12,19,10,26)\nWHERE p.grslistid IN (3,4,8,10,11,26,38)\n\nDROP TABLE #Temp1\nDROP TABLE #Temp2\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName ,Q.PartnerAccountNumber,SUM(Case WHEN ISNULL(Q.ManagedContact,0) = 0 THEN 1 ELSE 0 END) AS ManagedContact into #Temp3 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName ,Q.PartnerAccountNumber\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName ,COUNT(Distinct Q.PartnerAccountNumber) AccountsNonManagedContact_2 into #Temp4 from #Temp3 Q with(nolock) \nWHERE Q.PartnerAccountNumber is not null and ManagedContact > 2\nGROUP BY Q.GRSListid, Q.SubsidiaryName\n\nUpdate P\nSet P.AccountsNonManagedContact_2 = Tem.AccountsNonManagedContact_2\nfrom vnxt_reporting..TempReport P with(nolock)\nINNER JOIN #Temp4 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName\n--WHERE p.grslistid in (3,4,6,7,8,9,11,12,19,10,26)\nWHERE p.grslistid IN (3,4,8,10,11,26,38)\n\nDROP TABLE #Temp3\nDROP TABLE #Temp4\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName ,Q.PartnerAccountNumber,SUM(Case WHEN ISNULL(Q.ManagedContact,0) = 0 THEN 1 ELSE 0 END) AS ManagedContact into #Temp5 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName ,Q.PartnerAccountNumber\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName ,COUNT(Distinct Q.PartnerAccountNumber) AccountsNonManagedContact_3 into #Temp6 from #Temp5 Q with(nolock) \nWHERE Q.PartnerAccountNumber is not null and ManagedContact > 3\nGROUP BY Q.GRSListid, Q.SubsidiaryName\n\nUpdate P\nSet P.AccountsNonManagedContact_3 = Tem.AccountsNonManagedContact_3\nfrom vnxt_reporting..TempReport P with(nolock)\nINNER JOIN #Temp6 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName\n--WHERE p.grslistid in (3,4,6,7,8,9,11,12,19,10,26)\nWHERE p.grslistid IN (3,4,8,10,11,26,38)\n\nDROP TABLE #Temp5\nDROP TABLE #Temp6\n\nselect 1 abcd"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
