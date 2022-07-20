@@ -1,6 +1,33 @@
 {
 	"name": "Vnxt_Report_Scorecard_Summary",
 	"properties": {
+		"activities": [
+			{
+				"name": "Drop Table",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary'\nDROP TABLE dbo.TempReport_Summary\nEND\n\nSelect 1 abcd"
+						}
+					]
+				}
+			}
+		],
 		"folder": {
 			"name": "Reporting Pipeline"
 		},
