@@ -20956,6 +20956,38 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Update TempReport_Summary",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "TempReport_Summary",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "Update dbo.TempReport_Summary\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA ITP'\n\n\nUpdate dbo.TempReport_Summary\nSet GRSBucket = 'Customer - SMB MPAA'\nWhere GRSBucket = 'Customer -  SMB MPAA BDM'"
+								}
+							]
+						}
 					}
 				],
 				"policy": {
