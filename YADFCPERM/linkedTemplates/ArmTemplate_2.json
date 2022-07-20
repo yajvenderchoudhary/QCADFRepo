@@ -20988,6 +20988,86 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "Update Total Account Number",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Update TempReport_Summary",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "UPDATE s\nset TotalAccountNumber = t.AccountNumber\nFROM dbo.TempReport_Summary s\nINNER JOIN [dbo].[MPL_AccountNumber] t with(nolock)\nON t.subsidiary = s.subsidiaryName and t.grslistid = s.grslistid\n\n\nUPDATE s\nset TotalAccountNumber = t.AccountNumber\nFROM dbo.TempReport_Summary s\nINNER JOIN [dbo].[MAL_AccountNumber] t with(nolock)\nON t.subsidiary = s.subsidiaryName and t.grslistid = s.grslistid\n\nselect 1 abcd"
+								}
+							]
+						}
+					},
+					{
+						"name": "Update Customer Account Managed",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Update Total Account Number",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "Select Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp1 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 1 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_1 into #Temp2 from #Temp1 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager\n\nUpdate P\nSet P.AccountsManagedContact_1 = Tem.AccountsManagedContact_1\nfrom vnxt_reporting..TempReport_Summary P with(nolock)\nINNER JOIN #Temp2 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager\n\nDROP TABLE #Temp1\nDROP TABLE #Temp2\n\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp3 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 2 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_2 into #Temp4 from #Temp3 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager\n\nUpdate P\nSet P.AccountsManagedContact_2 = Tem.AccountsManagedContact_2\nfrom vnxt_reporting..TempReport_Summary P with(nolock)\nINNER JOIN #Temp4 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager\n\nDROP TABLE #Temp3\nDROP TABLE #Temp4\n\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp5 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 3\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_3 into #Temp6 from #Temp5 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager\n\nUpdate P\nSet P.AccountsManagedContact_3 = Tem.AccountsManagedContact_3\nfrom vnxt_reporting..TempReport_Summary P with(nolock)\nINNER JOIN #Temp6 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager\n\nDROP TABLE #Temp5\nDROP TABLE #Temp6\n\nselect 1 abcd"
+								}
+							]
+						}
+					},
+					{
+						"name": "Script1",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"scripts": []
+						}
 					}
 				],
 				"policy": {
