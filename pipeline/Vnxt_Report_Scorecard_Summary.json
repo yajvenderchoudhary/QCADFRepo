@@ -902,6 +902,522 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Truncate TempReport_Summary_MLD",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Update Data Quality",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_MLD' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_MLD'\ntruncateTABLE dbo.TempReport_Summary_MLD\nEND\nselect 1 abcd\n"
+						}
+					]
+				}
+			},
+			{
+				"name": "RefressTempReport_Summary_MLD",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate TempReport_Summary_MLD",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dbo.Scorecard"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.TempReport_Summary_MLD"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderStoredProcedureName": "[dbo].[SP_TempReport_Summary_MLD]",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlMISink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "GRSListid",
+									"type": "Int16",
+									"physicalType": "smallint"
+								},
+								"sink": {
+									"name": "GRSListid",
+									"type": "Int16",
+									"physicalType": "smallint"
+								}
+							},
+							{
+								"source": {
+									"name": "GRSBucket",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "GRSBucket",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AreaName",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "AreaName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SubRegionName",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "SubRegionName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SubsidiaryName",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "SubsidiaryName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountManager",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "AccountManager",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MSSalesTopParentID",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "MSSalesTopParentID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ParentAccountId",
+									"type": "Guid",
+									"physicalType": "uniqueidentifier"
+								},
+								"sink": {
+									"name": "ParentAccountId",
+									"type": "Guid",
+									"physicalType": "uniqueidentifier"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountId",
+									"type": "Guid",
+									"physicalType": "uniqueidentifier"
+								},
+								"sink": {
+									"name": "AccountId",
+									"type": "Guid",
+									"physicalType": "uniqueidentifier"
+								}
+							},
+							{
+								"source": {
+									"name": "CompanyName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "CompanyName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagedSampleCount",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "ManagedSampleCount",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "NonManagedSampleCount",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "NonManagedSampleCount",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Accountnumber",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Accountnumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PartnerAccountNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PartnerAccountNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAccountNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "TotalAccountNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountsManagedContact_1",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountsManagedContact_1",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountsManagedContact_2",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountsManagedContact_2",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountsManagedContact_3",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountsManagedContact_3",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountsNonManagedContact_1",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountsNonManagedContact_1",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountsNonManagedContact_2",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountsNonManagedContact_2",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "AccountsNonManagedContact_3",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "AccountsNonManagedContact_3",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAccountsManagedContact_1",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IsAccountsManagedContact_1",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAccountsManagedContact_2",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IsAccountsManagedContact_2",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAccountsManagedContact_3",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IsAccountsManagedContact_3",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAccountsNonManagedContact_1",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IsAccountsNonManagedContact_1",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAccountsNonManagedContact_2",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IsAccountsNonManagedContact_2",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAccountsNonManagedContact_3",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IsAccountsNonManagedContact_3",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Perc_AccountsManagedContact_1",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								},
+								"sink": {
+									"name": "Perc_AccountsManagedContact_1",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								}
+							},
+							{
+								"source": {
+									"name": "Perc_AccountsManagedContact_2",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								},
+								"sink": {
+									"name": "Perc_AccountsManagedContact_2",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								}
+							},
+							{
+								"source": {
+									"name": "Perc_AccountsManagedContact_3",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								},
+								"sink": {
+									"name": "Perc_AccountsManagedContact_3",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								}
+							},
+							{
+								"source": {
+									"name": "Perc_AccountsNonManagedContact_1",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								},
+								"sink": {
+									"name": "Perc_AccountsNonManagedContact_1",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								}
+							},
+							{
+								"source": {
+									"name": "Perc_AccountsNonManagedContact_2",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								},
+								"sink": {
+									"name": "Perc_AccountsNonManagedContact_2",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								}
+							},
+							{
+								"source": {
+									"name": "Perc_AccountsNonManagedContact_3",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								},
+								"sink": {
+									"name": "Perc_AccountsNonManagedContact_3",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 7
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Source_vnxt_Reporting",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dest_vnxt_TempReport_Summary_MLD",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
