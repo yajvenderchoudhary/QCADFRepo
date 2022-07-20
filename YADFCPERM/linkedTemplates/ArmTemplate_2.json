@@ -21212,6 +21212,38 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "Update Data Quality",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Update ManagedContactMLAccountCoverage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "--DataQuality\n\nUpdate dbo.TempReport_Summary\nSet DataQuality = CAST((CAST(SampleCount AS numeric(10,2)))/(CAST(FixableRejectionCount AS numeric(10,2))+CAST(SampleCount AS numeric(10,2))) AS numeric(7,4))\nWHERE (ISNULL(FixableRejectionCount,0)+ISNULL(SampleCount,0)) > 0\n\n\nselect 1 abcd"
+								}
+							]
+						}
 					}
 				],
 				"policy": {
