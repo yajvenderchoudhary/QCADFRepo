@@ -1,0 +1,9 @@
+{
+	"name": "Vnxt_Report_Scorecard_Summary",
+	"properties": {
+		"folder": {
+			"name": "Reporting Pipeline"
+		},
+		"annotations": []
+	}
+}
