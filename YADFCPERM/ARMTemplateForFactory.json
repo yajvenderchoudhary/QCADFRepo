@@ -33882,6 +33882,875 @@
 				"[concat(variables('factoryId'), '/datasets/Source_vnxt_pool')]",
 				"[concat(variables('factoryId'), '/datasets/Scorecard')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Vnxt_Report_Scorecard_Summary')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Drop Table",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary'\nDROP TABLE dbo.TempReport_Summary\nEND\n\nSelect 1 abcd"
+								}
+							]
+						}
+					},
+					{
+						"name": "TempReport_Summary",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Drop Table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dbo.Scorecard"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.TempReport_Summary"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderStoredProcedureName": "[[dbo].[SP_TempReport_Summary]",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlMISink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "GRSListid",
+											"type": "Int16",
+											"physicalType": "smallint"
+										},
+										"sink": {
+											"name": "GRSListid",
+											"type": "Int16",
+											"physicalType": "smallint"
+										}
+									},
+									{
+										"source": {
+											"name": "GRSBucket",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "GRSBucket",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AreaName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "AreaName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SubRegionName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "SubRegionName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SubsidiaryName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "SubsidiaryName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "AccountManager",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedContact",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "ManagedContact",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "TotalCount",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "TotalCount",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "SampleCount",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "SampleCount",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "RejectionCount",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "RejectionCount",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "FixableRejectionCount",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "FixableRejectionCount",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "NonFixableRejectionCount",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "NonFixableRejectionCount",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedSampleCount",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ManagedSampleCount",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Accountnumber",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Accountnumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "PartnerAccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "PartnerAccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "TotalAccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "TotalAccountNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountsManagedContact_1",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountsManagedContact_1",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountsManagedContact_2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountsManagedContact_2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountsManagedContact_3",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountsManagedContact_3",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountsNonManagedContact_1",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountsNonManagedContact_1",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountsNonManagedContact_2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountsNonManagedContact_2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountsNonManagedContact_3",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "AccountsNonManagedContact_3",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Perc_AccountsManagedContact_1",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "Perc_AccountsManagedContact_1",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "Perc_AccountsManagedContact_2",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "Perc_AccountsManagedContact_2",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "Perc_AccountsManagedContact_3",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "Perc_AccountsManagedContact_3",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "Perc_AccountsNonManagedContact_1",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "Perc_AccountsNonManagedContact_1",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "Perc_AccountsNonManagedContact_2",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "Perc_AccountsNonManagedContact_2",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "Perc_AccountsNonManagedContact_3",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "Perc_AccountsNonManagedContact_3",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "ManagedContactMLAccountCoverage",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "ManagedContactMLAccountCoverage",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "DataQuality",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										},
+										"sink": {
+											"name": "DataQuality",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 4,
+											"precision": 7
+										}
+									},
+									{
+										"source": {
+											"name": "DNCLocalSuppression",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DNCLocalSuppression",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DNCPriorWaveHardBounceBack",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DNCPriorWaveHardBounceBack",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "OtherSurveySuppression",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "OtherSurveySuppression",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DNCMDMHardSuppress",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DNCMDMHardSuppress",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "OtherNonFixable",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "OtherNonFixable",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "GlobalCompanySuppression",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "GlobalCompanySuppression",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DeDupeinSameBucket",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DeDupeinSameBucket",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "OtherFixable",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "OtherFixable",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "MissingNameCompanyFirstLast",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "MissingNameCompanyFirstLast",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "InvalidMissingEmail",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "InvalidMissingEmail",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "InvalidMissingFields",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "InvalidMissingFields",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_vnxt_Reporting",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dest_vnxt_Reporting_TempReport_Summary",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Reporting Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]",
+				"[concat(variables('factoryId'), '/datasets/Source_vnxt_Reporting')]",
+				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting_TempReport_Summary')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_Reporting_TempReport_Summary')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Dest Report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "GRSListid",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "GRSBucket",
+						"type": "varchar"
+					},
+					{
+						"name": "AreaName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubRegionName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubsidiaryName",
+						"type": "varchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagedContact",
+						"type": "bit"
+					},
+					{
+						"name": "TotalCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NonFixableRejectionCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagedSampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accountnumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Perc_AccountsManagedContact_1",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsManagedContact_2",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsManagedContact_3",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_1",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_2",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_3",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "ManagedContactMLAccountCoverage",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "DataQuality",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "DNCLocalSuppression",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DNCPriorWaveHardBounceBack",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OtherSurveySuppression",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DNCMDMHardSuppress",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OtherNonFixable",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GlobalCompanySuppression",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DeDupeinSameBucket",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OtherFixable",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MissingNameCompanyFirstLast",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InvalidMissingEmail",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InvalidMissingFields",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TempReport_Summary"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
+			]
 		}
 	]
 }
