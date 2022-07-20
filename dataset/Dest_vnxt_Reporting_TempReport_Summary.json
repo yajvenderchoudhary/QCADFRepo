@@ -1,0 +1,227 @@
+{
+	"name": "Dest_vnxt_Reporting_TempReport_Summary",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "vnxt_reporting",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Reporting Dataset/Dest Report"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "GRSListid",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "GRSBucket",
+				"type": "varchar"
+			},
+			{
+				"name": "AreaName",
+				"type": "varchar"
+			},
+			{
+				"name": "SubRegionName",
+				"type": "varchar"
+			},
+			{
+				"name": "SubsidiaryName",
+				"type": "varchar"
+			},
+			{
+				"name": "AccountManager",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagedContact",
+				"type": "bit"
+			},
+			{
+				"name": "TotalCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SampleCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RejectionCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FixableRejectionCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NonFixableRejectionCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ManagedSampleCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Accountnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PartnerAccountNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TotalAccountNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountsManagedContact_1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountsManagedContact_2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountsManagedContact_3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountsNonManagedContact_1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountsNonManagedContact_2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountsNonManagedContact_3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Perc_AccountsManagedContact_1",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "Perc_AccountsManagedContact_2",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "Perc_AccountsManagedContact_3",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "Perc_AccountsNonManagedContact_1",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "Perc_AccountsNonManagedContact_2",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "Perc_AccountsNonManagedContact_3",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "ManagedContactMLAccountCoverage",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "DataQuality",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 4
+			},
+			{
+				"name": "DNCLocalSuppression",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DNCPriorWaveHardBounceBack",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OtherSurveySuppression",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DNCMDMHardSuppress",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OtherNonFixable",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GlobalCompanySuppression",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DeDupeinSameBucket",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OtherFixable",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "MissingNameCompanyFirstLast",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "InvalidMissingEmail",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "InvalidMissingFields",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "TempReport_Summary"
+		}
+	}
+}
