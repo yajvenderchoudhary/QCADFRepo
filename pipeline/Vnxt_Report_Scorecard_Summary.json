@@ -774,6 +774,70 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Update Partner Account NonManaged",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Update Partner Account Managed",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Select Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.PartnerAccountNumber,SUM(Case WHEN ISNULL(Q.ManagedContact,0) = 0 THEN 1 ELSE 0 END) AS ManagedContact into #Temp1 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.PartnerAccountNumber Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 1 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, COUNT(Distinct Q.PartnerAccountNumber) AccountsNonManagedContact_1 into #Temp2 from #Temp1 Q with(nolock) \nWHERE Q.PartnerAccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager\n\nUpdate P\nSet P.AccountsNonManagedContact_1 = Tem.AccountsNonManagedContact_1\nfrom vnxt_reporting..TempReport_Summary P with(nolock)\nINNER JOIN #Temp2 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager \nWHERE p.grslistid in (3,4,6,7,8,9,11,12,19,10,26)\n\nDROP TABLE #Temp1\nDROP TABLE #Temp2\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.PartnerAccountNumber,SUM(Case WHEN ISNULL(Q.ManagedContact,0) = 0 THEN 1 ELSE 0 END) AS ManagedContact into #Temp3 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.PartnerAccountNumber Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 2\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, COUNT(Distinct Q.PartnerAccountNumber) AccountsNonManagedContact_2 into #Temp4 from #Temp3 Q with(nolock) \nWHERE Q.PartnerAccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager\n\nUpdate P\nSet P.AccountsNonManagedContact_2 = Tem.AccountsNonManagedContact_2\nfrom vnxt_reporting..TempReport_Summary P with(nolock)\nINNER JOIN #Temp4 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager\nWHERE p.grslistid in (3,4,6,7,8,9,11,12,19,10,26)\n\nDROP TABLE #Temp3\nDROP TABLE #Temp4\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.PartnerAccountNumber,SUM(Case WHEN ISNULL(Q.ManagedContact,0) = 0 THEN 1 ELSE 0 END) AS ManagedContact into #Temp5 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nWHERE ISNULL(Q.RejectionCount,0) = 0\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.PartnerAccountNumber Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 3\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, COUNT(Distinct Q.PartnerAccountNumber) AccountsNonManagedContact_3 into #Temp6 from #Temp5 Q with(nolock) \nWHERE Q.PartnerAccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager\n\nUpdate P\nSet P.AccountsNonManagedContact_3 = Tem.AccountsNonManagedContact_3\nfrom vnxt_reporting..TempReport_Summary P with(nolock)\nINNER JOIN #Temp6 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager \nWHERE p.grslistid in (3,4,6,7,8,9,11,12,19,10,26)\n\nDROP TABLE #Temp5\nDROP TABLE #Temp6\n\nselect 1 abcd"
+						}
+					]
+				}
+			},
+			{
+				"name": "Update Account Percentage",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Update Partner Account NonManaged",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "--Customer--------------------------------\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsManagedContact_1 = CAST((CAST(AccountsManagedContact_1 AS numeric(8,2))/CAST(NULLIF(AccountNumber,0) AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_1 <> 0 and AccountsManagedContact_1 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsManagedContact_2 = CAST((CAST(AccountsManagedContact_2 AS numeric(8,2))/CAST(NULLIF(AccountNumber,0) AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_2 <> 0 and AccountsManagedContact_2 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsManagedContact_3 = CAST((CAST(AccountsManagedContact_3 AS numeric(8,2))/CAST(NULLIF(AccountNumber,0) AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_3 <> 0 and AccountsManagedContact_3 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsNonManagedContact_1 = CAST((CAST(AccountsNonManagedContact_1 AS numeric(8,2))/CAST(NULLIF(AccountNumber,0) AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_1 <> 0 and AccountsNonManagedContact_1 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsNonManagedContact_2 = CAST((CAST(AccountsNonManagedContact_2 AS numeric(8,2))/CAST(NULLIF(AccountNumber,0) AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_2 <> 0 and AccountsNonManagedContact_2 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsNonManagedContact_3 = CAST((CAST(AccountsNonManagedContact_3 AS numeric(8,2))/CAST(NULLIF(AccountNumber,0) AS numeric(8,2))) as numeric(7,4))\nWHERE AccountsNonManagedContact_3 <> 0 and AccountsNonManagedContact_3 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\n--Partner--------------------------------\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsManagedContact_1 = CAST((CAST(AccountsManagedContact_1 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_1 <> 0 and AccountsManagedContact_1 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsManagedContact_2 = CAST((CAST(AccountsManagedContact_2 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_2 <> 0 and AccountsManagedContact_2 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsManagedContact_3 = CAST((CAST(AccountsManagedContact_3 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_3 <> 0 and AccountsManagedContact_3 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsNonManagedContact_1 = CAST((CAST(AccountsNonManagedContact_1 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_1 <> 0 and AccountsNonManagedContact_1 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsNonManagedContact_2 = CAST((CAST(AccountsNonManagedContact_2 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_2 <> 0 and AccountsNonManagedContact_2 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary\nSet Perc_AccountsNonManagedContact_3 = CAST((CAST(AccountsNonManagedContact_3 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_3 <> 0 and AccountsNonManagedContact_3 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary\nSet AccountNumber = PartnerAccountNumber\nWhere grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nselect 1 abcd"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
