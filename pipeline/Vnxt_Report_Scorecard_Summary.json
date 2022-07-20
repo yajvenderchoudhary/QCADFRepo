@@ -838,6 +838,38 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Update ManagedContactMLAccountCoverage",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Update Account Percentage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "Update [vnxt_Reporting].[dbo].[TempReport_Summary]\nSet Perc_AccountsManagedContact_1 = NULL,\nPerc_AccountsManagedContact_2 = NULL,\nPerc_AccountsManagedContact_3 = NULL\nWHERE ManagedContact = 0\n\n\nUpdate [vnxt_Reporting].[dbo].[TempReport_Summary]\nSet Perc_AccountsNonManagedContact_1 = NULL,\nPerc_AccountsNonManagedContact_2 = NULL,\nPerc_AccountsNonManagedContact_3 = NULL\nWHERE ManagedContact = 1\n\n\nUpdate dbo.TempReport_Summary\nSet ManagedContactMLAccountCoverage = CASE WHEN GRSBucket = 'Customer - SMSP Public Sector Corp AM' THEN Perc_AccountsManagedContact_2\nWHEN GRSBucket = 'Partner - Managed SMSP' THEN Perc_AccountsManagedContact_2\nWHEN GRSBucket = 'Partner - Regional Tele Covered' THEN Perc_AccountsManagedContact_1\nWHEN GRSBucket = 'Partner - Dynamics Managed' THEN Perc_AccountsManagedContact_2\nWHEN GRSBucket = 'Customer - SMSP Corp AM' THEN Perc_AccountsManagedContact_2\nWHEN GRSBucket = 'Customer - SMSP Corp TM' THEN Perc_AccountsManagedContact_1\nWHEN GRSBucket = 'Customer - SMSP Public Sector Corp TM' THEN Perc_AccountsManagedContact_1\nWHEN GRSBucket = 'Partner - Telemanaged Partner' THEN Perc_AccountsManagedContact_1\nELSE 0.0000 END\nWHERE ManagedContact = 1\n\n\nUpdate dbo.TempReport_Summary\nSet ManagedContactMLAccountCoverage = CASE WHEN GRSBucket = 'Customer - SMSP Public Sector Corp AM' THEN Perc_AccountsNonManagedContact_2\nWHEN GRSBucket = 'Partner - Managed SMSP' THEN Perc_AccountsNonManagedContact_2\nWHEN GRSBucket = 'Partner - Regional Tele Covered' THEN Perc_AccountsNonManagedContact_1\nWHEN GRSBucket = 'Partner - Dynamics Managed' THEN Perc_AccountsNonManagedContact_2\nWHEN GRSBucket = 'Customer - SMSP Corp AM' THEN Perc_AccountsNonManagedContact_2\nWHEN GRSBucket = 'Customer - SMSP Corp TM' THEN Perc_AccountsNonManagedContact_1\nWHEN GRSBucket = 'Customer - SMSP Public Sector Corp TM' THEN Perc_AccountsNonManagedContact_1\nWHEN GRSBucket = 'Partner - Telemanaged Partner' THEN Perc_AccountsNonManagedContact_1\nELSE 0.0000 END\nWHERE ManagedContact = 0\n\n\nselect 1 abcd"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
