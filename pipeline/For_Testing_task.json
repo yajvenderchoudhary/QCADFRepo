@@ -22,7 +22,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_MLD' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_MLD'\ntruncate TABLE dbo.TempReport_Summary_MLD\n\nselect 1 abcd\n"
+							"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_MLD' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_MLD'\ntruncate TABLE dbo.TempReport_Summary_MLD\nEND\n\n\nselect 1 abcd\n"
 						}
 					]
 				}
