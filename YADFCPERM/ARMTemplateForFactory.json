@@ -6557,8 +6557,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data2",
-						"type": "Copy",
+						"name": "Truncate TempReport_Summary_MLD",
+						"type": "Script",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -6568,79 +6568,18 @@
 							"secureInput": false
 						},
 						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlMISource",
-								"sqlReaderQuery": "select M.Subsidiary,P.GrslistId,Count(Distinct  Case WHEN ISNULL(m.AccountNumber,'') != '' THEN \nm.AccountNumber END) AS AccountNumber from MAL_MPL.[dbo].[vw_vnxt_src_MPL] m with(nolock)\nINNER JOIN [vnxt_Reporting].[dbo].[Partner_SegmentSubSegment] p with(nolock)\nON m.Segment = p.segment\nGROUp BY M.Subsidiary,P.GrslistId",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "SqlMISink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Subsidiary",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Subsidiary",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "GrslistId",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "GrslistId",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountNumber",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "AccountNumber",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
+						"linkedServiceName": {
+							"referenceName": "vnxt_reporting",
+							"type": "LinkedServiceReference"
 						},
-						"inputs": [
-							{
-								"referenceName": "Source_vnxt_Reporting",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Dest_vnxt_Reporting_MPL_AccountNumber",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_MLD' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_MLD'\ntruncate TABLE dbo.TempReport_Summary_MLD\nEND\n\n\nselect 1 abcd\n"
+								}
+							]
+						}
 					}
 				],
 				"policy": {
@@ -6653,8 +6592,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Source_vnxt_Reporting')]",
-				"[concat(variables('factoryId'), '/datasets/Dest_vnxt_Reporting_MPL_AccountNumber')]"
+				"[concat(variables('factoryId'), '/linkedServices/vnxt_reporting')]"
 			]
 		},
 		{
@@ -18248,7 +18186,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary'\nTruncate TABLE dbo.TempReport_Summary\nEND\n\nSelect 1 abcd"
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary'\nTruncate TABLE dbo.TempReport_Summary\nEND\n\n\n\nSelect 1 abcd"
 								}
 							]
 						}
@@ -19158,7 +19096,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_MLD' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_MLD'\ntruncateTABLE dbo.TempReport_Summary_MLD\nEND\nselect 1 abcd\n"
+									"text": "IF EXISTS(Select * from sysobjects where name = 'TempReport_Summary_MLD' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','TempReport_Summary_MLD'\ntruncate TABLE dbo.TempReport_Summary_MLD\nEND\n\n\nselect 1 abcd\n"
 								}
 							]
 						}
