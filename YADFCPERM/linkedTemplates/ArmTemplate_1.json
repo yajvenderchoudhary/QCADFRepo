@@ -3099,6 +3099,185 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_TempReport_Summary_MLD')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Reporting Dataset/Dest Report"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [
+					{
+						"name": "GRSListid",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "GRSBucket",
+						"type": "varchar"
+					},
+					{
+						"name": "AreaName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubRegionName",
+						"type": "varchar"
+					},
+					{
+						"name": "SubsidiaryName",
+						"type": "varchar"
+					},
+					{
+						"name": "AccountManager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MSSalesTopParentID",
+						"type": "varchar"
+					},
+					{
+						"name": "ParentAccountId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "AccountId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagedSampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NonManagedSampleCount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accountnumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PartnerAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalAccountNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsManagedContact_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AccountsNonManagedContact_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "IsAccountsManagedContact_1",
+						"type": "varchar"
+					},
+					{
+						"name": "IsAccountsManagedContact_2",
+						"type": "varchar"
+					},
+					{
+						"name": "IsAccountsManagedContact_3",
+						"type": "varchar"
+					},
+					{
+						"name": "IsAccountsNonManagedContact_1",
+						"type": "varchar"
+					},
+					{
+						"name": "IsAccountsNonManagedContact_2",
+						"type": "varchar"
+					},
+					{
+						"name": "IsAccountsNonManagedContact_3",
+						"type": "varchar"
+					},
+					{
+						"name": "Perc_AccountsManagedContact_1",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsManagedContact_2",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsManagedContact_3",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_1",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_2",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					},
+					{
+						"name": "Perc_AccountsNonManagedContact_3",
+						"type": "decimal",
+						"precision": 7,
+						"scale": 4
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TempReport_Summary_MLD"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Dest_vnxt_reporting_account_Hierarchy')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -8447,28 +8626,6 @@
 						"type": "varchar"
 					}
 				],
-				"typeProperties": {
-					"schema": "FAREAST\\v-yachou",
-					"table": "VW_Usp_Get_DoNotContact"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sr_Other_Checks')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DoNotContact",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QC Datasets/Source"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [],
 				"typeProperties": {
 					"schema": "FAREAST\\v-yachou",
 					"table": "VW_Usp_Get_DoNotContact"
