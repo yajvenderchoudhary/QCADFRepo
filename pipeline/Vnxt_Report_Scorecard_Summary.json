@@ -1546,6 +1546,38 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Update Account Percentage_MPL",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Update Partner Account NonManaged_mdl",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "vnxt_reporting",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "--Customer--------------------------------\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsManagedContact_1 = CAST((CAST(AccountsManagedContact_1 AS numeric(8,2))/CAST(AccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_1 <> 0 and AccountsManagedContact_1 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsManagedContact_2 = CAST((CAST(AccountsManagedContact_2 AS numeric(8,2))/CAST(AccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_2 <> 0 and AccountsManagedContact_2 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsManagedContact_3 = CAST((CAST(AccountsManagedContact_3 AS numeric(8,2))/CAST(AccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_3 <> 0 and AccountsManagedContact_3 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsNonManagedContact_1 = CAST((CAST(AccountsNonManagedContact_1 AS numeric(8,2))/CAST(AccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_1 <> 0 and AccountsNonManagedContact_1 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsNonManagedContact_2 = CAST((CAST(AccountsNonManagedContact_2 AS numeric(8,2))/CAST(AccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_2 <> 0 and AccountsNonManagedContact_2 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsNonManagedContact_3 = CAST((CAST(AccountsNonManagedContact_3 AS numeric(8,2))/CAST(AccountNumber AS numeric(8,2))) as numeric(7,4))\nWHERE AccountsNonManagedContact_3 <> 0 and AccountsNonManagedContact_3 is not null and grslistid not in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26)\n\n\n--Partner--------------------------------\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsManagedContact_1 = CAST((CAST(AccountsManagedContact_1 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_1 <> 0 and AccountsManagedContact_1 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsManagedContact_2 = CAST((CAST(AccountsManagedContact_2 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_2 <> 0 and AccountsManagedContact_2 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsManagedContact_3 = CAST((CAST(AccountsManagedContact_3 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsManagedContact_3 <> 0 and AccountsManagedContact_3 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsNonManagedContact_1 = CAST((CAST(AccountsNonManagedContact_1 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_1 <> 0 and AccountsNonManagedContact_1 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsNonManagedContact_2 = CAST((CAST(AccountsNonManagedContact_2 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_2 <> 0 and AccountsNonManagedContact_2 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet Perc_AccountsNonManagedContact_3 = CAST((CAST(AccountsNonManagedContact_3 AS numeric(8,2))/CAST(PartnerAccountNumber AS numeric(8,2))) AS numeric(7,4))\nWHERE AccountsNonManagedContact_3 <> 0 and AccountsNonManagedContact_3 is not null and grslistid in (3,4,8,10,11,26,38)--(3,4,6,7,8,9,11,12,19,10,26) \nand PartnerAccountNumber <> 0 and PartnerAccountNumber is not null\n\n\nUpdate dbo.TempReport_Summary_MLD\nSet IsAccountsManagedContact_1 = 'Y'\nWhere ManagedSampleCount > 1\n\nUpdate dbo.TempReport_Summary_MLD\nSet IsAccountsManagedContact_2 = 'Y'\nWhere ManagedSampleCount > 2\n\nUpdate dbo.TempReport_Summary_MLD\nSet IsAccountsManagedContact_3 = 'Y'\nWhere ManagedSampleCount > 3\n\nUpdate dbo.TempReport_Summary_MLD\nSet IsAccountsNonManagedContact_1 = 'Y'\nWhere NonManagedSampleCount > 1\n\nUpdate dbo.TempReport_Summary_MLD\nSet IsAccountsNonManagedContact_2 = 'Y'\nWhere NonManagedSampleCount > 2\n\nUpdate dbo.TempReport_Summary_MLD\nSet IsAccountsNonManagedContact_3 = 'Y'\nWhere NonManagedSampleCount > 3\n\nselect 1 abcd"
+						}
+					]
+				}
 			}
 		],
 		"folder": {
