@@ -17621,7 +17621,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlMISource",
-								"sqlReaderQuery": "--IF EXISTS(Select * from sysobjects where name = --'Scorecard' and type = 'U')\n--BEGIN\n--EXEC dbo.CreateBackup 'dbo','Scorecard'\n--Truncate TABLE dbo.Scorecard\n-- END\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
+								"sqlReaderQuery": "IF EXISTS(Select * from sysobjects where name = --'Scorecard' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','Scorecard'\nTruncate TABLE dbo.Scorecard\n END\n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\nselect 1 as abcd\n",
 								"partitionOption": "None"
 							},
 							"dataset": {
@@ -21079,7 +21079,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "--% of Contacts from last wave under Same Segment\n--35 sec\nIF EXISTS(Select * from sysobjects where name = 'Temp1' and type = 'U')\nDROP TABLE dbo.Temp1\n\n\nselect G.CPERMListid AS GRSListID,G.SubsidiaryName,COUNT(1) AS PreviousSample into dbo.Temp1 from dbo.CPERM_Prev_Sample G with(nolock)\nINNER JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] L with(nolock)\nON G.CPERMListid = L.GRSListId\nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON G.SubsidiaryName = Geo.SubsidiaryName\nINNER JOIN [dbo].[Scorecard] S with(nolock)\nON G.CPERMListid = S.GrslistId AND Geo.SubsidiaryId = ISNULL(S.SubsidiaryId,0) AND G.Contactid = S.ContactNumber\nWHERE S.RejectionCount = 0 and 1=1----Need to ask\nGROUP BY G.CPERMListid,G.SubsidiaryName\n\n\nUpdate tr\nSet tr.ContactsSameSegmentFromLastWave = t.PreviousSample\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp1 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet Perc_ContactsSameSegmentFromLastWave = CAST((CAST(ContactsSameSegmentFromLastWave AS numeric(10,2))/CAST(PreviousWaveSampleCount AS numeric(10,2))) AS numeric(6,4))\nWHERE ContactsSameSegmentFromLastWave <> 0 and ContactsSameSegmentFromLastWave is not null and PreviousWaveSampleCount <> 0\n\n\nDROP TABLE dbo.Temp1\n\n--% of Contacts from last wave under different Segment\n--33 sec\nIF EXISTS(Select * from sysobjects where name = 'Temp2' and type = 'U')\nDROP TABLE dbo.Temp2\n\n\nselect S.GrslistId,G.SubsidiaryName,COUNT(1) AS PreviousSample into dbo.Temp2 from dbo.CPERM_Prev_Sample G with(nolock)\nINNER JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] L with(nolock)\nON G.CPERMListid = L.GRSListId\nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON G.SubsidiaryName = Geo.SubsidiaryName\nINNER JOIN [dbo].[Scorecard] S with(nolock)\nON G.CPERMListid != S.GrslistId AND Geo.SubsidiaryId = ISNULL(S.SubsidiaryId,0) AND G.Contactid = S.ContactNumber\nWHERE S.RejectionCount = 0 and 1=1----Need to ask\nGROUP BY S.GrslistId,G.SubsidiaryName\n\n\nUpdate tr\nSet tr.ContactsDifferentSegmentFromLastWave = t.PreviousSample\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp2 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet Perc_ContactsDifferentSegmentFromLastWave = CAST((CAST(ContactsDifferentSegmentFromLastWave AS numeric(10,2))/CAST(PreviousWaveSampleCount AS numeric(10,2))) AS numeric(5,4))\nWHERE ContactsDifferentSegmentFromLastWave <> 0 and ContactsDifferentSegmentFromLastWave is not null and PreviousWaveSampleCount <> 0\n\n\nDROP TABLE dbo.Temp2\n\n--% of Qualified new contacts in current wave\n--5:49 min:sec\nIF EXISTS(Select * from sysobjects where name = 'Temp3' and type = 'U')\nDROP TABLE dbo.Temp3\n\n\nSelect S.GrslistId,Geo.SubsidiaryName,COUNT(S.ContactNumber) AS ContactCount into dbo.Temp3 from [dbo].[Scorecard] S with(nolock)\nINNER JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] Geo with(nolock)\nON S.SubsidiaryID = Geo.SubsidiaryID\nWHERE S.ContactNumber in \n(Select distinct S.ContactNumber from [dbo].[Scorecard] S with(nolock)\nLEFT JOIN CPERM_Prev_Sample G with(nolock)\nON S.ContactNumber = G.Contactid\nWHERE G.ContactId is null AND S.RejectionCount = 0) and 1=1\nGROUP BY S.GrslistId,Geo.SubsidiaryName\n\n\nUpdate tr\nSet tr.NewContactInThisWave = t.ContactCount\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp3 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet Perc_NewContactInThisWave = CAST((CAST(NewContactInThisWave AS numeric(12,4))/CAST(SampleCount AS numeric(12,4))) AS numeric(7,4))\nWHERE NewContactInThisWave <> 0 and SampleCount <> 0 and NewContactInThisWave is not null\n\n\nDROP TABLE dbo.Temp3\n\n--% Managed Contacts ∆ from last wave\n--1 sec\nIF EXISTS(Select * from sysobjects where name = 'Temp4' and type = 'U')\nDROP TABLE dbo.Temp4\n\n\nSelect CPERMListid AS GRSListId,SubsidiaryName,Count(1) AS ManagedContact into dbo.Temp4 from dbo.CPERM_Prev_Sample G with(nolock)\nWHERE ISNULL(t_a1_ManagedContact,0) = 1 and 1=1\nGROUP BY CPERMListid,SubsidiaryName\n\n\nUpdate tr\nSet tr.ManagedContactsFromLastWave = t.ManagedContact\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp4 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet ManagedContactsDifferenceFromLastWave = ManagedContact - ManagedContactsFromLastWave\nWHERE ManagedContactsFromLastWave is not null\n\n\nUpdate dbo.TempReport \nSet Perc_ManagedContactsDifferenceFromLastWave = CAST((CAST(ManagedContactsDifferenceFromLastWave AS numeric(10,2))/CAST(PreviousWaveSampleCount AS numeric(10,2))) AS numeric(6,4))\nWHERE ManagedContactsDifferenceFromLastWave <> 0 and PreviousWaveSampleCount <> 0 and ManagedContactsDifferenceFromLastWave is not null\nGO\n\nDROP TABLE dbo.Temp4\n\n--% Sample ∆ from Previous Wave\n--\nIF EXISTS(Select * from sysobjects where name = 'Temp5' and type = 'U')\nDROP TABLE dbo.Temp5\n\n\nSelect CPERMListid AS GRSListId,SubsidiaryName,Count(1) AS SampleCount into dbo.Temp5 from dbo.CPERM_Prev_Sample G with(nolock)\nWHERE 1=1\nGROUP BY CPERMListid,SubsidiaryName\n\n\nUpdate tr\nSet tr.PreviousWaveSampleCount = t.SampleCount\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp5 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate tr\nSet tr.DifferenceFromPreviousWave = tr.SampleCount - tr.PreviousWaveSampleCount\nfrom dbo.TempReport tr\n\n--Update dbo.TempReport \n--Set Perc_DifferenceFromPreviousWave = CAST((CAST(DifferenceFromPreviousWave AS numeric(12,4))/CAST(PreviousWaveSampleCount AS numeric(12,4))) AS numeric(7,4))\n--WHERE DifferenceFromPreviousWave <> 0 and PreviousWaveSampleCount <> 0 and DifferenceFromPreviousWave is not null\n--GO\n\nDROP TABLE dbo.Temp5\n\n--Intended Completes\n\nUpdate tr\nSet tr.IntendedCompletes = ISNULL(t.Lookup_Interview_Target,0)\nfrom dbo.TempReport tr \nINNER JOIN [dbo].[SRC_InterviewTarget_new] t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.level4\nWHERE t.Grslistid not in (13,32,35,36,24,25)\n\n\n--Previous Wave Data Quality\n\nUpdate tr\nSet tr.PreviousWaveFixableRejectionCount = ISNULL(t.FixableRejection,0)\nfrom dbo.TempReport tr \nINNER JOIN dbo.DataQuality_FY18Q1 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\n--% ManagedContactCRMKey\n\nUpdate dbo.TempReport \nSet Perc_ManagedContactCRMKey = CAST((CAST(ManagedContactCRMKey AS numeric(10,2))/CAST(SampleCount AS numeric(10,2))) AS numeric(5,4))\nWHERE ManagedContactCRMKey <> 0 and SampleCount <> 0 and ManagedContactCRMKey is not null\n\n\n--% ManagedContactMPOR\n\nUpdate dbo.TempReport \nSet Perc_ManagedContactMPOR = CAST((CAST(ManagedContactMPOR AS numeric(10,2))/CAST(SampleCount AS numeric(10,2))) AS numeric(5,4))\nWHERE ManagedContactMPOR <> 0 and SampleCount <> 0 and ManagedContactMPOR is not null\nGO\n\nselect 1 abcd\n\n--Remove From FY18H2\n\n--Update dbo.TempReport\n--Set [Perc_DifferenceFromPreviousWave] = 0\n--WHERE GRSBucket like '%EPG%'\n--GO"
+									"text": "--% of Contacts from last wave under Same Segment\n--35 sec\nIF EXISTS(Select * from sysobjects where name = 'Temp1' and type = 'U')\nDROP TABLE dbo.Temp1\n\n\nselect G.CPERMListid AS GRSListID,G.SubsidiaryName,COUNT(1) AS PreviousSample into dbo.Temp1 from dbo.CPERM_Prev_Sample G with(nolock)\nINNER JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] L with(nolock)\nON G.CPERMListid = L.GRSListId\nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON G.SubsidiaryName = Geo.SubsidiaryName\nINNER JOIN [dbo].[Scorecard] S with(nolock)\nON G.CPERMListid = S.GrslistId AND Geo.SubsidiaryId = ISNULL(S.SubsidiaryId,0) AND G.Contactid = S.ContactNumber\nWHERE S.RejectionCount = 0 and 1=1----Need to ask\nGROUP BY G.CPERMListid,G.SubsidiaryName\n\n\nUpdate tr\nSet tr.ContactsSameSegmentFromLastWave = t.PreviousSample\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp1 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet Perc_ContactsSameSegmentFromLastWave = CAST((CAST(ContactsSameSegmentFromLastWave AS numeric(10,2))/CAST(PreviousWaveSampleCount AS numeric(10,2))) AS numeric(6,4))\nWHERE ContactsSameSegmentFromLastWave <> 0 and ContactsSameSegmentFromLastWave is not null and PreviousWaveSampleCount <> 0\n\n\nDROP TABLE dbo.Temp1\n\n--% of Contacts from last wave under different Segment\n--33 sec\nIF EXISTS(Select * from sysobjects where name = 'Temp2' and type = 'U')\nDROP TABLE dbo.Temp2\n\n\nselect S.GrslistId,G.SubsidiaryName,COUNT(1) AS PreviousSample into dbo.Temp2 from dbo.CPERM_Prev_Sample G with(nolock)\nINNER JOIN [vnxt_Catalogues].[dbo].[Lkp_GRSList] L with(nolock)\nON G.CPERMListid = L.GRSListId\nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON G.SubsidiaryName = Geo.SubsidiaryName\nINNER JOIN [dbo].[Scorecard] S with(nolock)\nON G.CPERMListid != S.GrslistId AND Geo.SubsidiaryId = ISNULL(S.SubsidiaryId,0) AND G.Contactid = S.ContactNumber\nWHERE S.RejectionCount = 0 and 1=1----Need to ask\nGROUP BY S.GrslistId,G.SubsidiaryName\n\n\nUpdate tr\nSet tr.ContactsDifferentSegmentFromLastWave = t.PreviousSample\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp2 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet Perc_ContactsDifferentSegmentFromLastWave = CAST((CAST(ContactsDifferentSegmentFromLastWave AS numeric(10,2))/CAST(PreviousWaveSampleCount AS numeric(10,2))) AS numeric(5,4))\nWHERE ContactsDifferentSegmentFromLastWave <> 0 and ContactsDifferentSegmentFromLastWave is not null and PreviousWaveSampleCount <> 0\n\n\nDROP TABLE dbo.Temp2\n\n--% of Qualified new contacts in current wave\n--5:49 min:sec\nIF EXISTS(Select * from sysobjects where name = 'Temp3' and type = 'U')\nDROP TABLE dbo.Temp3\n\n\nSelect S.GrslistId,Geo.SubsidiaryName,COUNT(S.ContactNumber) AS ContactCount into dbo.Temp3 from [dbo].[Scorecard] S with(nolock)\nINNER JOIN [vnxt_Reporting].[dbo].[SubsidiaryDetails] Geo with(nolock)\nON S.SubsidiaryID = Geo.SubsidiaryID\nWHERE S.ContactNumber in \n(Select distinct S.ContactNumber from [dbo].[Scorecard] S with(nolock)\nLEFT JOIN CPERM_Prev_Sample G with(nolock)\nON S.ContactNumber = G.Contactid\nWHERE G.ContactId is null AND S.RejectionCount = 0) and 1=1\nGROUP BY S.GrslistId,Geo.SubsidiaryName\n\n\nUpdate tr\nSet tr.NewContactInThisWave = t.ContactCount\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp3 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet Perc_NewContactInThisWave = CAST((CAST(NewContactInThisWave AS numeric(12,4))/CAST(SampleCount AS numeric(12,4))) AS numeric(7,4))\nWHERE NewContactInThisWave <> 0 and SampleCount <> 0 and NewContactInThisWave is not null\n\n\nDROP TABLE dbo.Temp3\n\n--% Managed Contacts ∆ from last wave\n--1 sec\nIF EXISTS(Select * from sysobjects where name = 'Temp4' and type = 'U')\nDROP TABLE dbo.Temp4\n\n\nSelect CPERMListid AS GRSListId,SubsidiaryName,Count(1) AS ManagedContact into dbo.Temp4 from dbo.CPERM_Prev_Sample G with(nolock)\nWHERE ISNULL(t_a1_ManagedContact,0) = 1 and 1=1\nGROUP BY CPERMListid,SubsidiaryName\n\n\nUpdate tr\nSet tr.ManagedContactsFromLastWave = t.ManagedContact\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp4 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate dbo.TempReport \nSet ManagedContactsDifferenceFromLastWave = ManagedContact - ManagedContactsFromLastWave\nWHERE ManagedContactsFromLastWave is not null\n\n\nUpdate dbo.TempReport \nSet Perc_ManagedContactsDifferenceFromLastWave = CAST((CAST(ManagedContactsDifferenceFromLastWave AS numeric(10,2))/CAST(PreviousWaveSampleCount AS numeric(10,2))) AS numeric(6,4))\nWHERE ManagedContactsDifferenceFromLastWave <> 0 and PreviousWaveSampleCount <> 0 and ManagedContactsDifferenceFromLastWave is not null\n\n\nDROP TABLE dbo.Temp4\n\n--% Sample ∆ from Previous Wave\n--\nIF EXISTS(Select * from sysobjects where name = 'Temp5' and type = 'U')\nDROP TABLE dbo.Temp5\n\n\nSelect CPERMListid AS GRSListId,SubsidiaryName,Count(1) AS SampleCount into dbo.Temp5 from dbo.CPERM_Prev_Sample G with(nolock)\nWHERE 1=1\nGROUP BY CPERMListid,SubsidiaryName\n\n\nUpdate tr\nSet tr.PreviousWaveSampleCount = t.SampleCount\nfrom dbo.TempReport tr \nINNER JOIN dbo.Temp5 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\nUpdate tr\nSet tr.DifferenceFromPreviousWave = tr.SampleCount - tr.PreviousWaveSampleCount\nfrom dbo.TempReport tr\n\n--Update dbo.TempReport \n--Set Perc_DifferenceFromPreviousWave = CAST((CAST(DifferenceFromPreviousWave AS numeric(12,4))/CAST(PreviousWaveSampleCount AS numeric(12,4))) AS numeric(7,4))\n--WHERE DifferenceFromPreviousWave <> 0 and PreviousWaveSampleCount <> 0 and DifferenceFromPreviousWave is not null\n--GO\n\nDROP TABLE dbo.Temp5\n\n--Intended Completes\n\nUpdate tr\nSet tr.IntendedCompletes = ISNULL(t.Lookup_Interview_Target,0)\nfrom dbo.TempReport tr \nINNER JOIN [dbo].[SRC_InterviewTarget_new] t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.level4\nWHERE t.Grslistid not in (13,32,35,36,24,25)\n\n\n--Previous Wave Data Quality\n\nUpdate tr\nSet tr.PreviousWaveFixableRejectionCount = ISNULL(t.FixableRejection,0)\nfrom dbo.TempReport tr \nINNER JOIN dbo.DataQuality_FY18Q1 t with(nolock)\nON tr.grslistid = t.grslistid and tr.subsidiaryname = t.subsidiaryname\n\n\n--% ManagedContactCRMKey\n\nUpdate dbo.TempReport \nSet Perc_ManagedContactCRMKey = CAST((CAST(ManagedContactCRMKey AS numeric(10,2))/CAST(SampleCount AS numeric(10,2))) AS numeric(5,4))\nWHERE ManagedContactCRMKey <> 0 and SampleCount <> 0 and ManagedContactCRMKey is not null\n\n\n--% ManagedContactMPOR\n\nUpdate dbo.TempReport \nSet Perc_ManagedContactMPOR = CAST((CAST(ManagedContactMPOR AS numeric(10,2))/CAST(SampleCount AS numeric(10,2))) AS numeric(5,4))\nWHERE ManagedContactMPOR <> 0 and SampleCount <> 0 and ManagedContactMPOR is not null\n\n\nselect 1 abcd\n\n--Remove From FY18H2\n\n--Update dbo.TempReport\n--Set [Perc_DifferenceFromPreviousWave] = 0\n--WHERE GRSBucket like '%EPG%'\n--GO"
 								}
 							]
 						}
@@ -22550,7 +22550,7 @@
 							"scripts": [
 								{
 									"type": "Query",
-									"text": "Select Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp1 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 1 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_1 into #Temp2 from #Temp1 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName\n\nUpdate P\nSet P.AccountsManagedContact_1 = Tem.AccountsManagedContact_1\nfrom vnxt_reporting..TempReport_Summary_MLD P with(nolock)\nINNER JOIN #Temp2 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager and Tem.MSSalesTopParentID = P.MSSalesTopParentID and Tem.ParentAccountId = P.ParentAccountId and Tem.AccountId = P.AccountId and Tem.CompanyName = P.CompanyName\n\nDROP TABLE #Temp1\nDROP TABLE #Temp2\n\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp3 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 2 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_2 into #Temp4 from #Temp3 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName\n\nUpdate P\nSet P.AccountsManagedContact_2 = Tem.AccountsManagedContact_2\nfrom vnxt_reporting..TempReport_Summary_MLD P with(nolock)\nINNER JOIN #Temp4 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager and Tem.MSSalesTopParentID = P.MSSalesTopParentID and Tem.ParentAccountId = P.ParentAccountId and Tem.AccountId = P.AccountId and Tem.CompanyName = P.CompanyName\n\nDROP TABLE #Temp3\nDROP TABLE #Temp4\n\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp5 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 3\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_3 into #Temp6 from #Temp5 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName\n\nUpdate P\nSet P.AccountsManagedContact_3 = Tem.AccountsManagedContact_3\nfrom vnxt_reporting..TempReport_Summary_MLD P with(nolock)\nINNER JOIN #Temp6 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager and Tem.MSSalesTopParentID = P.MSSalesTopParentID and Tem.ParentAccountId = P.ParentAccountId and Tem.AccountId = P.AccountId and Tem.CompanyName = P.CompanyName\n\nDROP TABLE #Temp5\nDROP TABLE #Temp6\n\nselect 1 abcd"
+									"text": "Select Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp1 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 1 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_1 into #Temp2 from #Temp1 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName\n\nUpdate P\nSet P.AccountsManagedContact_1 = Tem.AccountsManagedContact_1\nfrom vnxt_reporting..TempReport_Summary_MLD P with(nolock)\nINNER JOIN #Temp2 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager and Tem.MSSalesTopParentID = P.MSSalesTopParentID and Tem.ParentAccountId = P.ParentAccountId and Tem.AccountId = P.AccountId and Tem.CompanyName = P.CompanyName\n\nDROP TABLE #Temp1\nDROP TABLE #Temp2\n\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp3 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 2 \n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_2 into #Temp4 from #Temp3 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName\n\nUpdate P\nSet P.AccountsManagedContact_2 = Tem.AccountsManagedContact_2\nfrom vnxt_reporting..TempReport_Summary_MLD P with(nolock)\nINNER JOIN #Temp4 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager and Tem.MSSalesTopParentID = P.MSSalesTopParentID and Tem.ParentAccountId = P.ParentAccountId and Tem.AccountId = P.AccountId and Tem.CompanyName = P.CompanyName\n\nDROP TABLE #Temp3\nDROP TABLE #Temp4\n\n\n\nSelect Distinct Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) AS ManagedContact into #Temp51 from [vnxt_Reporting].[dbo].[Scorecard] Q with(nolock) \nINNER JOIN [vnxt_Catalogues].[dbo].[vw_Mst_Geography] Geo with(nolock)\nON Q.Subsidiaryid = Geo.SubsidiaryId\nGROUP BY Q.GRSListid, Geo.SubsidiaryName, Q.AccountManager, Q.AccountNumber, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName Having SUM(Case WHEN Q.ManagedContact = 1 THEN 1 ELSE 0 END) > 3\n\nSelect Distinct Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName, COUNT(Distinct Q.AccountNumber) AccountsManagedContact_3 into #Temp6 from #Temp51 Q with(nolock) \nWHERE Q.AccountNumber is not null\nGROUP BY Q.GRSListid, Q.SubsidiaryName, Q.AccountManager, Q.MSSalesTopParentID, Q.ParentAccountId, Q.AccountId, Q.CompanyName\n\nUpdate P\nSet P.AccountsManagedContact_3 = Tem.AccountsManagedContact_3\nfrom vnxt_reporting..TempReport_Summary_MLD P with(nolock)\nINNER JOIN #Temp6 Tem with(nolock)\nON Tem.GRSlistid = P.Grslistid and Tem.Subsidiaryname = P.SubsidiaryName and Tem.AccountManager = P.AccountManager and Tem.MSSalesTopParentID = P.MSSalesTopParentID and Tem.ParentAccountId = P.ParentAccountId and Tem.AccountId = P.AccountId and Tem.CompanyName = P.CompanyName\n\nDROP TABLE #Temp51\nDROP TABLE #Temp6\n\nselect 1 abcd"
 								}
 							]
 						}
@@ -23029,53 +23029,102 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Demo trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
 					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "DoNotContact",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Drivedcolumns data",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"pool": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "CRs NewCheckpoints",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "FY22Q3 KSRFeedback",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "MandatoryFields",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "OtherChecks",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SelectionCriteria",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Tagging_Fields",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Validation_Geography",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Vendor_Feedbacks",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "Reporting Pipeline"
-				},
-				"annotations": []
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2022-07-08T06:00:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"weekDays": [
+								"Friday"
+							]
+						}
+					}
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Drivedcolumns data')]"
+				"[concat(variables('factoryId'), '/pipelines/DoNotContact')]",
+				"[concat(variables('factoryId'), '/pipelines/CRs NewCheckpoints')]",
+				"[concat(variables('factoryId'), '/pipelines/FY22Q3 KSRFeedback')]",
+				"[concat(variables('factoryId'), '/pipelines/MandatoryFields')]",
+				"[concat(variables('factoryId'), '/pipelines/OtherChecks')]",
+				"[concat(variables('factoryId'), '/pipelines/SelectionCriteria')]",
+				"[concat(variables('factoryId'), '/pipelines/Tagging_Fields')]",
+				"[concat(variables('factoryId'), '/pipelines/Validation_Geography')]",
+				"[concat(variables('factoryId'), '/pipelines/Vendor_Feedbacks')]"
 			]
 		}
 	]
