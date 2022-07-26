@@ -17621,7 +17621,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlMISource",
-								"sqlReaderQuery": "IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','Scorecard'\nTruncate TABLE dbo.Scorecard\nend\n \n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n\n\n",
+								"sqlReaderQuery": "IF EXISTS(Select * from sysobjects where name = 'Scorecard' and type = 'U')\nBEGIN\nEXEC dbo.CreateBackup 'dbo','Scorecard'\nTruncate TABLE dbo.Scorecard\nend\n \n\nTruncate Table [dbo].[AccountHierarchy]\n\nTruncate Table [dbo].[PartnerAccountHierarchy]\n select 1 abcd\n\n",
 								"partitionOption": "None"
 							},
 							"dataset": {
